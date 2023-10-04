@@ -1,17 +1,17 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Starter Kit",
+  "name": "BuildFlow",
   "logo": {
     "dark": "/logo/dark.svg",
     "light": "/logo/light.svg"
   },
   "favicon": "/favicon.png",
   "colors": {
-    "primary": "#9563FF",
-    "light": "#AE87FF",
-    "dark": "#0D001D",
+    "primary": "#A1CCA5",
+    "light": "#A1CCA5",
+    "dark": "#A1CCA5",
     "background": {
-      "dark": "#090014"
+      "dark": "#000000"
     },
     "anchors": {
       "from": "#FF7F57",
@@ -21,56 +21,71 @@
   "topbarLinks": [
     {
       "name": "Support",
-      "url": "mailto:hi@mintlify.com"
+      "url": "mailto:founders@launchflow.com"
     }
   ],
-  "topbarCtaButton": {
-    "name": "Dashboard",
-    "url": "https://dashboard.mintlify.com"
-  },
   "tabs": [
     {
-      "name": "API Reference",
-      "url": "api-reference"
+      "name": "Reference",
+      "url": "reference"
     }
   ],
   "anchors": [
     {
-      "name": "Documentation",
-      "icon": "book-open-cover",
-      "url": "https://mintlify.com/docs"
-    },
-    {
       "name": "Community",
-      "icon": "slack",
-      "url": "https://mintlify.com/community"
+      "icon": "discord",
+      "url": "https://discordapp.com/invite/wz7fjHyrCA"
     },
     {
       "name": "Blog",
       "icon": "newspaper",
-      "url": "https://mintlify.com/blog"
+      "url": "https://buildflow.dev/blog"
     }
   ],
   "navigation": [
     {
       "group": "Get Started",
-      "pages": ["introduction", "quickstart", "development"]
-    },
-    {
-      "group": "Essentials",
-      "pages": ["essentials/markdown", "essentials/code", "essentials/images", "essentials/settings", "essentials/navigation"]
-    },
-    {
-      "group": "API Documentation",
-      "pages": ["api-reference/authentication"]
-    },
-    {
-      "group": "Endpoint Examples",
       "pages": [
-        "api-reference/endpoint/get",
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/update",
-        "api-reference/endpoint/delete"
+        "introduction",
+        "concepts",
+        "quickstart"
+      ]
+    },
+    {
+      "group": "Programming Guide",
+      "pages": [
+        "programming-guide/install",
+        "programming-guide/flows",
+        "programming-guide/processors",
+        "programming-guide/endpoints",
+        "programming-guide/collectors",
+        "programming-guide/consumers",
+        "programming-guide/primitives",
+        "programming-guide/source-sink-types"
+      ]
+    },
+    {
+      "group": "Developers",
+      "pages": [
+        "developers/contribute"
+      ]
+    },
+    {
+      "group": "Primitives",
+      "pages": [
+        "reference/authentication"
+      ]
+    },
+    {
+      "group": "API",
+      "pages": [
+        "reference/authentication"
+      ]
+    },
+    {
+      "group": "CLI",
+      "pages": [
+        "reference/authentication"
       ]
     }
   ],

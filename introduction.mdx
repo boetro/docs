@@ -1,71 +1,106 @@
 ---
 title: Introduction
-description: "Welcome to the home of your new documentation"
+description: "Build your entire system in minutes using pure Python"
 ---
 
-<img
-  className="block dark:hidden"
-  src="/images/hero-light.svg"
-  alt="Hero Light"
-/>
-<img
-  className="hidden dark:block"
-  src="/images/hero-dark.svg"
-  alt="Hero Dark"
-/>
+```python
+app = Flow()
 
-## Setting up
+service = app.service("my-service")
+@service.endpoint("/", method="GET")
+def get():
+    return "Hello World"
 
-The first step to world-class documentation is setting up your editing environnments.
+@app.consumer(
+  source=Topic(topic_id="input-topic"),
+  sink=AnalysisTable("output-table"))
+def process(element: Dict[str, Any]):
+    return element
+
+@app.collector("/collect", method="POST", sink=AnalysisTable("output-table"))
+def collect(request: Dict[str, Any]):
+  return element
+```
+
+## What is BuildFlow?
+
+**BuildFlow** is a Python framework that allows you to build your entire backend system using one framework.
+With our simple decorator pattern you can turn any function into a component of your backend system. Allowing you to
+**serve data over HTTP**, **dump data to a datastore**, or **process async data from message queues**. 
+All of these can use our built in IO connectors allowing you to create, manage, and connect to your infrastructure using pure Python.
+
+Simply install BuildFlow to get started:
+
+```
+pip install buildflow
+```
+
+## Main Features
+
+<AccordionGroup>
+  <Accordion icon="microchip" title="Common serving and processing patterns">
+    **BuildFlow** offers a simple decorator pattern that allows you to turn any function into a part of you backend system.
+    - **endpoints**: Receive and respond to HTTP requests
+    - **collectors**: Receive HTTP requests and dump them to a data store
+    - **consumers**: Process data from message queues such as Pub/Sub and Kafka
+
+  </Accordion>
+  <Accordion icon="road-bridge" title="Infrastructure From Code">
+    **BuildFlow** allows you to create, manage, and connect to your infrastructure using pure Python. No more manual configuration, terraform, or seperate configuration management system. Simply let your logic manage your infrastructure.
+  </Accordion>
+  <Accordion icon="books" title="Production Ready IO Connectors">
+    Use any of our existing **BuildFlow** primitives to connect to any resource in any cloud. Including AWS, GCP, Snowflake, and DuckDB 
+  </Accordion>
+  <Accordion icon="chart-line-up" title="Scalable by Default">
+    **BuildFlow** will automatical scale to whatever your current demands are. This ensures your system can handle any surge in traffic while still be cost effective during low traffic periods.
+  </Accordion>
+  <Accordion icon="syringe" title="Dependency Injection">
+    **BuildFlow** will automatical scale to whatever your current demands are. This ensures your system can handle any surge in traffic while still be cost effective during low traffic periods.
+  </Accordion>
+  <Accordion icon="person-running-fast" title="Async Runtime">
+    **BuildFlow** runs in an asyncrounous Ray runtime allowing you to easily scale out parallel tasks with Ray or any other async framework.
+  </Accordion>
+  <Accordion icon="rocket" title="LaunchFlow">
+    You can use [LaunchFlow](https://launchflow.com) to automatically deploy and manage your BuildFlow flows and processors all from within VSCode.
+    </Accordion>
+</AccordionGroup>
+
+## Ready to Use Examples
+
+Get started quickly with any of our walkthrough or example projects.
 
 <CardGroup cols={2}>
   <Card
-    title="Edit Your Docs"
-    icon="pen-to-square"
-    href="https://mintlify.com/docs/quickstart"
+    title="Real-Time File Ingestion"
+    icon="image"
+    href="https://mintlify.com/docs/settings/global"
   >
-    Get your docs set up locally for easy development
+    Classify images as they are uploaded to a remote storage bucket (S3, GCS).
   </Card>
   <Card
-    title="Preview Changes"
-    icon="image"
-    href="https://mintlify.com/docs/development"
+    title="AI Chat Bot"
+    icon="comment"
+    href="https://github.com/launchflow/launchflow-chat"
   >
-    Preview your changes before you push to make sure they're perfect
+    Build an AI chatbot that uses the Llama2 model.
   </Card>
 </CardGroup>
 
-## Make it yours
-
-Update your docs to your brand and add valuable content for the best user conversion.
+## Learn more
 
 <CardGroup cols={2}>
   <Card
-    title="Customize Style"
-    icon="palette"
-    href="https://mintlify.com/docs/settings/global"
+    title="Quickstart"
+    icon="play"
+    href="./quickstart"
   >
-    Customize your docs to your company's colors and brands
+    Learn about important BuildFlow concepts.
   </Card>
   <Card
-    title="Reference APIs"
-    icon="code"
-    href="https://mintlify.com/docs/api-playground/openapi"
+    title="Concepts"
+    icon="image"
+    href="./concepts"
   >
-    Automatically generate endpoints from an OpenAPI spec
-  </Card>
-  <Card
-    title="Add Components"
-    icon="screwdriver-wrench"
-    href="https://mintlify.com/docs/components/accordion"
-  >
-    Build interactive features and designs to guide your users
-  </Card>
-  <Card
-    title="Get Inspiration"
-    icon="stars"
-    href="https://mintlify.com/showcase"
-  >
-    Check out our showcase of our favorite documentation
+    Learn about important BuildFlow concepts.
   </Card>
 </CardGroup>

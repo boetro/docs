@@ -1,0 +1,129 @@
+---
+title: Concepts
+description: "Important concepts and terminology used throughout the BuildFlow documentation."
+---
+
+TODO fix links on this page
+
+Before getting started with BuildFlow, it's important to understand the core concepts and terminology used throughout the documentation.
+
+- [Flow](#flows): a container type for user-defined Processors.
+- [Processor](#processors): a user-defined, individually scalable component of a flow
+- [Endpoint](#endpoints): processor pattern that receives and responds to HTTP requests
+- [Service](#services): a collection of endpoints that are deployed and scaled together
+- [Collector](#collectors): processor pattern that receives HTTP requests and writes to a Sink
+- [Consumer](#consumers): processor pattern that reads from a Source and writes to a Sink
+- [Replica](#replicas): an individual instance of a processor that is reading from a source and writing to a sink. More replicas are added and remove with autoscaling.
+- [Primitives](#primitives): a resource that a processor may read from, write to, or manage
+- [Dependencies](#dependencies): a dependency that is required to call your processor
+
+
+## Flows
+
+The [Flow](./user-guides/flows/overview) class is the entrypoint into the BuildFlow Framework. They acts as a container type for user-defined Processors and are responsible for orchestrating the Processors across the Runtime and Infrastructure submodules.
+
+TLDR; Flows act as a container type for a user's application:
+```python
+from buildflow import Flow
+
+app = Flow()
+
+...
+```
+
+## Processors
+
+At a high-level, Processors are a user-defined function that are individually scalable. 
+BuildFlow offers different **patterns** of processors to handle different use-cases ([endpoints](#endpoints), [collectors](#collectors), [consumers](#consumers)).
+
+
+### Endpoints
+An [`endpoint`](./user-guides/endpoints/overview) is a processor pattern intended for serving data over HTTP.
+Endpoints can be grouped under a [`service`](#services) that allows multiple endpoints to be scaled and deployed together.
+
+```python
+service = app.service("my-service")
+@service.endpoint("/", method="post")
+def my_processor(request: MyRequestType):
+    # TODO(developer): Add processing logic
+    return payload
+```
+
+### Collectors
+
+A [`collector`](./user-guides/collectors/overview) is a processor pattern intended for receiving data over HTTP and dumping it to a sink.
+
+```python
+@app.collector("/", method="post", sink=...)
+def my_processor(request: MyRequestType):
+    # TODO(developer): Add processing logic
+    return payload
+```
+
+### Consumers
+A [`consumer`](./user-guides/coneumsers/overview) is a processor pattern intended for event driven data processing. Consumers read from an unbounded source such as (Kafka, AWS SQS, or GCP Pub/Sub) and outputs to a Sink. They are attached to a Flow by using the `@app.consumer` decorator.
+
+```python
+@app.consumer(source=..., sink=...)
+def my_processor(payload: MyPayloadType):
+    # TODO(developer): Add processing logic
+    return payload
+```
+
+## Processor Groups
+
+Processor groups allow you to group like processor patterns together and scale them together.
+We currently only support grouping endpoints together into a service, but will soon be adding support
+for grouping consumers and collectors.
+
+### Services
+
+A [`service`](./user-guides/services/overview) is a group of endpoints that are deployed and scaled together. Services are defined by call `app.service()` decorator.
+Then endpoints can be attached with the `@service.endpoint()` decorator.
+
+```python
+app = Flow()
+service = app.service("my-service")
+@service.endpoint("/", method="post")
+def my_processor(request: MyRequestType):
+    # TODO(developer): Add processing logic
+    return payload
+```
+
+## Replicas
+
+A replica is an individual instance of a processor. As the load of your source changes, BuildFlow will automatically scale the number of replicas to match the load.
+Replicas can be configured to have their own CPU and GPU requirements. For example you can have a service that serves a model that requires a GPU and a service for auth that requires a CPU.
+If your auth service is receiving more traffic than your model service, BuildFlow will automatically scale the auth service to handle the load while keeping the model service at a minimum number of replicas. Which means you won't need more GPUs!
+Resource requirements are defined when you initiliaze a processor.
+
+```python
+app = Flow()
+
+service = app.service(num_cpus=1)
+@service.endpoint("/", method="post")
+def my_endpoint(request: MyRequestType):
+    ...
+
+@app.collector("/", method="post", sink=..., num_cpus=3)
+def my_collector(request: MyRequestType):
+    ...
+
+@app.consumer(source=..., sink=..., num_cpus=2)
+def my_consumer(payload: MyPayloadType):
+    ...
+```
+
+## Primitives
+
+[Primitives](./user-guides/primitives/overview) represent an individual resource that a processor may read, write to, or simply reference. For example, a `BigQueryTable` is a primitive that represents a single BigQuery table. Primitives define how to read from a source, write to a sink, and also how to manage the primitive with pulumi. 
+
+Primitives can be used as inputs (Sources) or outputs (Sinks) for consumers and collectors. A full list of our support primitives can be found in our [primitive docs](./category/primitives). You can also define your own primitives for reading, writing, and managing custom resources.
+
+## Dependencies
+
+Dependencies are any thing that is needed to call your processor. For example maybe you need to open a connection to your database, or maybe you need to download a model from a remote bucket.
+
+TODO: update these links
+
+BuildFlow offers a [collection of dependencies](./reference/dependencies) out of the box to help you get started with common use cases. You can also [define your own dependencies](./user-guides/dependencies/build-your-own) for your own use-cases.

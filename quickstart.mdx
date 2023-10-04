@@ -1,86 +1,62 @@
 ---
 title: 'Quickstart'
-description: 'Start building awesome documentation in under 5 minutes'
+description: 'Start building something awesome in under 60 seconds'
 ---
 
-## Setup your development
+## Install buildflow
 
-Learn how to update your docs locally and and deploy them to the public.
+```bash
+pip install buildflow
+```
 
-### Edit and preview
+## Create a new project
 
-<AccordionGroup>
-  <Accordion icon="github" title="Clone your docs locally">
-    During the onboarding process, we created a repository on your Github with
-    your docs content. You can find this repository on our
-    [dashboard](https://dashboard.mintlify.com). To clone the repository
-    locally, follow these
-    [instructions](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
-    in your terminal.
-  </Accordion>
-  <Accordion icon="rectangle-terminal" title="Preview changes">
-    Previewing helps you make sure your changes look as intended. We built a
-    command line interface to render these changes locally. 1. Install the
-    [Mintlify CLI](https://www.npmjs.com/package/mintlify) to preview the
-    documentation changes locally with this command: ``` npm i -g mintlify ```
-    2. Run the following command at the root of your documentation (where
-    `mint.json` is): ``` mintlify dev ```
-  </Accordion>
-</AccordionGroup>
+Once installed you will now have access to the `buildflow` CLI tool. First create a directory for your project and then run the `init` command which will prompt you to name your project and then setup everything.
 
-### Deploy your changes
+```bash
+mkdir my-project-dir
+cd my-project-dir
+buildflow init
+```
 
-<AccordionGroup>
+The `init` command creates a basic structure for your project. You are of course free to change this in any way you like.
 
-<Accordion icon="message-bot" title="Install our Github app">
-  Our Github app automatically deploys your changes to your docs site, so you
-  don't need to manage deployments yourself. You can find the link to install on
-  your [dashboard](https://dashboard.mintlify.com). Once the bot has been
-  successfully installed, there should be a check mark next to the commit hash
-  of the repo.
-</Accordion>
-<Accordion icon="rocket" title="Push your changes">
-  [Commit and push your changes to
-  Git](https://docs.github.com/en/get-started/using-git/pushing-commits-to-a-remote-repository#about-git-push)
-  for your changes to update in your docs site. If you push and don't see that
-  the Github app successfully deployed your changes, you can also manually
-  update your docs through our [dashboard](https://dashboard.mintlify.com).
-</Accordion>
 
-</AccordionGroup>
+If you want to just get started quickly you can run start your project with:
 
-## Update your docs
+```
+buildflow run
+```
 
-Add content directly in your files with MDX syntax and React components. You can use any of our components, or even build your own.
+Then you can visit http://localhost:8000 to see your project running.
 
-<CardGroup>
+### Directory Structure
 
-<Card title="Style Your Docs" icon="paintbrush" href="/settings/global">
-  Add flair to your docs with personalized branding.
-</Card>
+At the root level there are three important files:
 
-<Card
-  title="Add API Endpoints"
-  icon="square-code"
-  href="/api-playground/configuration"
->
-  Implement your OpenAPI spec and enable API user interaction.
-</Card>
+- `buildflow.yml` - This is the main configuration file for your project. It contains all the information about your project and how it should be built.
+- `main.py` - This is the entry point to your project and where your `Flow` is initialized.
+- `requirements.txt` - This is where you can specify any Python dependencies your project has.
 
-<Card
-  title="Integrate Analytics"
-  icon="chart-mixed"
-  href="/analytics/supported-integrations"
->
-  Draw insights from user interactions with your documentation.
-</Card>
+Below the root level we have:
 
-<Card
-  title="Host on a Custom Domain"
-  icon="browser"
-  href="/settings/custom-domain/subdomain"
->
-  Keep your docs on your own website's subdomain.
-</Card>
+**Project Code Directory**
 
-</CardGroup>
+This is the directory where your project code lives. It will match the name of your project. You can put any files you want in here and they will be available to your project. We create a couple directories for you:
+
+- **processors**: This is where you can put any custom processors you want to use in your project. In here you will see we have defined a *service.py* for a service in your project and a *hello_world.py* file for a custom endpoint processor.
+- **resources**: This is where you can define any custom primitive resources that your project will need. Note it is empty right now since your initial project is so simple.
+
+**.buildflow**
+
+This is a hidden directory that contains all the build artifacts for your project. You can general ignore this directory and it will be automatically generated for you. If you are using github you probably want to put this in your *.gitignore* file.
+
+## Running your project
+
+Simply run:
+
+```
+buildflow run
+```
+
+Then you can visit http://localhost:8000 to see your project running.

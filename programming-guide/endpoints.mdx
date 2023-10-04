@@ -1,0 +1,179 @@
+---
+title: 'Endpoints'
+icon: 'globe'
+description: 'Receive and respond to HTTP requests.'
+---
+
+The **Endpoint** pattern enables serving HTTP traffic via an API. 
+
+A endpoint is composed of:
+- A `route`: this is the path that the endpoint will be available at.
+- A `method`: this is the HTTP method that the endpoint will be available at currently GET and POST are supported.
+- Your processing Logic.
+
+Endpoints are created as part of a `Service`. A Service is a collection of endpoints that all share the same set of resources.
+
+A service can be created by call `app.service()`. This will create a service that is automatically attached to the flow.
+
+```python
+from buildflow import Flow
+
+app = Flow()
+service = app.service()
+```
+
+You can also manually create a service add attach it with `app.add_service(service)`
+
+```python
+from buildflow import Flow, Service
+
+app = Flow()
+service = Service()
+app.add_service(service)
+```
+
+Endpoints can be attached to a service with the `@service.endpoint(...)` decorator.
+
+```python
+from buildflow import Flow
+
+app = Flow()
+service = app.service()
+
+@service.endpoint(route="/", method="POST")
+def my_endpoint(...):
+    ...
+```
+
+Or by calling `service.add_endpoint(...)` and using the `@endpoint` decorator.
+
+```python
+from buildflow import Flow, endpoint
+
+app = Flow()
+service = app.service()
+
+@endpoint(route="/", method="POST")
+def my_endpoint(...):
+    ...
+service.add_endpoint(my_endpoint)
+```
+
+## Request and Response Type
+
+### JSON Request Body and Response
+
+The input of your collector will be one request from your HTTP endpoint.
+If you endpoint is processing a JSON payload you can specify a dataclass type, and the JSON will be automatically deserialized into that type.
+Similar for responses, if you return a dataclass it will be serialized to JSON.
+
+```python
+from dataclasses import dataclass
+from buildflow import Flow
+
+@dataclass
+class MyType:
+    val: int
+
+app = Flow()
+service = app.service()
+
+@service.endpoint(route="/", method="POST")
+def my_endpoint(request: MyType) -> MyType:
+    return request
+```
+
+### Query parameters
+
+With endpoints you can also define query parameters. The query is the key-value pairs that go after the `?` in the URL.
+
+```python
+from buildflow import Flow
+
+service = app.service()
+
+@service.endpoint(route="/my_endpoint", method="GET")
+def my_endpoint(my_int: int) -> int:
+    return request
+```
+
+Requests to this URL would look like:
+
+```
+http://localhost/my_endpoint?my_int=1
+```
+
+### Raw Request
+
+If you need access to the entire request you can also import `from buildflow.requests import Request`. If you do this no validation will be performed but you will have access to all the request data.
+
+<Note>
+    `buildflow.requests.Request` is just a proxy for the [starlette.requests.Request](https://www.starlette.io/requests/) object.
+
+    We simply provide it as a convenience to avoid having to import `starlette.requests.Request` directly.
+</Note>
+
+```python
+from buildflow import Flow
+from buildflow.requests import Request
+
+app = Flow()
+service = app.service()
+
+@service.endpoint(route="/", method="POST")
+def my_endpoint(request: Request):
+    ...
+```
+
+### Other Response Types
+
+We also offer additional response types that can be used to return different types other than JSON.
+These can all be found in the `buildflow.responses` module.
+
+<Note>
+    These responses are all proxies for different [starlette.responses](https://www.starlette.io/responses/) objects, and can be used interchangeably.
+</Note>
+
+| Response Type         | Description                           |
+| --------------------- | ------------------------------------- |
+| **FileResponse**      | Return a file from disk. Proxy for [starlette.responses.FileResponse](https://www.starlette.io/responses/#fileresponse).                  |
+| **HTMLResponse**      | Return an HTML file. Proxy for [starlette.responses.HTMLResponse](https://www.starlette.io/responses/#htmlresponse).
+| **JSONResponse**      | Return a JSON response. Proxy for [starlette.responses.JSONResponse](https://www.starlette.io/responses/#jsonresponse).                       |
+| **PlainTextResponse** | Return a plain text response. Proxy for [starlette.responses.PlainTextResponse](https://www.starlette.io/responses/#plaintextresponse). |
+| **RedirectResponse**  | Return a redirect. Proxy for [starlette.responses.RedirectResponse](https://www.starlette.io/responses/#redirectresponse).|
+| **StreamingResponse** | Returns a streaming response. Proxy for [starlette.responses.StreamingResponse](https://www.starlette.io/responses/#streamingresponse).|
+
+## Open API Docs
+
+BuildFlow also automatically provides open API docs for your serivces. You can access these at the `/docs` endpoint.
+
+## Service Options
+
+Services can be individually configured for different resource requirements.
+
+The following options are available:
+| Option                                        | Description                           |
+| --------------------------------------------- | ------------------------------------- |
+| **service_id**                                | A unique ID for your service. Defaults to a random UUID.                  |
+| **base_route**                                | Base route for all endpoints in the service. Defaults to `/`. This must be unique for all services in a flow.
+| **num_cpus**                                  | How many CPUs should be allocated to the processor. This can be any floating point number > 0. Defaults to 1.                       |
+| **log_level**                                 | Log level for the processor. Defaults to `logging.INFO`. |
+| **num_replicas**                              | Number of replicas the consumer should start with. Defaults to `1`|
+| **min_replicas**                              | Minimum number of replicas the consumer should have. Defaults to `1` |
+| **max_replicas**                              | Maximum number of replicas the consumer should have. Defaults to `1` |
+| **target_num_ongoing_requests_per_replica**   | Target number of ongoing requests per replica before scaling. Setting this lower will mean replicas are added faster, setting it higher will mean replicas are added slower. Defaults to `80` |
+
+### Example
+
+```python
+from buildflow import Flow
+from buildflow.requests import Request
+
+app = Flow()
+service = app.service(num_cpus=2)
+
+@service.endpoint(route="/", method="POST")
+def my_endpoint(request: Request):
+    ...
+```
+
