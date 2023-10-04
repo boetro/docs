@@ -7,15 +7,17 @@ TODO fix links on this page
 
 Before getting started with BuildFlow, it's important to understand the core concepts and terminology used throughout the documentation.
 
-- [Flow](#flows): a container type for user-defined Processors.
-- [Processor](#processors): a user-defined, individually scalable component of a flow
-- [Endpoint](#endpoints): processor pattern that receives and responds to HTTP requests
-- [Service](#services): a collection of endpoints that are deployed and scaled together
-- [Collector](#collectors): processor pattern that receives HTTP requests and writes to a Sink
-- [Consumer](#consumers): processor pattern that reads from a Source and writes to a Sink
-- [Replica](#replicas): an individual instance of a processor that is reading from a source and writing to a sink. More replicas are added and remove with autoscaling.
-- [Primitives](#primitives): a resource that a processor may read from, write to, or manage
-- [Dependencies](#dependencies): a dependency that is required to call your processor
+|                              |                           |
+| ------------------------------------ | ------------------------------------- |
+| [Flow](#flows) | a container type for user-defined Processors.
+| [Processor](#processors) | a user-defined, individually scalable component of a flow
+| [Endpoint](#endpoints) | processor pattern that receives and responds to HTTP requests
+| [Service](#services) | a collection of endpoints that are deployed and scaled together
+| [Collector](#collectors) | processor pattern that receives HTTP requests and writes to a Sink
+| [Consumer](#consumers) | processor pattern that reads from a Source and writes to a Sink
+| [Replica](#replicas) | an individual instance of a processor that is reading from a source and writing to a sink. More replicas are added and remove with autoscaling.
+| [Primitives](#primitives) | a resource that a processor may read from, write to, or manage
+| [Dependencies](#dependencies) | a dependency that is required to call your processor
 
 
 ## Flows
