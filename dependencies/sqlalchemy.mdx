@@ -1,0 +1,35 @@
+---
+title: 'SQLAlchemy'
+---
+
+BuildFlow offers a SessionDep that be used to create a SQLAlchemy session connected to a database primitive.
+This session can then be used to query the database.
+Each session returned by the dependency will be created from a connection that is shared across all processors replicas. To create a SessionDep you must provide the following fields:
+
+| Arg             | Description                                                                                                                                                                 |
+|-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **db_primitive** | The database prmitive we should connect to. Currently we only support [CloudSQLDatabase](/primitives/gcp/cloud_sql#cloud-sql-database)                                                                                                                                                   |
+| **db_user**   | The user name to use for authenticating with the database |
+| **db_password** | The password to use for connecting to the database                                                                                                     |
+
+The SessionDep returns an object with one field `session` which is a session connected to your dependency. This object is scoped to your processor so you will get a new session every time your processor is called.
+
+Example usage:
+
+```python
+from buildflow.dependencies.sqlalchemy import SessionDep
+from buildflow.io.gcp import CloudSQLDatabase
+
+cloud_sql_database = CloudSQLDatabase(...)
+
+
+DB = SessionDep(
+    db_primitive=cloud_sql_database, db_user="user", db_password="password"
+)
+
+@app.endpoint("/", method="POST")
+def endpoint(dep: DB):
+    with dep.session as session:
+        session.query(...)
+```
+

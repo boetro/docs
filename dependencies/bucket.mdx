@@ -1,0 +1,46 @@
+---
+title: 'Bucket'
+---
+
+The Bucket dependency allows you to easily get a connection to your remote storage bucket (S3 or GCS) that is configured with a buildflow bucket primitive.
+
+To construct a dependency you can use the `buildflow.dependencies.bucket.BucketDependencyBuilder` builder with the following arguments:
+
+| Arg                  | Description                                                                                                                                                                 |
+|----------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **bucket_primitive** | The [S3Bucket](/primitives/aws/s3) or [GCSBucket](/primitives/gcp/gcs) primitive referencing the bucket that should be connected to.                                                                                                                                                    |
+| gcp_quota_project_id | The GCP project to bill API usage to if you are connecting to a GCS bucket defaults to the project the bucket exists in. |
+| aws_region           | The AWS region to use if you are connecting to a S3 bucket, defaults to the region configured in your environment                                           |
+
+The dependency will provide and object containing a reference to the bucket in the `bucket` field.
+If you are connecting to a GCS bucket this will be a google cloud storage [Bucket](https://cloud.google.com/python/docs/reference/storage/latest/google.cloud.storage.bucket.Bucket) object returned by the google client library.
+If you are connecting to a S3 bucket this will be a s3 [Bucket](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/bucket/index.html) resource returned by boto3. 
+
+## GCS Usage
+
+```python
+from buildflow.dependencies.bucket import BucketDependencyBuilder
+from buildflow.io.gcp import GCSBucket
+
+bucket = GCSBucket(project_id="project", bucket_name="bucket")
+BucketDep = BucketDependencyBuilder(bucket)
+
+@app.endpoint("/", method="POST")
+def endpoint(bucket_dep: BucketDep):
+    blobs = bucket_deb.list_blobs()
+```
+
+## S3 Usage
+
+```python
+from buildflow.dependencies.bucket import BucketDependencyBuilder
+from buildflow.io.aws import S3Bucket
+
+bucket = S3Bucket(bucket_name="bucket", aws_region="us-east-1")
+BucketDep = BucketDependencyBuilder(bucket)
+
+@app.endpoint("/", method="POST")
+def endpoint(bucket_dep: BucketDep):
+    objects = bucket_deb.bucket.objects.all()
+```
+

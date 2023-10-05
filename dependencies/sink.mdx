@@ -1,0 +1,52 @@
+---
+title: 'Sink'
+---
+
+The Sink dependency allows you to push data to a BuildFlow primitive that can be used as a sink.
+For example you can depend on a [SQS](/primitives/aws/sqs) primitive or a [GCP PubSub Topc](/primitives/gcp/pubsub#gcp-pub-sub-topic) to push data to these queue.
+A sink dependency can be created by using the `buildflow.dependencies.sink.SinkDependencyBuilder` builder. The builder takes in the following args:
+
+| Arg             | Description                                                                                                                                                                 |
+|-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **primitive** | The primitive that should be used as a sink. This can be any primitive that can be used as a sink for a consumer. |
+
+The Sink dependency returns an object with two methods on it:
+
+| Method          | Description                                                                                                                                                                 |
+|-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| push            | Push takes in one element and pushed it to the sink.
+| push_batch      | Push takes in multiple elements and pushed them all to the sink.
+
+## SQS Example
+
+```python
+from buildflow.dependencies.sink import SinkDependencyBuilder
+from buildflow.io.aws import SQSQueue
+
+queue = SQSQueue(
+    queue_name="queue_name",
+    aws_region="us-east-1",
+    aws_account_id="1234567890"
+)
+QueueSinkDep = SinkDependencyBuilder(queue)
+
+@app.endpoint("/", method="POST")
+async def endpoint(dep: QueueSinkDep):
+    await dep.push({"message": "Hello World"})
+    await dep.push_batch([{"message": "Hello World"}, {"message": "Hello World"}])
+```
+
+## GCP PubSub Example
+
+```python
+from buildflow.dependencies.sink import SinkDependencyBuilder
+from buildflow.io.gcp import GCPPubSubTopic
+
+topic = GCPPubSubTopic(project_id="gpc-project", topic_name="topic-name")
+TopicSinkDep = SinkDependencyBuilder(topic)
+
+@app.endpoint("/", method="POST")
+async def endpoint(dep: TopicSinkDep):
+    await dep.push({"message": "Hello World"})
+    await dep.push_batch([{"message": "Hello World"}, {"message": "Hello World"}])
+```

@@ -1,0 +1,79 @@
+---
+title: 'Authentication'
+---
+
+## Authenticated Google User
+
+The authenticated google user dependency allows you to retrieve the google user info of the user who is 
+currently authenticated either with HTTP bearer credentials or via a session token.
+
+To construct a dependency you can use the `buildflow.dependencies.auth.AuthenticatedGoogleUserDepBuilder` builder with the following arguments:
+
+| Arg                          | Description                                                                                                                                                                 |
+|------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| raise_on_unauthenticated     | Whether or not to raise a 403 error if the request was unauthenticated. Defaults to `True`                                                                                                                                                   |
+| session_id_token             | The session ID token for where to fetch the credentials from. This can be used if you are storing credentials in a session object. If set we will look for the token in the session instead of the headers. Defaults to `None` |
+| bearer_credentials_dependency| The dependency used to fetch bearer credentials. Defaults to the buildflow provided dependency. You only need to set this if you need to extract the bearer token from a different header.                                                                                                          |
+
+
+The dependency will provide and object containing a google user.
+
+
+| Field           | Description                                                                                                                                                                 |
+|-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| google_user     | The authenticated google user (or none if `raise_on_unauthenticated` is set to `False` and the request was unauthenticated)                                                                                   |
+
+The google user object has the following fields
+
+| Field                 | Description                                                                                                                                                                 |
+|-----------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| google_account_id     | The subject ID of the user returned by Google                                                                                   |
+| email     | The email of the user returned by Google                                                                                   |
+| email_verified     | Whether the user has verified their email with google                                                                                   |
+| name     | The name of the user returned by Google                                                                                |
+
+
+### Usage with HTTP header
+
+```python
+from buildflow.dependencies.auth import AuthenticatedGoogleUserDepBuilder
+
+AuthenticatedGoogleUserDep = AuthenticatedGoogleUserDepBuilder()
+
+@app.endpoint("/", method="POST")
+def endpoint(google_user_dep: AuthenticatedGoogleUserDep):
+    print(google_user_dep.email)
+```
+
+### Usage with Session
+
+<Note>
+    The [SessionMiddleware](/programming-guide/endpoints#sessionmiddleware) must be added to your service for this to work. See the example below.
+</Note>
+
+```python
+from buildflow.dependencies.auth import AuthenticatedGoogleUserDepBuilder
+from buildflow.middleware import SessionMiddleware
+
+# NOTE: Where ever you add the id token to the session you must also use the same key here
+AuthenticatedGoogleUserDep = AuthenticatedGoogleUserDepBuilder(session_id_token="id_token")
+
+service = app.service()
+
+service.add_middleware(SessionMiddleware, secret_key="super-secret")
+
+@endpoint("/auth/callback/google", method="GET")
+async def auth_callback(request: Request, auth_flow: AuthFlow):
+    code = request.query_params.get("code")
+    if code is None:
+        raise HTTPException(401)
+    user_id_token = fetch_id_token(code, auth_flow)
+    # NOTE: we add the id token to the session here using the same key as above for our dependency
+    request.session["id_token"] = user_id_token
+    return RedirectResponse("/")
+
+@service.endpoint("/", method="POST")
+def endpoint(google_user_dep: AuthenticatedGoogleUserDep):
+    print(google_user_dep.email)
+```
+

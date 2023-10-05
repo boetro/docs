@@ -1,0 +1,36 @@
+---
+title: 'DEPENDENCY NAME'
+---
+
+Description of the dependency. 
+
+
+Folowed by arguments required to construct if a builder is used:
+
+| Arg             | Description                                                                                                                                                                 |
+|-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **bucket_name** | The name of the bucket                                                                                                                                                      |
+| **file_path**   | The base path of the file to write to. We will take this path and generate a unique file path for each replica in the following format:  ` {file_path}-{uuid}.{extension} ` |
+| **file_format** | The file format to write valid options are: JSON, CSV, and PARQUET                                                                                                          |
+| **aws_region**  | The region the bucket exists in      
+
+Folowed by fields available:
+
+| Field           | Description                                                                                                                                                                 |
+|-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **bucket_name** | The name of the bucket                                                                                                                                                      |
+| **file_path**   | The base path of the file to write to. We will take this path and generate a unique file path for each replica in the following format:  ` {file_path}-{uuid}.{extension} ` |
+| **file_format** | The file format to write valid options are: JSON, CSV, and PARQUET                                                                                                          |
+| **aws_region**  | The region the bucket exists in     
+
+Example usage:
+
+```python
+from buildflow.io import PrimitiveName
+from buildflow.dependencies import DEPENDENCY_NAME
+
+@app.endpoint("/", method="POST")
+def endpoint(dep: DEPENDENCY_NAME):
+    dep.usage
+```
+

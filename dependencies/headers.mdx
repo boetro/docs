@@ -1,0 +1,19 @@
+---
+title: 'HTTP Headers'
+---
+
+## BearerCredentials
+
+The BearerCredentials dependency is used to extract a bearer token from the request headers (`Authorization: Bearer XXX`).
+
+The BearerCredentials dependency returns an object contain one field. `token` which contains the bearer token.
+
+Example usage:
+
+```python
+from buildflow.dependencies.headers import BearerCredentials
+
+@app.endpoint("/", method="POST")
+def endpoint(dep: BearerCredentials):
+    print(dep.token)
+```

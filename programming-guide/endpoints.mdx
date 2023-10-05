@@ -143,6 +143,43 @@ These can all be found in the `buildflow.responses` module.
 | **RedirectResponse**  | Return a redirect. Proxy for [starlette.responses.RedirectResponse](https://www.starlette.io/responses/#redirectresponse).|
 | **StreamingResponse** | Returns a streaming response. Proxy for [starlette.responses.StreamingResponse](https://www.starlette.io/responses/#streamingresponse).|
 
+
+## Middleware
+
+You can attach middle ware to your service using the `add_middleware` method on your service. You can use any middleware provided by [Starlette](https://www.starlette.io/middleware/). We also provide some convenience imports at `buildflow.middleware`.
+
+### CORS middleware
+
+For additional details see the starlette [CORS middleware](https://www.starlette.io/middleware/#corsmiddleware).
+
+
+```python
+from buildflow import Service
+from buildflow.middleware import CORSMiddleware
+
+service = Service()
+service.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+```
+
+
+### SessionMiddleware
+
+For additional details see the starlette [SessionMiddleware](https://www.starlette.io/middleware/#sessionmiddleware).
+
+```python
+from buildflow import Service
+from buildflow.middleware import SessionMiddleware
+
+service = Service()
+service.add_middleware(SessionMiddleware, secret_key=session_secret)
+```
+
 ## Open API Docs
 
 BuildFlow also automatically provides open API docs for your serivces. You can access these at the `/docs` endpoint.

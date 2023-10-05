@@ -1,0 +1,79 @@
+---
+title: 'Cloud SQL'
+---
+
+## Cloud SQL Instance
+
+CloudSQLInstance is a primitive type that can only be managed. It can be used to create a Cloud SQL instance in GCP.
+To create a CloudSQLInstance simply provide:
+
+| Arg             | Description                                                                                                                                                                 |
+|-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **instance_name** | The name of Cloud SQL instance                                                                                                                   |
+| **project_id**   | The GCP project where the Cloud SQL instance should live |
+| **database_version** | The `buildflow.types.gcp.CloudSQLDatabaseVersion` to use for this instance. Currently we only support postgres versions.                                                                                                          |
+| **settings**  | The pulumi settings for configuring this instance. See [pulumi docs](https://www.pulumi.com/registry/packages/gcp/api-docs/sql/databaseinstance/#databaseinstancesettings) for more details. This can be imported with `from buildflow.types.gcp import CloudSQLInstanceSettings` for convenience      
+| **region**  | The region the cloud SQL instance exists in              
+
+Example usage:
+
+```python
+from buildflow.io.gcp import CloudSQLInstance
+from buildflow.types.gcp import CloudSQLDatabaseVersion, CloudSQLInstanceSettings
+
+cloud_sql_instance = CloudSQLInstance(
+    instance_name="instance-name",
+    project_id="project-id",
+    database_version=CloudSQLDatabaseVersion.POSTGRES_15,
+    region="us-central1",
+    settings=CloudSQLInstanceSettings(tier="db-custom-1-3840"),
+
+)
+
+app.manage(cloud_sql_instance)
+```
+
+### Resource Creation
+
+When running `buildflow apply` a Cloud SQL instance will be created in your GCP project.
+
+<Note>
+    It can take several minutes for the instance to be created and for the command to complete.
+</Note>
+
+## Cloud SQL Database
+
+CloudSQLDatabase is a primitive type that can only be managed. It can be used to create a database in a Cloud SQL Instance.
+To create a CloudSQLInstance simply provide:
+
+| Arg             | Description                                                                                                                                                                 |
+|-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **database_name** | The name of database                                                                                                                                                   |
+| **instance**   | The [CloudSQLInstance](#cloud-sql-instance) that should hold the database |
+
+Example usage:
+
+```python
+from buildflow.io.gcp import CloudSQLDatabase, CloudSQLInstance
+from buildflow.types.gcp import CloudSQLDatabaseVersion, CloudSQLInstanceSettings
+
+cloud_sql_instance = CloudSQLInstance(
+    instance_name="instance-name",
+    project_id="project-id",
+    database_version=CloudSQLDatabaseVersion.POSTGRES_15,
+    region="us-central1",
+    settings=CloudSQLInstanceSettings(tier="db-custom-1-3840"),
+
+)
+cloud_sql_database = CloudSQLDatabase(
+    instance=cloud_sql_instance,
+    database_name="launchflow-db",
+)
+
+app.manage(cloud_sql_instance, cloud_sql_database)
+```
+
+### Resource Creation
+
+When running `buildflow apply` a database will be created in your Cloud SQL instance.
+

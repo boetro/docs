@@ -79,8 +79,9 @@
         {
           "group": "Google Cloud Platform",
           "pages": [
-            "primitives/gcp/gcs",
             "primitives/gcp/bigquery",
+            "primitives/gcp/cloud_sql",
+            "primitives/gcp/gcs",
             "primitives/gcp/pubsub",
             "primitives/gcp/gcs_file_change_stream"
           ]
@@ -95,6 +96,16 @@
         },
         "primitives/duckdb",
         "primitives/snowflake"
+      ]
+    },
+    {
+      "group": "Dependencies",
+      "pages": [
+        "dependencies/auth",
+        "dependencies/bucket",
+        "dependencies/headers",
+        "dependencies/sink",
+        "dependencies/sqlalchemy"
       ]
     },
     {
