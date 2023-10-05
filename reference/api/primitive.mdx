@@ -1,35 +1,68 @@
-TODO: update these docs
-
 ```python
 class Primitive:
     primitive_type: PrimitiveType
-    managed: bool = False
+    _managed: bool = False
+
+    def primitive_id(self):
+        raise NotImplementedError(
+            f"Primitive.primitive_id() is not implemented for type: {type(self)}."
+        )
 
     def enable_managed(self):
-        """Enable managed mode."""
-        self.managed = True
+        self._managed = True
 
-    def source_provider(self) -> SourceProvider:
-        """Return a source provider for this primitive."""
+    def options(self) -> "Primitive":
+        return self
+
+    def pulumi_resources_if_managed(
+        self,
+        credentials: CredentialType,
+        opts: pulumi.ResourceOptions,
+    ):
+        if not self._managed:
+            return None
+        return self.pulumi_resources(credentials, opts)
+
+    def pulumi_resources(
+        self,
+        credentials: CredentialType,
+        opts: pulumi.ResourceOptions,
+    ) -> List[pulumi.Resource]:
         raise NotImplementedError(
-            f"Primitive.source_provider() is not implemented for type: {type(self)}."
+            f"Primitive.pulumi_resources() is not implemented for type: {type(self)}."
         )
 
-    def sink_provider(self) -> SinkProvider:
-        """Return a sink provider for this primitive."""
+    def source(self, credentials: CredentialType) -> SourceStrategy:
         raise NotImplementedError(
-            f"Primitive.sink_provider() is not implemented for type: {type(self)}."
+            f"Primitive.source() is not implemented for type: {type(self)}."
         )
 
-    def pulumi_provider(self) -> PulumiProvider:
-        """Return a pulumi provider for this primitive."""
+    def sink(self, credentials: CredentialType) -> SinkStrategy:
         raise NotImplementedError(
-            f"Primitive.pulumi_provider() is not implemented for type: {type(self)}."
+            f"Primitive.sink() is not implemented for type: {type(self)}."
         )
 
-    def options(self, managed: bool = False) -> "Primitive":
-        """Return a copy of this primitive with the managed flag set."""
-        self.managed = managed
+    def background_tasks(self, credentials: CredentialType) -> List[BackgroundTask]:
+        return []
+
+    def dependency(self) -> "PrimitiveDependency":
+        """Returns a dependency allowing the primitive to be injected as a dependency.
+
+        For example:
+
+        prim = Primitive(...)
+        PrimDep = prim.dependency()
+
+        @dependency(scope=Scope.PROCESS)
+        class MyDep:
+        def __init__(self, injected_primitive: PrimDep):
+            self.prim_field = injected_primitive.field_on_primitive
+        """
+        return PrimitiveDependency(self)
+
+    def cloud_console_url(self) -> Optional[str]:
+        """Returns a URL to the cloud console for this primitive."""
+        return Nonemanaged
         return self
 ```
 

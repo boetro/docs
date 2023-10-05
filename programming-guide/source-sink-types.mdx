@@ -28,13 +28,11 @@ If you do not provide a type hint you for the input you will receive the raw dat
 
 ## What if a dataclass isn't enough?
 
-TODO fix these links
-
 If you need any custom serialization or deserialzation you can provide a custom type as well. All you need to do is have your custom type provide a method that tell us how to serialize or deserialize the type.
 
 The method you need to implement will be dependent on the resource you are using. For example if you are using `GCPPubSubSubscription` as a source you can add a `from_bytes` class method to have automatic deserialization. If you are using `BigQueryTable` as a sink you can add a `to_json` instance method to have automatic serialization.
 
-See the [Primitives](../../category/primitives) section for your specific source and sink for more info.
+See the Primitives section for your specific source and sink for more info.
 
 Example:
 

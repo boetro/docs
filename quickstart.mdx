@@ -11,12 +11,24 @@ pip install buildflow
 
 ## Create a new project
 
-Once installed you will now have access to the `buildflow` CLI tool. First create a directory for your project and then run the `init` command which will prompt you to name your project and then setup everything.
+Once installed you will now have access to the `buildflow` CLI tool. First create a directory for your project and then run the `init` command which will prompt you to enter some basic information about your project.
 
 ```bash
 mkdir my-project-dir
 cd my-project-dir
 buildflow init
+```
+
+<Tip>
+We recommend starting with an endpoint since it requires the least setup. You can always add more processors later.
+</Tip>
+
+When you run `buildflow init` you'll see the following prompts (feel free to name your project whatever your like):
+
+```
+$ buildflow init
+Please enter a project name: hello
+Please enter a processor type (endpoint, consumer, collector): endpoint
 ```
 
 The `init` command creates a basic structure for your project. You are of course free to change this in any way you like.

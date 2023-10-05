@@ -1,0 +1,23 @@
+The init command will create a new BuildFlow project in your currenct directory.
+
+When you run `buildflow init` you will be prompted to fill out some basic information about your project. This informattion will be used to create the basic directory structure and layout of your project.
+
+Options:
+- `--project` - The name of the project. This will be used to name the project directory and the project in the `buildflow.yaml` file.
+- `--directory` - The directory to initialize. Defaults to the current directory.
+
+Run `buildflow apply --help` to see available options:
+
+```
+$ buildflow init --help
+                                                                                                                                                                                    
+ Usage: buildflow init [OPTIONS]                                                                                                                                                    
+                                                                                                                                                                                    
+ Initialize a new buildflow app                                                                                                                                                     
+                                                                                                                                                                                    
+╭─ Options ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ --project          TEXT  The name of the project                                                                                                                                 │
+│ --directory        TEXT  The directory to initialize [default: .]                                                                                                                │
+│ --help                   Show this message and exit.                                                                                                                             │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+```

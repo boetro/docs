@@ -1,0 +1,21 @@
+The plan command will build the BuildFlow project in the current directory, and output a `build.flow` file that can be used build `buildflow run --from-build`.
+
+Options:
+- `--build-path` - Output director to store the build in, defaults to `./.buildflow/build/build.flow`
+- `--exclude-dirs` - Paths to exclude from the build
+
+Run `buildflow apply --help` to see available options:
+
+```
+$ buildflow build --help
+                                                                                                                                                                          
+ Usage: buildflow build [OPTIONS]                                                                                                                                         
+                                                                                                                                                                          
+ Build a buildflow flow.                                                                                                                                                  
+                                                                                                                                                                          
+╭─ Options ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ --build-path          TEXT  Output director to store the build in, defaults to ./.buildflow/build/build.flow                                                           │
+│ --exclude-dirs        TEXT  Paths to exclude from the build                                                                                                            │
+│ --help                      Show this message and exit.                                                                                                                │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+```

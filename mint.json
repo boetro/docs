@@ -2,8 +2,8 @@
   "$schema": "https://mintlify.com/schema.json",
   "name": "BuildFlow",
   "logo": {
-    "dark": "/logo/buildflow-logo-dark2.png",
-    "light": "/logo/buildflow-logo-light2.png"
+    "dark": "/logo/buildflow-dark.png",
+    "light": "/logo/buildflow-light.png"
   },
   "favicon": "/favicon.png",
   "colors": {
@@ -37,9 +37,9 @@
       "url": "https://discordapp.com/invite/wz7fjHyrCA"
     },
     {
-      "name": "Blog",
-      "icon": "newspaper",
-      "url": "https://buildflow.dev/blog"
+      "name": "LaunchFlow",
+      "icon": "rocket",
+      "url": "https://www.launchflow.com"
     }
   ],
   "navigation": [
@@ -61,6 +61,7 @@
         "programming-guide/collectors",
         "programming-guide/consumers",
         "programming-guide/primitives",
+        "programming-guide/dependencies",
         "programming-guide/source-sink-types"
       ]
     },
@@ -80,9 +81,20 @@
           "pages": [
             "primitives/gcp/gcs",
             "primitives/gcp/bigquery",
-            "primitives/gcp/pubsub"
+            "primitives/gcp/pubsub",
+            "primitives/gcp/gcs_file_change_stream"
           ]
-        }
+        },
+        {
+          "group": "Local",
+          "pages": [
+            "primitives/local/file",
+            "primitives/local/pulse",
+            "primitives/local/file_change_stream"
+          ]
+        },
+        "primitives/duckdb",
+        "primitives/snowflake"
       ]
     },
     {
@@ -94,13 +106,20 @@
     {
       "group": "API",
       "pages": [
-        "reference/api/primitive"
+        "reference/api/credentials",
+        "reference/api/primitive",
+        "reference/api/strategy"
       ]
     },
     {
       "group": "CLI",
       "pages": [
-        "reference/cli/apply"
+        "reference/cli/apply",
+        "reference/cli/build",
+        "reference/cli/destroy",
+        "reference/cli/init",
+        "reference/cli/plan",
+        "reference/cli/run"
       ]
     }
   ],

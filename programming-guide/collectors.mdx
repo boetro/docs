@@ -6,12 +6,10 @@ description: 'Receive HTTP requests and dump to a sink'
 
 The **Collector** pattern enables receiving HTTP requests and dumping the payload to a sink.
 
-TODO fix links
-
 A collector is composed of:
 - A `route`: this is the path that the endpoint will be available at.
 - A `method`: this is the HTTP method that the endpoint will be available at currently GET and POST are supported.
-- A `sink` [primitive](../primitives/overview)
+- A `sink` [primitive](/programming-guide/primitives)
 - Your processing Logic.
 
 Collectors can easily be created with the `collector` decorator method of your [flow](/programming-guide/flows).
