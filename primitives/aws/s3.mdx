@@ -3,12 +3,14 @@ title: 'S3 Bucket'
 ---
 
 
-`S3Bucket` is a sink primitive that can be used to write various files to an S3 bucket.  The sink primitive takes in a file path and will create one unique file per replica. To create a `S3Bucket` provide:
+S3Bucket is a sink primitive that can be used to write various files to an S3 bucket.  The sink primitive takes in a file path and will create one unique file per replica. To create a S3Bucket provide:
 
-- `bucket_name` **required**: The name of the bucket
-- `file_path` **required**:: the base path of the file to write to. We will take this path and generate a unique file path for each replica in the following format: `{file_path}-{uuid}.{extension}` 
-- `file_format` **required**: The file format to write valid options are: JSON, CSV, and PARQUET
-- `aws_region`: The region the bucket exists in
+| Arg             | Description                                                                                                                                                                 |
+|-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **bucket_name** | The name of the bucket                                                                                                                                                      |
+| **file_path**   | The base path of the file to write to. We will take this path and generate a unique file path for each replica in the following format:  ` {file_path}-{uuid}.{extension} ` |
+| **file_format** | The file format to write valid options are: JSON, CSV, and PARQUET                                                                                                          |
+| **aws_region**  | The region the bucket exists in                                                                                                                                             |
 
 <Note>
     `file_path` and `file_format` are only used if you are using GCSBucket as a sink.
@@ -19,22 +21,33 @@ Example usage:
 ```python
 from buildflow.io.aws import S3Bucket
 
-@app.pipeline(source=..., sink=S3Bucket(
+bucket = S3Bucket(
     bucket_name="bucket",
     aws_region="us-east-1",
     file_path="path/to/file_in_bucket",
-    file_format="PARQUET")
+    file_format="PARQUET"
 )
+
+app.manage(bucket)
+
+@app.consumer(source=..., sink=bucket)
 ```
 
-:::
-
 ## Types
-The `S3Bucket` sink expects an object that can be serialized in to a JSON object. You can return a `dataclass` and we will automatically serialize it for you, or you can return a dictionary containing JSON serializable objects.
+The S3Bucket sink expects an object that can be serialized in to a JSON object. You can return a `dataclass` and we will automatically serialize it for you, or you can return a dictionary containing JSON serializable objects.
 
 If you would like to return a custom type that is not JSON serializable you can implement the `to_json` method on your class and we will use that to serialize your object.
 
 ```python
+bucket = S3Bucket(
+    bucket_name="bucket",
+    aws_region="us-east-1",
+    file_path="path/to/file_in_bucket",
+    file_format="PARQUET"
+)
+
+app.manage(bucket)
+
 class CustomType:
     def __init__(self, b: int):
         self.b = str
@@ -42,23 +55,24 @@ class CustomType:
     def to_json(self):
         return {"b": self.b}
 
-@app.pipeline(source=..., sink=S3Bucket(...))
+@app.consumer(source=..., sink=bucket)
 async def my_processor(elem: int) -> CustomType:
     return CustomType(b=elem + 1)
 ```
 
 ## Resource Creation
 
-If you are using BuildFlow's built in resource creation/management you can use the `S3Bucket` primitive to create a bucket in your AWS account.
+If you are using BuildFlow's built in resource creation/management you can use the S3Bucket primitive to create a bucket in your AWS account.
 
 
 ## Configuration Options
 
 You can provide the following options to control resource management of the S3 bucket:
 
-- `managed`: Whether or not the topic is managed by BuildFlow. Defaults to `False`.
-- `force_destroy`: If true destroy will fail if the bucket contains objects. Defaults to `False`.
+| Options       | Description                                                                        |
+|---------------|------------------------------------------------------------------------------------|
+| force_destroy | If true destroy will fail if the bucket contains objects. Defaults to  ` False ` . |
 
 ```python
-primitive = S3Bucket(...).options(managed=True, force_destroy=True)
+primitive = S3Bucket(...).options(force_destroy=True)
 ```

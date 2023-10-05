@@ -2,8 +2,8 @@
   "$schema": "https://mintlify.com/schema.json",
   "name": "BuildFlow",
   "logo": {
-    "dark": "/logo/buildflow-logo-dark.png",
-    "light": "/logo/buildflow-logo-light.png"
+    "dark": "/logo/buildflow-logo-dark2.png",
+    "light": "/logo/buildflow-logo-light2.png"
   },
   "favicon": "/favicon.png",
   "colors": {
@@ -70,13 +70,17 @@
         {
           "group": "Amazon Web Services",
           "pages": [
-            "primitives/aws/s3"
+            "primitives/aws/s3",
+            "primitives/aws/s3_file_change_stream",
+            "primitives/aws/sqs"
           ]
         },
         {
           "group": "Google Cloud Platform",
           "pages": [
-            "primitives/gcp/gcs"
+            "primitives/gcp/gcs",
+            "primitives/gcp/bigquery",
+            "primitives/gcp/pubsub"
           ]
         }
       ]
