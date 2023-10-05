@@ -2,14 +2,14 @@
   "$schema": "https://mintlify.com/schema.json",
   "name": "BuildFlow",
   "logo": {
-    "dark": "/logo/dark.svg",
-    "light": "/logo/light.svg"
+    "dark": "/logo/buildflow-logo-dark.png",
+    "light": "/logo/buildflow-logo-light.png"
   },
   "favicon": "/favicon.png",
   "colors": {
-    "primary": "#A1CCA5",
-    "light": "#A1CCA5",
-    "dark": "#A1CCA5",
+    "primary": "#f222ff",
+    "light": "#ffd319",
+    "dark": "#ffd319",
     "background": {
       "dark": "#000000"
     },
@@ -65,27 +65,38 @@
       ]
     },
     {
+      "group": "Primitives",
+      "pages": [
+        {
+          "group": "Amazon Web Services",
+          "pages": [
+            "primitives/aws/s3"
+          ]
+        },
+        {
+          "group": "Google Cloud Platform",
+          "pages": [
+            "primitives/gcp/gcs"
+          ]
+        }
+      ]
+    },
+    {
       "group": "Developers",
       "pages": [
         "developers/contribute"
       ]
     },
     {
-      "group": "Primitives",
-      "pages": [
-        "reference/authentication"
-      ]
-    },
-    {
       "group": "API",
       "pages": [
-        "reference/authentication"
+        "reference/api/primitive"
       ]
     },
     {
       "group": "CLI",
       "pages": [
-        "reference/authentication"
+        "reference/cli/apply"
       ]
     }
   ],
