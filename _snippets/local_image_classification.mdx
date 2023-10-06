@@ -1,0 +1,34 @@
+To run this using no remote resources use [this github repo](https://github.com/launchflow/buildflow-local-image-classification)
+
+<Steps>
+    <Step title="Clone the GitHub Repo">
+```
+git clone git@github.com:launchflow/buildflow-local-image-classification.git 
+cd buildflow-local-image-classification
+```
+    </Step>
+    <Step title="Install your requirements">
+        ```
+            pip install -r requirements.txt
+        ```
+    </Step>
+    <Step title="Create a .env file">
+        Copy the `template.env` to `.env` and update all variables
+    </Step>
+    <Step title="Run your project">
+        Run your project with:
+
+        ```
+            buildflow run
+        ```
+
+        Once running you can visit http://localhost:8000 to see and begin uploading images!
+
+        <Tip>
+            We provide an picture of one of our contributors dog in the repo to help get you started!
+
+            ![Dog](/images/founders_dog.jpg)
+        </Tip>
+    </Step>
+</Steps>
+
