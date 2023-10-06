@@ -137,7 +137,7 @@
         "reference/cli/build",
         "reference/cli/destroy",
         "reference/cli/init",
-        "reference/cli/plan",
+        "reference/cli/preview",
         "reference/cli/run"
       ]
     }
