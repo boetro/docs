@@ -125,6 +125,19 @@ def my_endpoint(request: Request):
     ...
 ```
 
+### Other Request Types
+
+We also offer additional request types that can be used to receive different types other than JSON. Such as form data or files. These are available in the `buildflow.requests` module. 
+
+<Note>
+    Note these are just proxy imports for FastAPI request types for convenience. You can find more details on these in the [FastAPI docs](https://fastapi.tiangolo.com/tutorial/request-forms/).
+</Note>
+
+| Request Type         | Description                           |
+| --------------------- | ------------------------------------- |
+| **Form**      | Process a form from an http body. Proxy for [fastapi.Form](https://fastapi.tiangolo.com/tutorial/request-forms/).                  |
+| **UploadFile**      | Return a file from and http request. Proxy for [fastapi.UploadFile](https://fastapi.tiangolo.com/tutorial/request-files/#file-parameters-with-uploadfile).
+
 ### Other Response Types
 
 We also offer additional response types that can be used to return different types other than JSON.

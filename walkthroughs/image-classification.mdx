@@ -1,0 +1,65 @@
+---
+title: Image Classification
+icon: image
+description: "Upload images to a bucket and then run them through an image classification model."
+---
+
+<Tip>
+
+    You can follow the same walkthrough using VS Code and LaunchFlow cloud [here](https://docs.launchflow.com/walkthroughs/file-ingestion).
+
+</Tip>
+
+In this walkthrough we will create an endpoint to upload images to a bucket and then run them through an image classification model using [ImageAI](https://github.com/OlafenwaMoses/ImageAI).
+
+Before completing the walkthrough ensure you have [installed BuildFlow](/programming-guide/install)
+with all [extra dependencies](/programming-guide/install#extra-dependencies).
+
+<Tabs>
+  <Tab title="GCP">
+All the code for this walkthrough can be found on <a href="https://github.com/launchflow/buildflow-gcp-image-classification">github</a>
+    
+In order to run this code you will need to have a GCP project created that you have access to.
+
+Follow the [Google Cloud Walkthrough](https://developers.google.com/workspace/guides/create-project) to create a new one if you need to.
+  </Tab>
+  <Tab title="AWS">
+All the code for this walkthrough can be found on <a href="https://github.com/launchflow/buildflow-aws-image-classification">github</a>
+
+In order to run this code you will need to have a AWS and Snowflake account created that you have access to.
+
+Follow the [AWS Walkthrough](https://docs.aws.amazon.com/accounts/latest/reference/manage-acct-creating.html) to create a new one if you need to.
+
+You can signup for a Snowflake trial account [here](https://docs.snowflake.com/en/user-guide/admin-trial-account#signing-up-for-a-trial-account).
+  </Tab>
+  <Tab title="Local">
+All the code for this walkthrough can be found on <a href="https://github.com/launchflow/buildflow-local-image-classification">github</a>
+  </Tab>
+</Tabs>
+
+## Quick Start
+
+1. Clone the github repo local
+
+<Tabs groupId="cloud-types">
+  <Tab title="GCP">
+```
+git clone git@github.com:launchflow/buildflow-gcp-image-classification.git 
+cd buildflow-gcp-image-classification
+```
+    </Tab>
+  <Tab title="AWS">
+```
+git clone git@github.com:launchflow/buildflow-aws-image-classification.git 
+cd buildflow-aws-image-classification
+```
+    </Tab>
+  <Tab title="Local">
+```
+git clone git@github.com:launchflow/buildflow-local-image-classification.git 
+cd buildflow-local-image-classification
+```
+    </Tab>
+</Tabs>
+
+2. Create a .env file in the root of the project and add the following variables

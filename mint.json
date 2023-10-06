@@ -68,6 +68,12 @@
       ]
     },
     {
+      "group": "Walkthroughs",
+      "pages": [
+        "walkthroughs/image-classification"
+      ]
+    },
+    {
       "group": "Primitives",
       "pages": [
         {
