@@ -8,6 +8,7 @@ Before getting started with BuildFlow, it's important to understand the core con
 
 |                              |                           |
 | ------------------------------------ | ------------------------------------- |
+| [buildflow.yaml](#buildflow-yaml) | a configuration file that defines your application
 | [Flow](#flows) | a container type for user-defined Processors.
 | [Processor](#processors) | a user-defined, individually scalable component of a flow
 | [Endpoint](#endpoints) | processor pattern that receives and responds to HTTP requests
@@ -17,6 +18,11 @@ Before getting started with BuildFlow, it's important to understand the core con
 | [Replica](#replicas) | an individual instance of a processor that is reading from a source and writing to a sink. More replicas are added and remove with autoscaling.
 | [Primitives](#primitives) | a resource that a processor may read from, write to, or manage
 | [Dependencies](#dependencies) | a dependency that is required to call your processor
+
+
+## Buildflow Yaml
+
+The [buildflow.yaml](/programming-guide/buildflow-yaml) file is a configuration file that defines your application. This can be used to configure what primitives and resources your application manages and connects to.
 
 
 ## Flows

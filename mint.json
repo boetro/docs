@@ -38,7 +38,7 @@
     },
     {
       "name": "LaunchFlow",
-      "icon": "rocket",
+      "icon": "rocket-launch",
       "url": "https://www.launchflow.com"
     }
   ],
@@ -55,6 +55,7 @@
       "group": "Programming Guide",
       "pages": [
         "programming-guide/install",
+        "programming-guide/buildflow-yaml",
         "programming-guide/flows",
         "programming-guide/processors",
         "programming-guide/endpoints",
@@ -62,7 +63,8 @@
         "programming-guide/consumers",
         "programming-guide/primitives",
         "programming-guide/dependencies",
-        "programming-guide/source-sink-types"
+        "programming-guide/source-sink-types",
+        "programming-guide/deploying"
       ]
     },
     {

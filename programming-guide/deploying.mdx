@@ -1,0 +1,31 @@
+---
+title: 'Deploying'
+icon: 'rocket-launch'
+description: 'Deploy your application.'
+---
+
+Congrats! You've built your application and now you're ready to deploy it and have users use it, how should you do this?
+
+## Manage BuildFlow with LaunchFlow
+
+[LaunchFlow](https://launchflow.com) is the fastest way to deploy your BuildFlow project with zero configuration. LaunchFlow gives you all the production best practices to ensure your system is scalable and reliable.
+
+- Instant deployments with the click of a button
+- Zero down-time updates
+- Observability with built in remote monitoring and logging
+- Automatic HTTPS url pointed at your system
+
+## Self-Hosting
+
+You can also self host your BuildFlow project on any [Ray cluster](https://docs.ray.io/en/latest/cluster/getting-started.html). We recommend deploying to a Ray cluster using the [Ray Jobs](https://docs.ray.io/en/latest/cluster/running-applications/job-submission/index.html) API like:
+
+```bash
+ray job submit \
+    --runtime-env-json='{"pip": ["requirements.txt"]}' \
+    --working-dir . \
+    -- buildflow run
+```
+
+## Other Services
+
+You can also run your BuildFlow project on any other service that offers managed ray. Such as [Anyscale](https://www.anyscale.com).
