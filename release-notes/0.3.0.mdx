@@ -1,0 +1,112 @@
+---
+title: 'BuildFlow 0.3.0'
+---
+
+BuildFlow 0.3.0 helps empower users to build entire backend systems using python.
+
+## What's include in 0.3.0?
+
+- [Endpoints](#endpoints): serve and scale HTTP traffic
+- [Collectors](#collectors): receive and dump HTTP traffic to a sink
+- [Dependencies](#dependencies): easily define dependencies between processor patterns and external integrations
+- [New primitives](#new-primitives): connect to GCP Cloud SQL databases with just a few lines of code.
+
+## Endpoints
+
+We're excited to anounce the addition of the [endpoint](/programming-guide/endpoints) pattern which enables serving HTTP traffic via an API. With endpoints you can easily standup a scalable backend API with a few lines of code.
+
+```python
+from buildflow import Flow
+
+app = Flow()
+service = app.service()
+
+@service.endpoint(route="/", method="POST")
+def my_endpoint(...):
+    ...
+```
+
+## Collectors
+
+In addition to endpoints we're also adding the [collector](/programming-guide/collectors) pattern. Which enables receiving HTTP requests and dumping them to the sink of your choice.
+
+```python
+from buildflow import Flow
+
+app = Flow()
+
+@app.collector(route="/", method="POST", sink=Primitive(...))
+def my_collector(...):
+    ...
+```
+
+## Dependencies
+
+BuildFlow now allows allows you to define custom dependencies for your processor that can be injected whenever your processor is called. This enable you to easily integrate other components into your processor.
+
+Dependencies unlock doing some really complex things that we are extreamly excited about. For example, you can now easily share state between processors. This unlocks things like loading a model once for any number of requests, or using a shared database connection for your backend.
+
+```python
+from buildflow import Flow
+from buildflow.dependencies import dependency, Scope
+
+@dependency(Scope.GLOBAL)
+class MyStringDependency:
+    def __init__(self):
+        self.my_string = "HELLO!"
+
+
+app = Flow()
+service = app.service()
+
+@service.endpoint("/bob", method="GET")
+def bob(my_string_dep: MyStringDependency):
+    return my_string_dep.my_string + " BOB!"
+
+@service.endpoint("/sally", method="GET")
+def sally(my_string_dep: MyStringDependency):
+    return my_string_dep.my_string + " SALLY!"
+```
+
+## New Primitives
+
+We've added support for [GCP Cloud SQL](/primitives/gcp/cloud_sql) instance and database primitives. These primitives allow you to easily manage resources, and can be used with our new [dependencies](#dependencies) feature to easily connect to your database.
+
+```python
+from buildflow import Flow
+from buildflow.dependencies.sqlalchemy import SessionDep
+from buildflow.io.gcp import CloudSQLDatabase, CloudSQLInstance
+from buildflow.types.gcp import CloudSQLDatabaseVersion, CloudSQLInstanceSettings
+
+
+app = Flow()
+
+cloud_sql_instance = CloudSQLInstance(
+    instance_name="instance-name",
+    project_id="project-id",
+    database_version=CloudSQLDatabaseVersion.POSTGRES_15,
+    region="us-central1",
+    settings=CloudSQLInstanceSettings(tier="db-custom-1-3840"),
+
+)
+cloud_sql_database = CloudSQLDatabase(
+    instance=cloud_sql_instance,
+    database_name="launchflow-db",
+)
+
+app.manage(cloud_sql_instance, cloud_sql_database)
+
+DB = SessionDep(
+    db_primitive=cloud_sql_database, db_user="user", db_password="password"
+)
+
+service = app.service()
+
+@service.endpoint("/bob", method="GET")
+def endpoint(db_dep: DB):
+    with db_dep.session as session:
+        session.query(...)
+
+```
+
+In just a few lines of code you have a config management system for your database and a dependency that can be injected into any processor to maintain a [consistant database connection](/dependencies/sqlalchemy).

@@ -26,6 +26,10 @@
     {
       "name": "Reference",
       "url": "reference"
+    },
+    {
+      "name": "Release Notes",
+      "url": "release-notes"
     }
   ],
   "anchors": [
@@ -138,11 +142,15 @@
         "reference/cli/preview",
         "reference/cli/run"
       ]
+    },
+    {
+      "group": "Release Notes",
+      "pages": [
+        "release-notes/0.3.0"
+      ]
     }
   ],
   "footerSocials": {
-    "twitter": "https://twitter.com/mintlify",
-    "github": "https://github.com/mintlify",
-    "linkedin": "https://www.linkedin.com/company/mintsearch"
+    "discord": "https://discordapp.com/invite/wz7fjHyrCA"
   }
 }
