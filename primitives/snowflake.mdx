@@ -3,7 +3,7 @@ title: 'Snowflake Table'
 ---
 
 
-SnowflakeTable is a **sink** that can be use to write data to a Snowflake table. To create a SnowflakeTable simply provide:
+SnowflakeTable is a **sink** that can be used to write data to a Snowflake table. To create a SnowflakeTable simply provide:
 
 | Arg             | Description                                                                                                                                                                                              |
 |-----------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -92,11 +92,12 @@ If you are using BuildFlow's built in resource creation/management you can use t
 
 ## Configuration Options
 
-You can provide the following options to control resource management of the BigQuery table:
+You can provide the following options to control resource management of the SnowflakeTable table:
 | Options          | Description                                                                                               |
 |------------------|-----------------------------------------------------------------------------------------------------------|
 | database_managed | Whether or not the database should be included in resource management / creation. Defaults to  ` True ` . |
 | schema_managed   | Whether or not the database should be included in resource management / creation. Defaults to  ` True ` . |
+| table_schema             | The schema associated with the table. This can be your dataclass type that you are outputing. This is required if you are having buildflow manage your SnowflakeTable table.                                                                                            |
 
 ```python
 SnowflakeTable(...).options(database_managed=True, schema_managed=True)
