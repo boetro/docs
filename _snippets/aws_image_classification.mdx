@@ -1,11 +1,11 @@
 
-To run this walkthrough using AWS and Snowflake resources use [this github repo](https://github.com/launchflow/buildflow-aws-image-classification)
+To run this walkthrough using AWS and Motherduck resources use [this github repo](https://github.com/launchflow/buildflow-aws-image-classification)
 <Note>
-In order to run this code you will need to have a AWS and Snowflake account created that you have access to.
+In order to run this code you will need to have a AWS and [Motherduck](https://motherduck.com) account created that you have access to.
 
 Follow the [AWS Walkthrough](https://docs.aws.amazon.com/accounts/latest/reference/manage-acct-creating.html) to create a new one if you need to.
 
-You can signup for a Snowflake trial account [here](https://docs.snowflake.com/en/user-guide/admin-trial-account#signing-up-for-a-trial-account).
+You can signup for a Motherduck account [here](https://motherduck.com).
 </Note>
 
 <Steps>
@@ -22,42 +22,34 @@ cd buildflow-aws-image-classification
     </Step>
     <Step title="Create a .env file">
         Rename the `template.env` to `.env` and update all variables
+        <Tip>
+            You can follow the instructions [here](https://motherduck.com/docs/authenticating-to-motherduck#authentication-using-a-service-token) to find your Motherduck token.
+        </Tip>
     </Step>
     <Step title="Create your resources">
-        <Tip>
-            If you are following the local walkthrough you can skip this step.
-        </Tip> 
         Create all the resources that are required for your system.
         ```
             buildflow apply
         ```
         <Tip>
-            Make sure you have logged in with your cloud provider before running this command.
+            Make sure you have logged in with AWS with: `aws sso login`
         </Tip>
 
         This will output every primitive that will be created, and ask you to confirm before creating them:
 
-        TODO: update this output
-
         ```
             Primitives to create:
             ---------------------
-            ├── GCSBucket
-            │   └── gcs://caleb-launchflow-sandbox-image-classification
-            ├── BigQueryDataset
-            │   └── caleb-launchflow-sandbox.buildflow_image_classification_walkthrough
-            ├── BigQueryTable
-            │   └── caleb-launchflow-sandbox.buildflow_image_classification_walkthrough.image_classification
-            ├── GCSFileChangeStream
-            │   └── caleb-launchflow-sandbox-image-classification.caleb-launchflow-sandbox-image-classification_topic
-            ├── GCPPubSubSubscription
-            │   └── caleb-launchflow-sandbox/caleb-launchflow-sandbox-image-classification_subscription
-            └── GCPPubSubTopic
-                └── caleb-launchflow-sandbox/caleb-launchflow-sandbox-image-classification_topic
+            ├── S3Bucket
+            │   └── s3://caleb-aws-buildflow-image-classification
+            ├── S3FileChangeStream
+            │   └── caleb-aws-buildflow-image-classification:caleb-aws-buildflow-image-classification_queue
+            └── SQSQueue
+                └── us-east-1-caleb-aws-buildflow-image-classification_queue
 
 
             Would you like to apply these changes?
-            Enter "y (yes)" to confirm, "n (no) to reject":
+            Enter "y (yes)" to confirm, "n (no) to reject": 
         ```
     </Step>
     <Step title="Run your project">
