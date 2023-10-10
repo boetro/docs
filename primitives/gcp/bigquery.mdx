@@ -4,8 +4,8 @@ title: 'BigQuery'
 
 ## BigQueryDataset
 
-BigQueryDatset is a primitive type that can only be managed. In general it is used as a container for your BigQueryTables.
-To create a BigQueryDatset simply provide:
+BigQueryDataset is a primitive type that can only be managed. In general it is used as a container for your BigQueryTables.
+To create a BigQueryDataset simply provide:
 
 | Arg               | Description                                     |
 |------------------|-------------------------------------------------|
@@ -84,7 +84,7 @@ You can provide the following options to control resource management of the BigQ
 |--------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | destroy_projection | Whether or not the dataset should be destroyed when the  ` buildflow destroy `  is run. Defaults to  ` False ` .                                                                                                                                                 |
 | batch_size         | The number of rows to batch together in one write request to BigQuery. Defaults to 10,000. If you produce more than rows than  ` batch_size `  the rows will be split in to multiple requests where the number of requests equals:  ` len(rows) / batch_size ` . |
-| schema             | The schema associated with the table. This can be your dataclas type that you are outputing. This is required if you are having buildflow manage your BigQuery table.                                                                                            |
+| schema             | The schema associated with the table. This can be your dataclass type that you are outputing. This is required if you are having buildflow manage your BigQuery table.                                                                                            |
 
 ```python
 @dataclasses.dataclass

@@ -39,23 +39,23 @@ pip install buildflow
 
 <AccordionGroup>
   <Accordion icon="microchip" title="Common serving and processing patterns">
-    **BuildFlow** offers a simple decorator pattern that allows you to turn any function into a part of you backend system.
+    **BuildFlow** offers a simple decorator pattern that allows you to turn any function into a part of your backend system.
     - **endpoints**: Receive and respond to HTTP requests
     - **collectors**: Receive HTTP requests and dump them to a data store
     - **consumers**: Process data from message queues such as Pub/Sub and Kafka
 
   </Accordion>
   <Accordion icon="road-bridge" title="Infrastructure From Code">
-    **BuildFlow** allows you to create, manage, and connect to your infrastructure using pure Python. No more manual configuration, terraform, or seperate configuration management system. Simply let your logic manage your infrastructure.
+    **BuildFlow** allows you to create, manage, and connect to your infrastructure using pure Python. No more manual configuration, terraform, or separate configuration management system. Simply let your logic manage your infrastructure.
   </Accordion>
   <Accordion icon="books" title="Production Ready IO Connectors">
     Use any of our existing **BuildFlow** primitives to connect to any resource in any cloud. Including AWS, GCP, Snowflake, and DuckDB 
   </Accordion>
   <Accordion icon="chart-line-up" title="Scalable by Default">
-    **BuildFlow** will automatical scale to whatever your current demands are. This ensures your system can handle any surge in traffic while still be cost effective during low traffic periods.
+    **BuildFlow** will automatically scale to whatever your current demands are. This ensures your system can handle any surge in traffic while still be cost effective during low traffic periods.
   </Accordion>
   <Accordion icon="syringe" title="Dependency Injection">
-    **BuildFlow** will automatical scale to whatever your current demands are. This ensures your system can handle any surge in traffic while still be cost effective during low traffic periods.
+    **BuildFlow** allows you to define custom dependencies for your processor that can be injected whenever your processor is called. This enable you to easily integrate other components into your processor (such as loading models, handling auth, or connecting to a database).
   </Accordion>
   <Accordion icon="person-running-fast" title="Async Runtime">
     **BuildFlow** runs in an asyncrounous Ray runtime allowing you to easily scale out parallel tasks with Ray or any other async framework.

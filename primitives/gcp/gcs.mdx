@@ -4,8 +4,6 @@ title: 'GCS Bucket'
 
 GCSBucket is a sink primitive that can be used to write various files to a GCS bucket.  The sink primitive takes in a file path and will create one unique file per replica. To create a GCSBucket provide:
 
-Description of the primitive. Folowed by arguments:
-
 | Arg             | Description                                                                                                                                                                 |
 |-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **project_id**  | The project ID where the GCS bucket lives                                                                                                                                   |
@@ -73,7 +71,7 @@ You can provide the following options to control resource management of the GCS 
 | Options       | Description                                                                        |
 |---------------|------------------------------------------------------------------------------------|
 | force_destroy | If true destroy will fail if the bucket contains objects. Defaults to  ` False ` . |
-| bucket_region | The region to create the bucket it.                                                |
+| bucket_region | The region to create the bucket in.                                                |
 
 
 ```python

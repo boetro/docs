@@ -32,7 +32,7 @@ class CustomType:
     def to_json(self):
         return {"b": self.b}
 
-@app.processor(source=ResourceType(...), sink=Files(...))
+@app.consumer(source=ResourceType(...), sink=File(...))
 async def my_processor(elem: int) -> CustomType:
     return CustomType(b=elem + 1)
 ```

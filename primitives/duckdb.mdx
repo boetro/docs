@@ -8,11 +8,22 @@ DuckDB is a **sink** that can be use to write data to a DuckDB table. To create 
 |--------------|-----------------------------------------------------|
 | **database** | The name of the DuckDB database the table exists in |
 | **table**    | The name the table                                  |
+| **motherduck_token**    | The token to use for authenticating to [MotherDuck](https://motherduck.com/docs/authenticating-to-motherduck#authentication-using-a-service-token)                                |
 
 ```python
 from buildflow.io.duckdb import DuckDB
 
 duckdb_table = DuckDB(database="database", table="table")
+
+@app.consumer(source=..., sink=duckdb_table)
+```
+
+### Connecting to Motherduck
+
+```python
+from buildflow.io.duckdb import DuckDB
+
+duckdb_table = DuckDB(database="md:database", table="table", motherduck_token="XXXXX")
 
 @app.consumer(source=..., sink=duckdb_table)
 ```

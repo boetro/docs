@@ -36,7 +36,7 @@ flow.add_collector(my_collector)
 
 The input of your collector will be one request from your HTTP endpoint. You can use a dataclass to define a JSON payload that you expect. If you do not want to process JSON see our [endpoint guide](/programming-guide/endpoints#request-and-response-type) for additional request types and parameters.
 
-The element you return from your collector will be written to your `sink` primitive. For instance if your sink type is an OLAP datastore (like GCP BigQuery or Snowflake) one row will be written for each element you return from your processor. Or if you sink is a queue (like Kafka, GCP Pub/Sub, or AWS SQS) then one message will be published for each element you return from your processor. See our [source and sink types documentation](/programming-guide/source-sink-types) for what type should be used for writting to a sink.
+The element you return from your collector will be written to your `sink` primitive. For instance if your sink type is an OLAP datastore (like GCP BigQuery or Snowflake) one row will be written for each element you return from your processor. Or if your sink is a queue (like Kafka, GCP Pub/Sub, or AWS SQS) then one message will be published for each element you return from your processor. See our [source and sink types documentation](/programming-guide/source-sink-types) for what type should be used for writting to a sink.
 
 ## Collector Options
 

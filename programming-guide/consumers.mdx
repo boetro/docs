@@ -5,7 +5,7 @@ description: 'Event-driven processing'
 ---
 
 The **Consumer** pattern enables building event-driven architectures.
-You define your buisness logic in a function and attach where it should read data from and where it should write data to.
+You define your business logic in a function and attach where it should read data from and where it should write data to.
 
 A consumer is composed of:
 - A `source` [primitive](/programming-guide/primitives)
@@ -25,7 +25,7 @@ Or you can use the `@consumer` decorator and attach it with the `add_consumer` m
 ```python
 from buildflow import Flow, consumer
 @consumer(source=Primitive(...), sink=Primitive(...))
-def my_conusmer(...):
+def my_consumer(...):
     ...
 
 app = Flow()

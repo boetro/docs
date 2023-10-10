@@ -6,14 +6,14 @@ description: 'Receive and respond to HTTP requests.'
 
 The **Endpoint** pattern enables serving HTTP traffic via an API. 
 
-A endpoint is composed of:
+An endpoint is composed of:
 - A `route`: this is the path that the endpoint will be available at.
 - A `method`: this is the HTTP method that the endpoint will be available at currently GET and POST are supported.
 - Your processing Logic.
 
 Endpoints are created as part of a `Service`. A Service is a collection of endpoints that all share the same set of resources.
 
-A service can be created by call `app.service()`. This will create a service that is automatically attached to the flow.
+A service can be created by calling `app.service()`. This will create a service that is automatically attached to the flow.
 
 ```python
 from buildflow import Flow
@@ -22,7 +22,7 @@ app = Flow()
 service = app.service()
 ```
 
-You can also manually create a service add attach it with `app.add_service(service)`
+You can also manually create a service and attach it with `app.add_service(service)`
 
 ```python
 from buildflow import Flow, Service

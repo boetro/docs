@@ -27,7 +27,7 @@ The [buildflow.yaml](/programming-guide/buildflow-yaml) file is a configuration 
 
 ## Flows
 
-The [Flow](/programming-guide/flows) class is the entrypoint into the BuildFlow Framework. They acts as a container type for user-defined Processors and are responsible for orchestrating the Processors across the Runtime and Infrastructure submodules.
+The [Flow](/programming-guide/flows) class is the entrypoint into the BuildFlow Framework. They act as a container type for user-defined Processors and are responsible for orchestrating the Processors across the Runtime and Infrastructure submodules.
 
 TLDR; Flows act as a container type for a user's application:
 ```python
@@ -40,7 +40,7 @@ app = Flow()
 
 ## Processors
 
-At a high-level, [rocessors](/programming-guide/processors) are a user-defined function that are individually scalable. 
+At a high-level, [Processors](/programming-guide/processors) are a user-defined function that are individually scalable. 
 BuildFlow offers different **patterns** of processors to handle different use-cases ([endpoints](#endpoints), [collectors](#collectors), [consumers](#consumers)).
 
 
@@ -85,7 +85,7 @@ for grouping consumers and collectors.
 
 ### Services
 
-A service is a group of endpoints that are deployed and scaled together. Services are defined by call `app.service()` decorator.
+A service is a group of endpoints that are deployed and scaled together. Services are defined by calling the `app.service()` decorator.
 Then endpoints can be attached with the `@service.endpoint()` decorator.
 
 ```python
@@ -102,7 +102,7 @@ def my_processor(request: MyRequestType):
 A replica is an individual instance of a processor. As the load of your source changes, BuildFlow will automatically scale the number of replicas to match the load.
 Replicas can be configured to have their own CPU and GPU requirements. For example you can have a service that serves a model that requires a GPU and a service for auth that requires a CPU.
 If your auth service is receiving more traffic than your model service, BuildFlow will automatically scale the auth service to handle the load while keeping the model service at a minimum number of replicas. Which means you won't need more GPUs!
-Resource requirements are defined when you initiliaze a processor.
+Resource requirements are defined when you initialize a processor.
 
 ```python
 app = Flow()
