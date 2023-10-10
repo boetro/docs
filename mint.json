@@ -18,12 +18,10 @@
       "to": "#9563FF"
     }
   },
-  "topbarLinks": [
-    {
-      "name": "Support",
-      "url": "mailto:founders@launchflow.com"
-    }
-  ],
+  "topbarCtaButton": {
+    "type": "github",
+    "url": "https://github.com/launchflow/buildflow"
+  },
   "tabs": [
     {
       "name": "Reference",
