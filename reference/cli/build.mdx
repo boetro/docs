@@ -2,20 +2,20 @@ The build command will build the BuildFlow project in the current directory, and
 
 Options:
 - `--build-path` - Output director to store the build in, defaults to `./.buildflow/build/build.flow`
-- `--exclude-dirs` - Paths to exclude from the build
+- `--ignores` - Files to ignore when building, these can be the same syntax as .gitignore
 
 Run `buildflow apply --help` to see available options:
 
 ```
 $ buildflow build --help
-                                                                                                                                                                          
- Usage: buildflow build [OPTIONS]                                                                                                                                         
-                                                                                                                                                                          
- Build a buildflow flow.                                                                                                                                                  
-                                                                                                                                                                          
-╭─ Options ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ --build-path          TEXT  Output director to store the build in, defaults to ./.buildflow/build/build.flow                                                           │
-│ --exclude-dirs        TEXT  Paths to exclude from the build                                                                                                            │
-│ --help                      Show this message and exit.                                                                                                                │
-╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+                                                                                                                                              
+ Usage: buildflow build [OPTIONS]                                                                                                             
+                                                                                                                                              
+ Build a buildflow flow.                                                                                                                      
+                                                                                                                                              
+╭─ Options ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ --build-path        TEXT  Output director to store the build in, defaults to ./.buildflow/build/build.flow                                 │
+│ --ignores           TEXT  Files to ignore when building, these can be the same syntax as .gitignore                                        │
+│ --help                    Show this message and exit.                                                                                      │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 ```

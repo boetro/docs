@@ -16,6 +16,8 @@ pulumi_config:
     -   name: local
         backend_url: file://./.buildflow/_pulumi/local
     pulumi_home: ./.buildflow/_pulumi
+build_ignores:
+- my-large-file.bin
 ```
 
 ## Project
@@ -32,6 +34,16 @@ The pulumi config defines what stacks your project manages. Each stack is a grou
 By default we set up one stack for you that is stored locally. This stack is great for spinning up local dev environments, but you will likely want to add additional stacks that can be shared with your team.
 
 To do this you can add a new stack with a remote `backend_url`. This can be an `S3 Bucket`, `GCS Bucket`, or you can use Pulumi cloud to store your state. You can read more about Pulumi backends [here](https://www.pulumi.com/docs/intro/concepts/state/).
+
+## Build Ignores
+
+This is a list of files that should be ignored when building your project. You can use the same syntax as a [.gitignore file](https://git-scm.com/docs/gitignore). 
+This is useful for large files that you don't want to include in your build.
+For example, you might have a large binary file that is used by your application.
+
+<Tip>
+    If you are using [LaunchFlow](https://launchflow.com) these files will not be uploaded when launching a remote deployment.
+</Tip>
 
 ### S3 Remote state
 
