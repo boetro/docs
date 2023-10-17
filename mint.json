@@ -82,7 +82,9 @@
     {
       "group": "Walkthroughs",
       "pages": [
-        "buildflow/walkthroughs/image-classification"
+        "buildflow/walkthroughs/image-classification",
+        "buildflow/walkthroughs/llama2-ai-chatbot",
+        "buildflow/walkthroughs/saas"
       ]
     },
     {
@@ -135,22 +137,27 @@
       ]
     },
     {
-      "group": "API",
+      "group": "Reference",
       "pages": [
-        "buildflow/reference/api/credentials",
-        "buildflow/reference/api/primitive",
-        "buildflow/reference/api/strategy"
-      ]
-    },
-    {
-      "group": "CLI",
-      "pages": [
-        "buildflow/reference/cli/apply",
-        "buildflow/reference/cli/build",
-        "buildflow/reference/cli/destroy",
-        "buildflow/reference/cli/init",
-        "buildflow/reference/cli/preview",
-        "buildflow/reference/cli/run"
+        {
+          "group": "API",
+          "pages": [
+            "buildflow/reference/api/credentials",
+            "buildflow/reference/api/primitive",
+            "buildflow/reference/api/strategy"
+          ]
+        },
+        {
+          "group": "CLI",
+          "pages": [
+            "buildflow/reference/cli/apply",
+            "buildflow/reference/cli/build",
+            "buildflow/reference/cli/destroy",
+            "buildflow/reference/cli/init",
+            "buildflow/reference/cli/preview",
+            "buildflow/reference/cli/run"
+          ]
+        }
       ]
     },
     {

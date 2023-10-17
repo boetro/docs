@@ -1,0 +1,104 @@
+---
+title: Software as a Service
+icon: database
+description: "Build a journal entry app with permanent storage and user authentication."
+---
+
+In this walkthrough we will be creating a simple CRUD API that allows users to log in with their Google account and create and update journal entries. These entries will be stored in a Postgres database hosted on GCP and will be accessible to the user when they log in.
+
+Our API will be built using [endpoints](/programming-guide/endpoints) and our databased will be hosted on [Google Cloud SQL](http://localhost:3000/buildflow/primitives/gcp/cloud_sql) that we connect to via [SQLAlchemy](http://localhost:3000/buildflow/dependencies/sqlalchemy).
+
+
+Before completing the walkthrough ensure you have [installed BuildFlow](/programming-guide/install)
+with all [extra dependencies](/programming-guide/install#extra-dependencies).
+
+
+To run this walkthrough on resources created on GCP use [this github repo](https://github.com/launchflow/gcp-saas-example).
+<Note>    
+    In order to run this code you will need to have a GCP project created that you have access to.
+
+    Follow the [Google Cloud Walkthrough](https://developers.google.com/workspace/guides/create-project) to create a new one if you need to.
+</Note>
+
+<Steps>
+    <Step title="Clone the GitHub Repo">
+    ```
+    git clone git@github.com:launchflow/gcp-saas-example.git
+    cd gcp-saas-example
+    ```
+    </Step>
+    <Step title="Install your requirements">
+        ```
+            pip install -r requirements.txt
+        ```
+    </Step>
+    <Step title="Create a .env file">
+        Rename the `template.env` to `.env` and update all variables
+
+<Tip>
+    You will need to create OAuth 2.0 credentials to fill out these variables: https://developers.google.com/identity/protocols/oauth2#1.-obtain-oauth-2.0-credentials-from-the-dynamic_data.setvar.console_name-.
+
+    Or you can use one you already have in place if you want.
+</Tip>
+
+| Variable          | Description                                                                                                                                                                               |
+|-------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| GCP_PROJECT_ID    | The GCP Project where your resources (Cloud SQL instance and database) should be created.                                                                                                 |
+| DATABASE_USER     | The user used for authenticating with your database (defaults to `postgres`) this will be set in GCP in a later step. |
+| DATABASE_PASSWORD | The password of the user for authenticating with your database this will be set in GCP in a later step.                                                                                                                           |
+| CLIENT_ID         | OAuth client ID obtained from google.                                                                                                                                                     |
+| CLIENT_SECRET     | OAuth client secret obtained from google.                                                                                                                                                 |
+
+        
+    </Step>
+    <Step title="Create your resources">
+        Create all the resources that are required for your system.
+        ```
+            buildflow apply
+        ```
+        <Tip>
+            Make sure you have logged in with GCP with: `gcloud auth login --update-adc`
+        </Tip>
+
+        This will output every primitive that will be created, and ask you to confirm before creating them:
+
+        ```
+Primitives to create:
+---------------------
+├── CloudSQLInstance
+│   └── <GCP_PROJECT_ID>:launchflow-gcp-postgres-auth-cloud-sql
+└── CloudSQLDatabase
+    └── <GCP_PROJECT_ID>:launchflow-gcp-postgres-auth-cloud-sql.launchflow-gcp-postgres-auth-cloud-db
+
+
+Would you like to apply these changes?
+Enter "y (yes)" to confirm, "n (no) to reject":
+        ```
+    </Step>
+    <Step title="Create your database user">
+         A user and password can be added following this [guide](https://cloud.google.com/sql/docs/postgres/create-manage-users). Ensure this matches with what you put in your `.env` file.
+    </Step>
+    <Step title="Update your OAuth Credentials">
+    For your [OAuth credentials](https://developers.google.com/identity/protocols/oauth2/javascript-implicit-flow#creatingcred) update the **Authorized JavaScript origins** and **Authorized redirect URIs** to match your local environment.
+
+    For **Authorized JavaScript origins** you will need to add http://localhost:8000 and for **Authorized redirect URIs** you will need to add http://localhost:3001/auth/callback/google
+    </Step>
+    <Step title="Run your project">
+        Update the `.env` to set `CREATE_MODELS=true` this will create all the necessary databases when you run your project.
+
+        Run your project with:
+
+        ```
+            buildflow run
+        ```
+
+        Once running you can visit http://localhost:8000 to begin using your app.
+    </Step>
+    <Step title="Cleanup your resources">
+        Once you're finished with your app, you can easily delete all of your resources with one command.
+
+        ```
+            buildflow destroy
+        ```
+    </Step>
+</Steps>
