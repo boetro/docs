@@ -1,9 +1,9 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "BuildFlow",
+  "name": "LaunchFlow",
   "logo": {
-    "dark": "/logo/dark.png",
-    "light": "/logo/light.png"
+    "dark": "/logo/launchflow-logo-dark.png",
+    "light": "/logo/launchflow-logo-light.png"
   },
   "favicon": "/favicon.png",
   "colors": {
@@ -19,13 +19,17 @@
     }
   },
   "topbarCtaButton": {
-    "type": "github",
-    "url": "https://github.com/launchflow/buildflow"
+    "type": "link",
+    "url": "https://launchflow.com/signup",
+    "name": "Sign Up"
+  },
+  "primaryTab": {
+    "name": "LaunchFlow Cloud"
   },
   "tabs": [
     {
-      "name": "Reference",
-      "url": "reference"
+      "name": "BuildFlow",
+      "url": "buildflow"
     },
     {
       "name": "Release Notes",
@@ -34,45 +38,51 @@
   ],
   "anchors": [
     {
+      "name": "LaunchFlow",
+      "icon": "rocket-launch",
+      "url": "https://launchflow.com"
+    },
+    {
       "name": "Community",
       "icon": "discord",
       "url": "https://discordapp.com/invite/wz7fjHyrCA"
-    },
-    {
-      "name": "LaunchFlow",
-      "icon": "rocket-launch",
-      "url": "https://www.launchflow.com"
     }
   ],
   "navigation": [
     {
       "group": "Get Started",
       "pages": [
-        "introduction",
-        "concepts",
-        "quickstart"
+        "introduction"
+      ]
+    },
+    {
+      "group": "Get Started",
+      "pages": [
+        "buildflow/introduction",
+        "buildflow/concepts",
+        "buildflow/quickstart"
       ]
     },
     {
       "group": "Programming Guide",
       "pages": [
-        "programming-guide/install",
-        "programming-guide/buildflow-yaml",
-        "programming-guide/flows",
-        "programming-guide/processors",
-        "programming-guide/endpoints",
-        "programming-guide/collectors",
-        "programming-guide/consumers",
-        "programming-guide/primitives",
-        "programming-guide/dependencies",
-        "programming-guide/source-sink-types",
-        "programming-guide/deploying"
+        "buildflow/programming-guide/install",
+        "buildflow/programming-guide/buildflow-yaml",
+        "buildflow/programming-guide/flows",
+        "buildflow/programming-guide/processors",
+        "buildflow/programming-guide/endpoints",
+        "buildflow/programming-guide/collectors",
+        "buildflow/programming-guide/consumers",
+        "buildflow/programming-guide/primitives",
+        "buildflow/programming-guide/dependencies",
+        "buildflow/programming-guide/source-sink-types",
+        "buildflow/programming-guide/deploying"
       ]
     },
     {
       "group": "Walkthroughs",
       "pages": [
-        "walkthroughs/image-classification"
+        "buildflow/walkthroughs/image-classification"
       ]
     },
     {
@@ -81,66 +91,66 @@
         {
           "group": "Amazon Web Services",
           "pages": [
-            "primitives/aws/s3",
-            "primitives/aws/s3_file_change_stream",
-            "primitives/aws/sqs"
+            "buildflow/primitives/aws/s3",
+            "buildflow/primitives/aws/s3_file_change_stream",
+            "buildflow/primitives/aws/sqs"
           ]
         },
         {
           "group": "Google Cloud Platform",
           "pages": [
-            "primitives/gcp/bigquery",
-            "primitives/gcp/cloud_sql",
-            "primitives/gcp/gcs",
-            "primitives/gcp/pubsub",
-            "primitives/gcp/gcs_file_change_stream"
+            "buildflow/primitives/gcp/bigquery",
+            "buildflow/primitives/gcp/cloud_sql",
+            "buildflow/primitives/gcp/gcs",
+            "buildflow/primitives/gcp/pubsub",
+            "buildflow/primitives/gcp/gcs_file_change_stream"
           ]
         },
         {
           "group": "Local",
           "pages": [
-            "primitives/local/file",
-            "primitives/local/pulse",
-            "primitives/local/file_change_stream"
+            "buildflow/primitives/local/file",
+            "buildflow/primitives/local/pulse",
+            "buildflow/primitives/local/file_change_stream"
           ]
         },
-        "primitives/duckdb",
-        "primitives/snowflake"
+        "buildflow/primitives/duckdb",
+        "buildflow/primitives/snowflake"
       ]
     },
     {
       "group": "Dependencies",
       "pages": [
-        "dependencies/auth",
-        "dependencies/bucket",
-        "dependencies/headers",
-        "dependencies/sink",
-        "dependencies/sqlalchemy"
+        "buildflow/dependencies/auth",
+        "buildflow/dependencies/bucket",
+        "buildflow/dependencies/headers",
+        "buildflow/dependencies/sink",
+        "buildflow/dependencies/sqlalchemy"
       ]
     },
     {
       "group": "Developers",
       "pages": [
-        "developers/contribute"
+        "buildflow/developers/contribute"
       ]
     },
     {
       "group": "API",
       "pages": [
-        "reference/api/credentials",
-        "reference/api/primitive",
-        "reference/api/strategy"
+        "buildflow/reference/api/credentials",
+        "buildflow/reference/api/primitive",
+        "buildflow/reference/api/strategy"
       ]
     },
     {
       "group": "CLI",
       "pages": [
-        "reference/cli/apply",
-        "reference/cli/build",
-        "reference/cli/destroy",
-        "reference/cli/init",
-        "reference/cli/preview",
-        "reference/cli/run"
+        "buildflow/reference/cli/apply",
+        "buildflow/reference/cli/build",
+        "buildflow/reference/cli/destroy",
+        "buildflow/reference/cli/init",
+        "buildflow/reference/cli/preview",
+        "buildflow/reference/cli/run"
       ]
     },
     {
@@ -151,6 +161,9 @@
     }
   ],
   "footerSocials": {
-    "discord": "https://discordapp.com/invite/wz7fjHyrCA"
+    "website": "https://launchflow.com",
+    "discord": "https://discordapp.com/invite/wz7fjHyrCA",
+    "linkedin": "https://www.linkedin.com/company/launchflow-inc",
+    "twitter": "https://twitter.com/Launch_Flow"
   }
 }
