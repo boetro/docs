@@ -1,0 +1,240 @@
+
+In this tutorial we'll introduce you to BuildFlow and BuildFlow concepts by walking through a simple image classification application.
+
+All the code for this tutorial can be found on [github](https://github.com/launchflow/buildflow-aws-image-classification); we will be walking through this repo step by step.
+
+## buildflow.yaml
+
+The `buildflow.yaml` defines our [buildflow project](/buildflow/programming-guide/buildflow-yaml). This is created when we use the [BuildFlow CLI](/buildflow/reference/cli/init) to create a new project, and doesn't need to be updated unlesss you need to add something.
+
+Our yaml file defines the following:
+- [**project**](/buildflow/programming-guide/buildflow-yaml#project): the name of our project; this can be updated to any string containing lower-case letters and hyphens
+- [**pulumi_config**](/buildflow/programming-guide/buildflow-yaml#pulumi-configure): our pulumi configuration; here we say we have one stack that is stored locally
+- [**entry_point**](/buildflow/programming-guide/buildflow-yaml#entry-point): defines how our application is run
+
+```yaml
+project: buildflow-aws-image-classification-walkthrough
+pulumi_config:
+  pulumi_home: .buildflow/_pulumi
+  stacks:
+    - name: local
+      backend_url: file://.buildflow/_pulumi/local
+entry_point: main:app
+```
+
+## main.py
+
+This file is where we start to define our logic. `app = Flow(...)` creates our [Flow object](/buildflow/programming-guide/flows) which is a container for all of our buisness logic and resources.
+You'll notice we call a couple methods on our flow object.
+
+- **manage**: this method marks a [primitive](/buildflow/primitives) as being managed. Meaning it can be created, updated, and destroyed by buildflow.
+- **add_service**: attaches a service to our flow. A service is a container of [endpoints](/buildflow/programming-guide/endpoints), our service will be used for allowing users to upload images to our application.
+- **add_consumer**: attaches a [consumer](/buildflow/programming-guide/consumers) to our flow. A consumer allows us to asynchronously process image uploads meaning it won't block the users request!
+
+
+```python
+from buildflow import Flow, FlowOptions
+
+from image_classification import primitives
+from image_classification.processors.consumer import classify_image
+from image_classification.processors.service import service
+from image_classification.settings import env
+
+app = Flow(flow_options=FlowOptions(stack=env.env.value))
+app.manage(
+    primitives.bucket,
+    primitives.source,
+)
+app.add_service(service)
+app.add_consumer(classify_image)
+```
+
+## primitives.py
+
+Here we define all of the [primitives](/buildflow/programming-guide/primitives) used by our applications. Primitives are resources that a processor may read from, write to, or referenced.
+
+<Tip>
+    You may have noticed these same primitives were passed into `app.manage` this means they will be created when you run `buildflow run` for the first time.
+</Tip>
+
+We define 3 primitives here:
+
+- **bucket**: a [S3 bucket](/buildflow/primitives/aws/s3) where we will upload user images to.
+- **file_change_stream**: a [S3 File Change Stream](/buildflow/primitives/aws/s3_file_change_stream) which sets up notifications for when a file is uploaded to our bucket. This is what triggers our image upload model to be called.
+- **table**: a [DuckDB table](/buildflow/primitives/duckdb) where we will store our image classifications results. 
+
+```python
+from buildflow.io.aws import S3FileChangeStream, S3Bucket
+from buildflow.io.duckdb import DuckDBTable
+
+from image_classification.settings import env
+
+bucket = S3Bucket(
+    bucket_name=env.s3_bucket_name,
+    aws_region="us-east-1",
+).options(force_destroy=True)
+
+source = S3FileChangeStream(s3_bucket=bucket)
+table = DuckDBTable(
+    database="md:buildflow_walkthrough",
+    table="image_classification",
+    motherduck_token=env.motherduck_token,
+)
+```
+
+## dependencies.py
+
+In `dependencies.py` we set up a [dependencies](/buildflow/programming-guide/dependencies) that will be used by our endpoints and consumer. Dependencies allow us to precompute / share code between processors. In our case we want to load the model when we start our application before any data is processed.
+
+We do this by defining the `ModelDep` you can see we add the decorator `@dependency(scope=Scope.REPLICA)` which annotates the class as a dependency that should be created before a [replica](/buildflow/concepts#replicas) starts to process data.
+
+We also define a `BucketDep` which is a [bucket dependency](/buildflow/dependencies/bucket) that allows us to connect to the bucket associated with our bucket primitive we defined in [primitives.py](/buildflow/tutorial#image-classification-primitives-py)
+```python
+import os
+
+from buildflow.dependencies import dependency, Scope
+from buildflow.dependencies.bucket import BucketDependencyBuilder
+from imageai.Classification import ImageClassification
+
+from image_classification.primitives import bucket
+
+
+@dependency(scope=Scope.REPLICA)
+class ModelDep:
+    def __init__(self) -> None:
+        self.execution_path = os.path.dirname(os.path.realpath(__file__))
+        self.prediction = ImageClassification()
+        self.prediction.setModelTypeAsMobileNetV2()
+        self.prediction.setModelPath("mobilenet_v2-b0353104.pth")
+        self.prediction.loadModel()
+
+
+BucketDep = BucketDependencyBuilder(bucket)
+```
+
+## processors/service.py
+
+In `service.py` we define our actual endpoints that will be used by our users.  First we create a service with `service = Service(...)` then attach endpoints to functions using `@service.endpoint(...)`.
+
+<Tip>
+    Remember we attached our service to our flow in `main.py` with `app.add_service`
+</Tip>
+
+
+We define three endpoints here:
+
+- **index**: this endpoint returns a simple html page that allows users to upload images.
+- **image_upload**: this endpoint allows users to upload an image and we upload them to our remote bucket. It takes in an [UploadFile](/buildflow/programming-guide/requests#uploadfile) which is a file that has been uploaded by a user. We also take in the `bucket_dep` dependency we defined earlier. This allows us to upload the file to our bucket using the [boto3 API](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/bucket/put_object.html).
+- **image_upload_results**: this endpoint returns a simple html page that displays the results of our image classification model. It does this by querying our DuckDB table and then rendering the results as a table.
+
+```python
+from buildflow import Service
+from buildflow.requests import UploadFile
+from buildflow.responses import FileResponse, HTMLResponse
+import duckdb
+import pandas as pd
+
+from image_classification.dependencies import BucketDep
+from image_classification.primitives import table
+
+service = Service(service_id="image-classification")
+
+
+@service.endpoint("/", method="GET")
+def index():
+    return FileResponse("image_classification/processors/index.html")
+
+
+@service.endpoint("/image-upload", method="POST")
+def image_upload(image_file: UploadFile, bucket_dep: BucketDep):
+    bucket_dep.bucket.put_object(Key=image_file.filename, Body=image_file.file)
+
+
+def generate_inner_table(row):
+    inner_df = pd.DataFrame.from_records(row["classifications"])
+    return inner_df.to_html(classes="table-auto", index=False, border=1).replace(
+        "\n", ""
+    )
+
+
+@service.endpoint("/image-upload-results", method="GET")
+def image_upload_results():
+    conn = duckdb.connect(database=table.database, read_only=True)
+    df = conn.execute(f"SELECT * FROM {table.table}").fetchdf()
+    df["classifications"] = df.apply(generate_inner_table, axis=1)
+
+    return HTMLResponse(
+        df.to_html(
+            classes="m-5 border-spacing-2 border-collapse border border-slate-500 table-auto".split(
+                " "
+            ),
+            escape=False,
+        ).replace("\n", "")
+    )
+```
+
+## processors/consumer.py
+
+`consumer.py` is where we send our images through the model. We do this by attaching the `@consumer` decorator to our 
+`classify_image` function.
+
+<Tip>
+    Remember we attached our service to our flow in `main.py` with `app.add_consumer`
+</Tip>
+
+Our consumer function takes in two arguments:
+- **file_event: S3FileChangeEvent** - this is the input to our consumer that is generate when ever an image is uploaded to our bucket (whenever our endpoint is called).
+- **model: ModelDep** - this is the dependency we defined in [dependency.py](/buildflow/tutorial#image-classification-dependencies-py) that loaded the model.
+
+```python
+import datetime
+import os
+import tempfile
+
+from buildflow import consumer
+from buildflow.types.aws import S3FileChangeEvent, S3ChangeStreamEventType
+
+from image_classification.dependencies import ModelDep
+from image_classification.primitives import table, source
+from image_classification.schemas import Classification, ImageClassificationRow
+
+
+@consumer(source=source, sink=table)
+def classify_image(
+    file_event: S3FileChangeEvent, model: ModelDep
+) -> ImageClassificationRow:
+    if file_event.event_type not in S3ChangeStreamEventType.create_event_types():
+        # s3/sqs publishes a test notification when the notification is first created
+        # we ignore that
+        return
+    with tempfile.TemporaryDirectory() as td:
+        file_path = os.path.join(td, file_event.file_path)
+        with open(file_path, "wb") as f:
+            f.write(file_event.blob)
+        predictions, probabilities = model.prediction.classifyImage(
+            file_path, result_count=5
+        )
+    classifications = []
+    for predicition, probability in zip(predictions, probabilities):
+        classifications.append(Classification(predicition, probability))
+    row = ImageClassificationRow(
+        image_name=file_event.file_path,
+        upload=datetime.datetime.utcnow().isoformat(),
+        classifications=classifications,
+    )
+    print(row)
+    return row
+```
+
+## Other Files
+
+Some other files we didn't mention that are also in the repo:
+- **settings.py** - this loads in a `.env` file for configuring our environment variables
+- **schemas.py** - defines our API schemas for request and respones
+- **requirements.txt** - defines our python dependencies
+- **index.html** - a simple html page for uploading images
+
+
+## Running The Application
+
+<Snippet file="aws_image_classification.mdx" />

@@ -1,0 +1,49 @@
+---
+title: Llama 2 AI ChatBot
+icon: rocketchat
+description: "Serve a Llama 2 Model hosted in a remote storage bucket."
+---
+
+In this example we will create a chatbot that uses the Llama2 7b chat model. This model is stored in a remote bucket (either GCS or S3) and gets downloaded and loaded when we start our application.
+
+Our model will be served using an [endpoint](/buildflow/programming-guide/endpoints) that loads our model via a [custom dependency](/buildflow/programming-guide/dependencies) that will be shared across requests.
+
+
+Before completing the example ensure you have [installed BuildFlow](/buildflow/programming-guide/install)
+with all [extra dependencies](/buildflow/programming-guide/install#extra-dependencies).
+
+<Tip>
+    Our basic model is hosted on a public bucket, but you can also host your own model on a private bucket.
+</Tip>
+
+<Steps>
+    <Step title="Clone the GitHub Repo">
+    ```
+    git clone git@github.com:launchflow/launchflow-model-serving.git
+    cd launchflow-model-serving
+    ```
+    </Step>
+    <Step title="Install your requirements">
+        ```
+            pip install -r requirements.txt
+        ```
+    </Step>
+    <Step title="Run your project">
+        Run your project with:
+
+        ```
+            buildflow run
+        ```
+
+        <Tip>
+            If you want to experiment loading the model from S3 instead of GCS simply set `USE_GCP=false` in the `.env` file
+        </Tip>
+
+        Once running you can visit http://localhost:8000 to begin chatting with the AI!
+    </Step>
+    <Step title="What's next?">
+        Now that you have a working chatbot, you can start to customize it to your needs. Such as adding [google auth](/buildflow/dependencies/auth#authenticated-google-user) for user authentication or a [postgres database](/buildflow/dependencies/sqlalchemy) for permanent storage. Or even hosting your own model on a private bucket.
+
+        See our [SaaS example](/buildflow/examples/saas) for an example of how to add these features.
+    </Step>
+</Steps>

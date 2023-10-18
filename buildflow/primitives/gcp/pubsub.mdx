@@ -102,7 +102,7 @@ If you are using BuildFlow's built in resource creation/management you can use t
 You can provide the following options to control resource management of the Pub/Sub topic:
 | Options            | Description                                                                                                                                                                                                              |
 |--------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| topic              | The  [ GCPPubSubTopic ]( /primitives/gcp/pubsub#gcp-pub-sub-topic )  of the topic you want to subscribe to this will be used when creating the subscription if it is managed.                                                       |
+| topic              | The  [ GCPPubSubTopic ]( /buildflow/primitives/gcp/pubsub#gcp-pub-sub-topic )  of the topic you want to subscribe to this will be used when creating the subscription if it is managed.                                                       |
 | include_attributes | Whether or not attributes should be included in the return type. If this is set to  ` True `  your pipeline will receive a  ` PubsubMessage `  class containing the raw message and attributes. Defaults to  ` False ` . |
 ```python
 GCPPubSubSubscription(...).options(managed=True, topic=GCPPubSubTopic(...), include_attributes=True)

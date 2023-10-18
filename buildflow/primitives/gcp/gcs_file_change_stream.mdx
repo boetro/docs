@@ -6,7 +6,7 @@ title: 'GCS File Change Stream'
 GCSFileChangeStream is a source primitive that can be used to subscribe to file changes on a given GCS bucket. To create a GCSFileChangeStream provide:
 | Arg            | Description                                                                                                                  |
 |----------------|------------------------------------------------------------------------------------------------------------------------------|
-| **gcs_bucket** | [ GCSBucket ]( /primitives/gcp/gcs )  to subscribe to change events from. NOTE: you do not need to provide file path or file format. |
+| **gcs_bucket** | [ GCSBucket ]( /buildflow/primitives/gcp/gcs )  to subscribe to change events from. NOTE: you do not need to provide file path or file format. |
 | event_types    | List of event types to subscribe to. Defaults to:  ` [GCSChangeStreamEventType.OBJECT_FINALIZE] `                            |
 
 

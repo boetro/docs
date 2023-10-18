@@ -8,11 +8,11 @@ The **Consumer** pattern enables building event-driven architectures.
 You define your business logic in a function and attach where it should read data from and where it should write data to.
 
 A consumer is composed of:
-- A `source` [primitive](/programming-guide/primitives)
-- A `sink` [primitive](/programming-guide/primitives)
+- A `source` [primitive](/buildflow/programming-guide/primitives)
+- A `sink` [primitive](/buildflow/programming-guide/primitives)
 - Your processing logic
 
-Consumers can easily be created with the `consumer` decorator method of your [flow](/programming-guide/flows).
+Consumers can easily be created with the `consumer` decorator method of your [flow](/buildflow/programming-guide/flows).
 
 ```python
 @app.consumer(source=Primitive(...), sink=Primitive(...))
@@ -20,7 +20,7 @@ def my_consumer(...):
     ...
 ```
 
-Or you can use the `@consumer` decorator and attach it with the `add_consumer` method of your [flow](/programming-guide/flows).
+Or you can use the `@consumer` decorator and attach it with the `add_consumer` method of your [flow](/buildflow/programming-guide/flows).
 
 ```python
 from buildflow import Flow, consumer
@@ -38,7 +38,7 @@ The input of your consumer will be one element that is read from your `source` p
 
 The element you return from your consumer will be written to your `sink` primitive. For instance if your sink type is an OLAP datastore (like GCP BigQuery or Snowflake) one row will be written for each element you return from your processor, or if you sink is a queue (like Kafka, GCP Pub/Sub, or AWS SQS) then one message will be published for each element you return from your processor.
 
-For more details on what these types should / can be for your source and sink see our [source and sink types](/programming-guide/source-sink-types) documentation.
+For more details on what these types should / can be for your source and sink see our [source and sink types](/buildflow/programming-guide/source-sink-types) documentation.
 
 ## Consumer Options
 

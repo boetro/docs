@@ -65,17 +65,17 @@ async def my_consumer(elem: InputType) -> OutputType:
 ### For Consumers
 
 For consumers the input type defines what data time is coming from your sink, and the output type defines what will be written to your sink.
-For more details on how to use additional types with sources and sinks see our [source and sink documentation](/programming-guide/source-sink-types).
+For more details on how to use additional types with sources and sinks see our [source and sink documentation](/buildflow/programming-guide/source-sink-types).
 
 ### For Collectors
 
 For collectors the input type defines the JSON payload that is expected from the HTTP request. The output type defines what will be written to your sink.
-For more details on how to use additional types with sources and sinks see our [source and sink documentation](/programming-guide/source-sink-types).
+For more details on how to use additional types with sources and sinks see our [source and sink documentation](/buildflow/programming-guide/source-sink-types).
 
 ### For Endpoints
 
 For endpoints the input type defines the JSON payload that is expected from the HTTPrequest. The output type defines the JSON payload that will be sent back in the response.
-For more details on different types of requests and response payload specific to endpoints see our [endpoint documentation](/programming-guide/endpoints#request-and-response-type).
+For more details on different types of requests and response payload specific to endpoints see our [endpoint documentation](/buildflow/programming-guide/endpoints#request-and-response-type).
 
 
 
@@ -97,5 +97,5 @@ All of these options can be set when creating a processor of any type. For examp
 ```
 
 <Note>
-    Different processor types have different options for configuring autoscaling. See the specific processor type documentation for more details ([endpoints](/programming-guide/endpoints#service-options), [collectors](/programming-guide/collectors#collector-options), [consumers](/programming-guide/consumers#consumer-options)).
+    Different processor types have different options for configuring autoscaling. See the specific processor type documentation for more details ([endpoints](/buildflow/programming-guide/endpoints#service-options), [collectors](/buildflow/programming-guide/collectors#collector-options), [consumers](/buildflow/programming-guide/consumers#consumer-options)).
 </Note>

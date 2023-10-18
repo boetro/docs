@@ -6,10 +6,10 @@ description: 'Create, manage, and connect to your resources'
 
 
 Primitives are resources that a processor may read from, write to, or referenced. For example a primitive might be a Postgres Database managed by GCP, or a S3 bucket managed by AWS.
-Primitives can be uses as sources or sinks in your [processors](/programming-guide/processors), and they can also be managed by your [flow](/programming-guide/flows).
+Primitives can be uses as sources or sinks in your [processors](/buildflow/programming-guide/processors), and they can also be managed by your [flow](/buildflow/programming-guide/flows).
 If a primitive is managed it can automatically be created, managed, and destroyed with BuildFlow
 
-BuildFlow provides many primitives out of the box, and you can also create your own custom primitives. All of our primitives can be found in our [primitive docs](/primitives/)
+BuildFlow provides many primitives out of the box, and you can also create your own custom primitives. All of our primitives can be found in our [primitive docs](/buildflow/primitives/)
 
 ## Primitive Resource Management
 
@@ -53,11 +53,11 @@ All resource management is powered by [Pulumi](https://www.pulumi.com), ideally 
 
 ### Implement the Primitive Interface
 
-To create a custom primitive, you can implement the [Primitive](/reference/api/primitive) interface a description of all the methods is found below (bold indicates required).
+To create a custom primitive, you can implement the [Primitive](/buildflow/reference/api/primitive) interface a description of all the methods is found below (bold indicates required).
 
 
 <Tip>
-If your primitive is specific to a cloud provider you can extend [GCPPrimitive](/reference/api/primitive#gcp-primitive) or [AWSPrimitive](/reference/api/primitive#aws-primitive).
+If your primitive is specific to a cloud provider you can extend [GCPPrimitive](/buildflow/reference/api/primitive#gcp-primitive) or [AWSPrimitive](/buildflow/reference/api/primitive#aws-primitive).
 
 By extending these we will know if you what type of credentials to pass to your primitive (GCP or AWS).
 </Tip>
@@ -66,8 +66,8 @@ By extending these we will know if you what type of credentials to pass to your 
 | --------------------- | -----------------------| ------------------------------------- |
 | **primitive_id**      | str                    | A unique ID for your primitive           |
 | pulumi_resources      | List[pulumi.Resources] | Returns a list of pulumi resources that should be managed |
-| source                | [SourceStrategy](/reference/api/strategy#source-strategy) | Returns an implementation of [SourceStrategy](/reference/api/strategy#source-strategy) for reading data.
-| sink                  | [SinkStrategy](/reference/api/strategy#sink-strategy)   | Returns an implementation of [SinkStrategy](/reference/api/strategy#sink-strategy) for reading data.                       |                       |
+| source                | [SourceStrategy](/buildflow/reference/api/strategy#source-strategy) | Returns an implementation of [SourceStrategy](/buildflow/reference/api/strategy#source-strategy) for reading data.
+| sink                  | [SinkStrategy](/buildflow/reference/api/strategy#sink-strategy)   | Returns an implementation of [SinkStrategy](/buildflow/reference/api/strategy#sink-strategy) for reading data.                       |                       |
 | cloud_console_url     | str                    | Returns a URL to the cloud console for this resource if applicable.         |
 
 You only need to implement the methods that your primitive supports. For example, if your primitive only supports reading data you only need to implement the `source()` method, or if your primitive only supports being managed you only need to implement the `pulumi_resources` method.
@@ -100,7 +100,7 @@ Strategies define the actual logic for reading or writing data.
 
 #### Source Strategy
 
-Source strategies should implement the [SourceStrategy](/reference/api/strategy#source-strategy) interface.
+Source strategies should implement the [SourceStrategy](/buildflow/reference/api/strategy#source-strategy) interface.
 
 | Method                | Return Type            | Description                           |
 | --------------------- | -----------------------| ------------------------------------- |
@@ -137,7 +137,7 @@ class CustomPrimitiveSource(SourceStrategy):
 
 #### Sink Strategy
 
-Sink strategies should implement the [SinkStrategy](/reference/api/strategy#sink-strategy) interface.
+Sink strategies should implement the [SinkStrategy](/buildflow/reference/api/strategy#sink-strategy) interface.
 
 | Method                | Return Type            | Description                           |
 | --------------------- | -----------------------| ------------------------------------- |

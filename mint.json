@@ -60,11 +60,12 @@
       "pages": [
         "buildflow/introduction",
         "buildflow/concepts",
-        "buildflow/quickstart"
+        "buildflow/quickstart",
+        "buildflow/tutorial"
       ]
     },
     {
-      "group": "Programming Guide",
+      "group": "Complete Programming Guide",
       "pages": [
         "buildflow/programming-guide/install",
         "buildflow/programming-guide/buildflow-yaml",
@@ -80,11 +81,11 @@
       ]
     },
     {
-      "group": "Walkthroughs",
+      "group": "Examples",
       "pages": [
-        "buildflow/walkthroughs/image-classification",
-        "buildflow/walkthroughs/llama2-ai-chatbot",
-        "buildflow/walkthroughs/saas"
+        "buildflow/examples/image-classification",
+        "buildflow/examples/llama2-ai-chatbot",
+        "buildflow/examples/saas"
       ]
     },
     {
@@ -161,9 +162,9 @@
       ]
     },
     {
-      "group": "Release Notes",
+      "group": "BuildFlow",
       "pages": [
-        "release-notes/0.3.0"
+        "release-notes/buildflow-0.3.0"
       ]
     }
   ],

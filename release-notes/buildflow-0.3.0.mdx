@@ -1,5 +1,5 @@
 ---
-title: 'BuildFlow 0.3.0'
+title: '0.3.0'
 ---
 
 BuildFlow 0.3.0 helps empower users to build entire backend systems using python.
@@ -13,7 +13,7 @@ BuildFlow 0.3.0 helps empower users to build entire backend systems using python
 
 ## Endpoints
 
-We're excited to anounce the addition of the [endpoint](/programming-guide/endpoints) pattern which enables serving HTTP traffic via an API. With endpoints you can easily standup a scalable backend API with a few lines of code.
+We're excited to anounce the addition of the [endpoint](/buildflow/programming-guide/endpoints) pattern which enables serving HTTP traffic via an API. With endpoints you can easily standup a scalable backend API with a few lines of code.
 
 ```python
 from buildflow import Flow
@@ -28,7 +28,7 @@ def my_endpoint(...):
 
 ## Collectors
 
-In addition to endpoints we're also adding the [collector](/programming-guide/collectors) pattern. Which enables receiving HTTP requests and dumping them to the sink of your choice.
+In addition to endpoints we're also adding the [collector](/buildflow/programming-guide/collectors) pattern. Which enables receiving HTTP requests and dumping them to the sink of your choice.
 
 ```python
 from buildflow import Flow
@@ -70,7 +70,7 @@ def sally(my_string_dep: MyStringDependency):
 
 ## New Primitives
 
-We've added support for [GCP Cloud SQL](/primitives/gcp/cloud_sql) instance and database primitives. These primitives allow you to easily manage resources, and can be used with our new [dependencies](#dependencies) feature to easily connect to your database.
+We've added support for [GCP Cloud SQL](/buildflow/primitives/gcp/cloud_sql) instance and database primitives. These primitives allow you to easily manage resources, and can be used with our new [dependencies](#dependencies) feature to easily connect to your database.
 
 ```python
 from buildflow import Flow
@@ -109,4 +109,4 @@ def endpoint(db_dep: DB):
 
 ```
 
-In just a few lines of code you have a config management system for your database and a dependency that can be injected into any processor to maintain a [consistant database connection](/dependencies/sqlalchemy).
+In just a few lines of code you have a config management system for your database and a dependency that can be injected into any processor to maintain a [consistant database connection](/buildflow/dependencies/sqlalchemy).

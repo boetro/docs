@@ -4,16 +4,16 @@ icon: database
 description: "Build a journal entry app with permanent storage and user authentication."
 ---
 
-In this walkthrough we will be creating a simple CRUD API that allows users to log in with their Google account and create and update journal entries. These entries will be stored in a Postgres database hosted on GCP and will be accessible to the user when they log in.
+In this example we will be creating a simple CRUD API that allows users to log in with their Google account and create and update journal entries. These entries will be stored in a Postgres database hosted on GCP and will be accessible to the user when they log in.
 
-Our API will be built using [endpoints](/programming-guide/endpoints) and our databased will be hosted on [Google Cloud SQL](http://localhost:3000/buildflow/primitives/gcp/cloud_sql) that we connect to via [SQLAlchemy](http://localhost:3000/buildflow/dependencies/sqlalchemy).
-
-
-Before completing the walkthrough ensure you have [installed BuildFlow](/programming-guide/install)
-with all [extra dependencies](/programming-guide/install#extra-dependencies).
+Our API will be built using [endpoints](/buildflow/programming-guide/endpoints) and our databased will be hosted on [Google Cloud SQL](/buildflow/primitives/gcp/cloud_sql) that we connect to via [SQLAlchemy](/buildflow/dependencies/sqlalchemy).
 
 
-To run this walkthrough on resources created on GCP use [this github repo](https://github.com/launchflow/gcp-saas-example).
+Before completing the example ensure you have [installed BuildFlow](/buildflow/programming-guide/install)
+with all [extra dependencies](/buildflow/programming-guide/install#extra-dependencies).
+
+
+To run this example on resources created on GCP use [this github repo](https://github.com/launchflow/gcp-saas-example).
 <Note>    
     In order to run this code you will need to have a GCP project created that you have access to.
 

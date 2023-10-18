@@ -22,12 +22,12 @@ Before getting started with BuildFlow, it's important to understand the core con
 
 ## Buildflow Yaml
 
-The [buildflow.yaml](/programming-guide/buildflow-yaml) file is a configuration file that defines your application. This can be used to configure what primitives and resources your application manages and connects to.
+The [buildflow.yaml](/buildflow/programming-guide/buildflow-yaml) file is a configuration file that defines your application. This can be used to configure what primitives and resources your application manages and connects to.
 
 
 ## Flows
 
-The [Flow](/programming-guide/flows) class is the entrypoint into the BuildFlow Framework. They act as a container type for user-defined Processors and are responsible for orchestrating the Processors across the Runtime and Infrastructure submodules.
+The [Flow](/buildflow/programming-guide/flows) class is the entrypoint into the BuildFlow Framework. They act as a container type for user-defined Processors and are responsible for orchestrating the Processors across the Runtime and Infrastructure submodules.
 
 TLDR; Flows act as a container type for a user's application:
 ```python
@@ -40,12 +40,12 @@ app = Flow()
 
 ## Processors
 
-At a high-level, [Processors](/programming-guide/processors) are a user-defined function that are individually scalable. 
+At a high-level, [Processors](/buildflow/programming-guide/processors) are a user-defined function that are individually scalable. 
 BuildFlow offers different **patterns** of processors to handle different use-cases ([endpoints](#endpoints), [collectors](#collectors), [consumers](#consumers)).
 
 
 ### Endpoints
-An [endpoint](/programming-guide/endpoints) is a processor pattern intended for serving data over HTTP.
+An [endpoint](/buildflow/programming-guide/endpoints) is a processor pattern intended for serving data over HTTP.
 Endpoints can be grouped under a [service](#services) that allows multiple endpoints to be scaled and deployed together.
 
 ```python
@@ -58,7 +58,7 @@ def my_processor(request: MyRequestType):
 
 ### Collectors
 
-A [collector](/programming-guide/collectors) is a processor pattern intended for receiving data over HTTP and dumping it to a sink.
+A [collector](/buildflow/programming-guide/collectors) is a processor pattern intended for receiving data over HTTP and dumping it to a sink.
 
 ```python
 @app.collector("/", method="post", sink=...)
@@ -68,7 +68,7 @@ def my_processor(request: MyRequestType):
 ```
 
 ### Consumers
-A [consumer](/programming-guide/consumers) is a processor pattern intended for event driven data processing. Consumers read from an unbounded source such as (Kafka, AWS SQS, or GCP Pub/Sub) and outputs to a Sink. They are attached to a Flow by using the `@app.consumer` decorator.
+A [consumer](/buildflow/programming-guide/consumers) is a processor pattern intended for event driven data processing. Consumers read from an unbounded source such as (Kafka, AWS SQS, or GCP Pub/Sub) and outputs to a Sink. They are attached to a Flow by using the `@app.consumer` decorator.
 
 ```python
 @app.consumer(source=..., sink=...)
@@ -123,11 +123,11 @@ def my_consumer(payload: MyPayloadType):
 
 ## Primitives
 
-[Primitives](/programming-guide/primitives) represent an individual resource that a processor may read, write to, or simply reference. For example, a `BigQueryTable` is a primitive that represents a single BigQuery table. Primitives define how to read from a source, write to a sink, and also how to manage the primitive with pulumi. 
+[Primitives](/buildflow/programming-guide/primitives) represent an individual resource that a processor may read, write to, or simply reference. For example, a `BigQueryTable` is a primitive that represents a single BigQuery table. Primitives define how to read from a source, write to a sink, and also how to manage the primitive with pulumi. 
 
-Primitives can be used as inputs (Sources) or outputs (Sinks) for consumers and collectors. A full list of our support primitives can be found in our [primitive docs](/primitives/). You can also [define your own primitives](/programming-guide/primitives#creating-custom-primitives) for reading, writing, and managing custom resources.
+Primitives can be used as inputs (Sources) or outputs (Sinks) for consumers and collectors. A full list of our support primitives can be found in our [primitive docs](/buildflow/primitives/). You can also [define your own primitives](/buildflow/programming-guide/primitives#creating-custom-primitives) for reading, writing, and managing custom resources.
 
 ## Dependencies
 
-[Dependencies](/programming-guide/dependencies) are any thing that is needed to call your processor. For example maybe you need to open a connection to your database, or maybe you need to download a model from a remote bucket.
+[Dependencies](/buildflow/programming-guide/dependencies) are any thing that is needed to call your processor. For example maybe you need to open a connection to your database, or maybe you need to download a model from a remote bucket.
 BuildFlow allows you define any dependencies, and also provides many dependencies out of the box to make your integrations easier.
