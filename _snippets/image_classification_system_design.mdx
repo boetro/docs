@@ -2,9 +2,10 @@
 <img className="hidden dark:block" src="/images/image-classification-design-dark.gif" />
 
 Our application will:
-1. Expose an [endpoint](/buildflow/programming-guide/endpoints) that allows users to upload images
-2. When our endpoint receives an image, it will upload the image to a bucket ([GCS](/buildflow/primitives/gcp/gcs) or [S3](/buildflow/primitives/aws/s3))
-3. When the image is uploaded it will trigger a notification to our queue ([GCP Pub/Sub](/buildflow/primitives/gcp/pubsub) or [AWS SQS](/buildflow/primitives/aws/sqs))
-4. Our [consumer]((/buildflow/programming-guide/endpoints)) will receive this notification and run the image through an image classification model using [ImageAI](https://github.com/OlafenwaMoses/ImageAI)
-5. The results of the image classification will be stored in a data warehouse ([BigQuery]((/buildflow/primitives/gcp/bigquery)) or [DuckDB](/buildflow/primitives/duckdb))
-6. The data warehouse will be exposed by another endpoint
+1. Load our model from local storage in a [dependency](/buildflow/programming-guide/dependencies) ensuring the model is ready before we receive image uploads, and it can be shared across requests.
+2. Expose an [endpoint](/buildflow/programming-guide/endpoints) that allows users to upload images
+3. When our endpoint receives an image, it will upload the image to a bucket ([GCS](/buildflow/primitives/gcp/gcs) or [S3](/buildflow/primitives/aws/s3))
+4. When the image is uploaded it will trigger a notification to our queue ([GCP Pub/Sub](/buildflow/primitives/gcp/pubsub) or [AWS SQS](/buildflow/primitives/aws/sqs))
+5. Our [consumer]((/buildflow/programming-guide/endpoints)) will receive this notification and run the image through an image classification model using [ImageAI](https://github.com/OlafenwaMoses/ImageAI)
+6. The results of the image classification will be stored in a data warehouse ([BigQuery]((/buildflow/primitives/gcp/bigquery)) or [DuckDB](/buildflow/primitives/duckdb))
+7. The data warehouse will be exposed by another endpoint
