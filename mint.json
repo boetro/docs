@@ -24,12 +24,20 @@
     "name": "Sign Up"
   },
   "primaryTab": {
-    "name": "LaunchFlow Cloud"
+    "name": "Home"
   },
   "tabs": [
     {
       "name": "BuildFlow",
       "url": "buildflow"
+    },
+    {
+      "name": "LaunchFlow Cloud",
+      "url": "launchflow-cloud"
+    },
+    {
+      "name": "Developer Tools",
+      "url": "developer-tools"
     },
     {
       "name": "Release Notes",
@@ -50,9 +58,15 @@
   ],
   "navigation": [
     {
-      "group": "Get Started",
+      "group": "",
       "pages": [
-        "introduction"
+        "home"
+      ]
+    },
+    {
+      "group": "LaunchFlow Cloud",
+      "pages": [
+        "launchflow-cloud/introduction"
       ]
     },
     {
@@ -159,6 +173,18 @@
             "buildflow/reference/cli/run"
           ]
         }
+      ]
+    },
+    {
+      "group": "",
+      "pages": [
+        "developer-tools/introduction"
+      ]
+    },
+    {
+      "group": "VS Code Extension",
+      "pages": [
+        "developer-tools/vs-code-extension/introduction"
       ]
     },
     {
