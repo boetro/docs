@@ -3,9 +3,10 @@ In this tutorial we'll introduce you to BuildFlow and BuildFlow concepts by walk
 
 All the code for this tutorial can be found on [github](https://github.com/launchflow/buildflow-aws-image-classification); we will be walking through this repo step by step.
 
-## buildflow.yaml
+## Define your Project
 
-The `buildflow.yaml` defines our [buildflow project](/buildflow/programming-guide/buildflow-yaml). This is created when we use the [BuildFlow CLI](/buildflow/reference/cli/init) to create a new project, and doesn't need to be updated unlesss you need to add something.
+Your project is defined by the presenence of a `buildflow.yaml` [file](/buildflow/programming-guide/buildflow-yaml) in the root of your project.
+This is created when we use the [BuildFlow CLI](/buildflow/reference/cli/init) to create a new project, and doesn't need to be updated unlesss you need to add something.
 
 Our yaml file defines the following:
 - [**project**](/buildflow/programming-guide/buildflow-yaml#project): the name of our project; this can be updated to any string containing lower-case letters and hyphens
@@ -22,9 +23,9 @@ pulumi_config:
 entry_point: main:app
 ```
 
-## main.py
+## Initialize your Flow
 
-This file is where we start to define our logic. `app = Flow(...)` creates our [Flow object](/buildflow/programming-guide/flows) which is a container for all of our buisness logic and resources.
+We define our flow in `main.py` this is the entry point we defined in our `buildflow.yaml` file. `app = Flow(...)` creates our [Flow object](/buildflow/programming-guide/flows) which is a container for all of our buisness logic and resources.
 You'll notice we call a couple methods on our flow object.
 
 - **manage**: this method marks a [primitive](/buildflow/primitives) as being managed. Meaning it can be created, updated, and destroyed by buildflow.
@@ -49,9 +50,9 @@ app.add_service(service)
 app.add_consumer(classify_image)
 ```
 
-## primitives.py
+## Create your Primitives
 
-Here we define all of the [primitives](/buildflow/programming-guide/primitives) used by our applications. Primitives are resources that a processor may read from, write to, or referenced.
+In `primitives.py` we define all of the [primitives](/buildflow/programming-guide/primitives) used by our applications. Primitives are resources that a processor may read from, write to, or referenced.
 
 <Tip>
     You may have noticed these same primitives were passed into `app.manage` this means they will be created when you run `buildflow run` for the first time.
@@ -82,13 +83,14 @@ table = DuckDBTable(
 )
 ```
 
-## dependencies.py
+## Add your Dependencies
 
 In `dependencies.py` we set up a [dependencies](/buildflow/programming-guide/dependencies) that will be used by our endpoints and consumer. Dependencies allow us to precompute / share code between processors. In our case we want to load the model when we start our application before any data is processed.
 
 We do this by defining the `ModelDep` you can see we add the decorator `@dependency(scope=Scope.REPLICA)` which annotates the class as a dependency that should be created before a [replica](/buildflow/concepts#replicas) starts to process data.
 
 We also define a `BucketDep` which is a [bucket dependency](/buildflow/dependencies/bucket) that allows us to connect to the bucket associated with our bucket primitive we defined in [primitives.py](/buildflow/tutorial#image-classification-primitives-py)
+
 ```python
 import os
 
@@ -112,7 +114,7 @@ class ModelDep:
 BucketDep = BucketDependencyBuilder(bucket)
 ```
 
-## processors/service.py
+## Add your Service
 
 In `service.py` we define our actual endpoints that will be used by our users.  First we create a service with `service = Service(...)` then attach endpoints to functions using `@service.endpoint(...)`.
 
@@ -173,7 +175,7 @@ def image_upload_results():
     )
 ```
 
-## processors/consumer.py
+## Add Async Processing
 
 `consumer.py` is where we send our images through the model. We do this by attaching the `@consumer` decorator to our 
 `classify_image` function.

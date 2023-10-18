@@ -1,7 +1,7 @@
 
 In this guide we'll introduce you to BuildFlow and BuildFlow concepts by writing a simple image classification application.
 
-All the code for this tutorial can be found on [github](https://github.com/launchflow/buildflow-gcp-image-classification); we will be walking through this repo step by step.
+All the code for this tutorial can be found on [github](https://github.com/launchflow/buildflow-local-image-classification); we will be walking through this repo step by step.
 
 ## Define your Project
 
@@ -28,104 +28,22 @@ entry_point: main:app
 We define our flow in `main.py` this is the entry point we defined in our `buildflow.yaml` file. `app = Flow(...)` creates our [Flow object](/buildflow/programming-guide/flows) which is a container for all of our buisness logic and resources.
 You'll notice we call a couple methods on our flow object.
 
-- **manage**: this method marks a [primitive](/buildflow/primitives) as being managed. Meaning it can be created, updated, and destroyed by buildflow.
 - **add_service**: attaches a service to our flow. A service is a container of [endpoints](/buildflow/programming-guide/endpoints), our service will be used for allowing users to upload images to our application.
 - **add_consumer**: attaches a [consumer](/buildflow/programming-guide/consumers) to our flow. A consumer allows us to asynchronously process image uploads meaning it won't block the users request!
 
-
-```python
-from buildflow import Flow, FlowOptions
-
-from image_classification import primitives
-from image_classification.processors.consumer import classify_image
-from image_classification.processors.service import service
-from image_classification.settings import env
-
-app = Flow(
-    flow_options=FlowOptions(
-        gcp_service_account_info=env.gcp_service_account_info, stack=env.env.value
-    )
-)
-app.manage(
-    primitives.bucket,
-    primitives.dataset,
-    primitives.table,
-    primitives.file_change_stream,
-)
-app.add_service(service)
-app.add_consumer(classify_image)
-```
-
-## Create your Primitives
-
-In `primitives.py` we define all of the [primitives](/buildflow/programming-guide/primitives) used by our applications. Primitives are resources that a processor may read from, write to, or referenced.
-
 <Tip>
-    You may have noticed these same primitives were passed into `app.manage` this means they will be created when you run `buildflow run` for the first time.
+    Since this is local we don't have any primitives to create in our cloud provider. See the GCP or AWS tutorials for an example of that.
 </Tip>
 
-We define 4 primitives here:
-
-- **bucket**: a [GCS bucket](/buildflow/primitives/gcp/gcs) where we will upload user images to.
-- **file_change_stream***: a [GCS File Change Stream](/buildflow/primitives/gcp/gcs_file_change_stream) which sets up notifications for when a file is uploaded to our bucket. This is what triggers our image upload model to be called.
-- **dataset***: a [BigQuery dataset](/buildflow/primitives/gcp/bigquery#bigquerydataset), this is a container for our BigQuery table.
-- **table**: a [BigQuery table](/buildflow/primitives/gcp/bigquery#bigquerytable) where we will store our image classifications results. 
-
 ```python
-from buildflow.io.gcp import (
-    GCSFileChangeStream,
-    BigQueryTable,
-    GCSBucket,
-    BigQueryDataset,
-)
+from buildflow import Flow
 
-from image_classification.settings import env
-from image_classification.schemas import ImageClassificationRow
+from image_classification.processors.consumer import classify_image
+from image_classification.processors.service import service
 
-bucket = GCSBucket(
-    project_id=env.gcp_project_id,
-    bucket_name=f"{env.gcp_project_id}-image-classification",
-).options(force_destroy=True)
-file_change_stream = GCSFileChangeStream(gcs_bucket=bucket)
-
-dataset = BigQueryDataset(
-    project_id=env.gcp_project_id,
-    dataset_name="buildflow_image_classification_walkthrough",
-)
-table = BigQueryTable(dataset=dataset, table_name="image_classification").options(
-    schema=ImageClassificationRow
-)
-```
-
-## Add your Dependencies
-
-In `dependencies.py` we set up [dependencies](/buildflow/programming-guide/dependencies) that will be used by our endpoints and consumer. Dependencies allow us to precompute / share code between processors. In our case we want to load the model when we start our application before any data is processed.
-
-We do this by defining the `ModelDep` you can see we add the decorator `@dependency(scope=Scope.REPLICA)` which annotates the class as a dependency that should be created before a [replica](/buildflow/concepts#replicas) starts to process data.
-
-We also define a `BucketDep` which is a [bucket dependency](/buildflow/dependencies/bucket) that allows us to connect to the bucket associated with our bucket primitive we defined in [primitives.py](/buildflow/tutorial#image-classification-primitives-py)
-
-```python
-import os
-
-from buildflow.dependencies import dependency, Scope
-from buildflow.dependencies.bucket import BucketDependencyBuilder
-from imageai.Classification import ImageClassification
-
-from image_classification.primitives import bucket
-
-
-@dependency(scope=Scope.REPLICA)
-class ModelDep:
-    def __init__(self) -> None:
-        self.execution_path = os.path.dirname(os.path.realpath(__file__))
-        self.prediction = ImageClassification()
-        self.prediction.setModelTypeAsMobileNetV2()
-        self.prediction.setModelPath("mobilenet_v2-b0353104.pth")
-        self.prediction.loadModel()
-
-
-BucketDep = BucketDependencyBuilder(bucket)
+app = Flow()
+app.add_service(service)
+app.add_consumer(classify_image)
 ```
 
 ## Add your Service
@@ -144,13 +62,14 @@ We define three endpoints here:
 - **image_upload_results**: this endpoint returns a simple html page that displays the results of our image classification model. It does this by querying our BigQuery table and then rendering the results as a table.
 
 ```python
+import os
+
 from buildflow import Service
 from buildflow.requests import UploadFile
 from buildflow.responses import FileResponse, HTMLResponse
-from google.cloud import bigquery
+import duckdb
 import pandas as pd
 
-from image_classification.dependencies import BucketDep
 from image_classification.primitives import table
 
 service = Service(service_id="image-classification")
@@ -162,23 +81,28 @@ def index():
 
 
 @service.endpoint("/image-upload", method="POST")
-def image_upload(image_file: UploadFile, bucket_dep: BucketDep):
-    blob = bucket_dep.bucket.blob(image_file.filename)
-    blob.upload_from_file(image_file.file)
+async def image_upload(image_file: UploadFile):
+    new_file_path = os.path.join("image_folder", image_file.filename)
+    with open(new_file_path, "wb") as f:
+        file_bytes = await image_file.read()
+        f.write(file_bytes)
+    with open(new_file_path, "rb") as f:
+        file_bytes = f.read()
 
 
 def generate_inner_table(row):
     inner_df = pd.DataFrame.from_records(row["classifications"])
-    return inner_df.to_html(classes="table-auto", index=False, border=1).replace(
-        "\n", ""
-    )
+    return inner_df.to_html(
+        classes="table-auto".split(" "),
+        index=False,
+        border=1,
+    ).replace("\n", "")
 
 
 @service.endpoint("/image-upload-results", method="GET")
 def image_upload_results():
-    bigquery_client = bigquery.Client()
-    results = bigquery_client.query(f"SELECT * FROM {table.primitive_id()}")
-    df = results.to_dataframe()
+    conn = duckdb.connect(database=table.database, read_only=True)
+    df = conn.execute(f"SELECT * FROM {table.table}").fetchdf()
     df["classifications"] = df.apply(generate_inner_table, axis=1)
 
     return HTMLResponse(
@@ -201,34 +125,26 @@ def image_upload_results():
 </Tip>
 
 Our consumer function takes in two arguments:
-- **file_event: GCSFileChangeEvent** - this is the input to our consumer that is generate when ever an image is uploaded to our bucket (whenever our endpoint is called).
+- **file_event: FileChangeEvent** - this is the input to our consumer that is generate when ever an image is uploaded to our bucket (whenever our endpoint is called).
 - **model: ModelDep** - this is the dependency we defined in [dependency.py](/buildflow/tutorial#image-classification-dependencies-py) that loaded the model.
 
 ```python
 import datetime
-import os
-import tempfile
 
 from buildflow import consumer
-from buildflow.types.gcp import GCSFileChangeEvent
-
+from buildflow.types.local import FileChangeEvent
 from image_classification.dependencies import ModelDep
-from image_classification.primitives import table, file_change_stream
+from image_classification.primitives import table, file_stream
 from image_classification.schemas import Classification, ImageClassificationRow
 
 
-@consumer(source=file_change_stream, sink=table)
+@consumer(source=file_stream, sink=table)
 def classify_image(
-    file_event: GCSFileChangeEvent, model: ModelDep
+    file_event: FileChangeEvent, model: ModelDep
 ) -> ImageClassificationRow:
-    with tempfile.TemporaryDirectory() as td:
-        file_path = os.path.join(td, file_event.file_path)
-        # Download the bytes to a local file that can be sent through the model
-        with open(file_path, "wb") as f:
-            f.write(file_event.blob)
-        predictions, probabilities = model.prediction.classifyImage(
-            file_path, result_count=5
-        )
+    predictions, probabilities = model.prediction.classifyImage(
+        file_event.file_path, result_count=5
+    )
     classifications = []
     for predicition, probability in zip(predictions, probabilities):
         classifications.append(Classification(predicition, probability))
@@ -252,4 +168,4 @@ Some other files we didn't mention that are also in the repo:
 
 ## Running The Application
 
-<Snippet file="gcp_image_classification.mdx" />
+<Snippet file="local_image_classification.mdx" />
