@@ -46,9 +46,33 @@ app.add_service(service)
 app.add_consumer(classify_image)
 ```
 
+## Add your Dependencies
+
+In `dependencies.py` we set up [dependencies](/buildflow/programming-guide/dependencies) that will be used by our endpoints and consumer. Dependencies allow us to precompute and share code between processors. In our case we want to load the model when we start our application before any data is processed.
+
+We do this by defining the `ModelDep` class and add the decorator `@dependency(scope=Scope.REPLICA)` which annotates the class as a dependency that should be created before a [replica](/buildflow/concepts#replicas) starts to process data.
+
+```python
+import os
+
+from buildflow.dependencies import dependency, Scope
+from imageai.Classification import ImageClassification
+
+
+@dependency(scope=Scope.REPLICA)
+class ModelDep:
+    def __init__(self) -> None:
+        self.execution_path = os.path.dirname(os.path.realpath(__file__))
+        self.prediction = ImageClassification()
+        self.prediction.setModelTypeAsMobileNetV2()
+        self.prediction.setModelPath("mobilenet_v2-b0353104.pth")
+        self.prediction.loadModel()
+```
+
+
 ## Add your Service
 
-In `service.py` we define our actual endpoints that will be used by our users.  First we create a service with `service = Service(...)` then attach endpoints to functions using `@service.endpoint(...)`.
+In `service.py` we define our actual endpoints that will be called by our users.  First we create a service with `service = Service(...)` then attach endpoints to functions using `@service.endpoint(...)`.
 
 <Tip>
     Remember we attached our service to our flow in `main.py` with `app.add_service`
@@ -57,9 +81,9 @@ In `service.py` we define our actual endpoints that will be used by our users.  
 
 We define three endpoints here:
 
-- **index**: this endpoint returns a simple html page that allows users to upload images.
-- **image_upload**: this endpoint allows users to upload an image and we upload them to our remote bucket. It takes in an [UploadFile](/buildflow/programming-guide/requests#uploadfile) which is a file that has been uploaded by a user. We also take in the `bucket_dep` dependency we defined earlier. This allows us to upload the file to our bucket using the [Google Cloud Storage client library](https://cloud.google.com/python/docs/reference/storage/latest/google.cloud.storage.blob.Blob#google_cloud_storage_blob_Blob_upload_from_file).
-- **image_upload_results**: this endpoint returns a simple html page that displays the results of our image classification model. It does this by querying our BigQuery table and then rendering the results as a table.
+- **index**: this endpoint returns a simple HTML page that allows users to upload images.
+- **image_upload**: this endpoint allows users to upload an image; then we move it to our image processing folder. It takes in an [UploadFile](/buildflow/programming-guide/requests#uploadfile) which is a file that has been uploaded by a user.
+- **image_upload_results**: this endpoint returns a simple HTML page that displays the results of our image classification model. It does this by querying our DuckDB table and then rendering the results as a table.
 
 ```python
 import os
@@ -163,7 +187,7 @@ Some other files we didn't mention that are also in the repo:
 - **settings.py** - this loads in a `.env` file for configuring our environment variables
 - **schemas.py** - defines our API schemas for request and respones
 - **requirements.txt** - defines our python dependencies
-- **index.html** - a simple html page for uploading images
+- **index.html** - a simple HTML page for uploading images
 
 
 ## Running The Application
