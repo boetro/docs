@@ -7,12 +7,7 @@ description: "Upload images to a bucket and then run them through an image class
 
 In this example we will create an endpoint to upload images to a bucket and then run them through an image classification model using [ImageAI](https://github.com/OlafenwaMoses/ImageAI).
 
-We will use:
-- An [endpoint](/buildflow/programming-guide/endpoints) for receiving image uploads from a user
-- A [bucket dependency](/buildflow/dependencies/bucket) to upload the image to a bucket
-- A [custom dependency](/buildflow/programming-guide/dependencies) for loading a model that can be shared across requests
-- A [consumer](/buildflow/programming-guide/consumers) that consumes notifications of file uploads and runs the image classification model
-
+<Snippet file="image_classification_system_design.mdx" />
 
 Before completing the example ensure you have [installed BuildFlow](/buildflow/programming-guide/install)
 with all [extra dependencies](/buildflow/programming-guide/install#extra-dependencies).

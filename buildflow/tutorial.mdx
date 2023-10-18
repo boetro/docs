@@ -3,18 +3,9 @@ title: 'Tutorial: Image Classification'
 description: 'Upload images to a bucket and then run them through an image classification model.'
 ---
 
-In this guide we'll introduce you to BuildFlow and BuildFlow concepts by writing a simple image classification application.
+In this guide we'll introduce you to BuildFlow and BuildFlow concepts by walking through a simple image classification application.
 
-<img className="block dark:hidden" src="/images/image-classification-design-light.gif" />
-<img className="hidden dark:block" src="/images/image-classification-design-dark.gif" />
-
-Our application will:
-1. Expose and endpoint that allows users to upload images
-2. When our endpoint receives an image, it will upload the image to a bucket (GCS or S3)
-3. When the image is uploaded it will trigger a notification on our queue (GCP Pub/Sub or AWS SQS)
-4. Our consumer will receive this notification and run the image through an image classification model
-5. The results of the image classification will be stored in a data warehouse (BigQuery or DuckDB)
-6. The data warehouse will be exposed by another endpoint
+<Snippet file="image_classification_system_design.mdx" />
 
 
 <Tabs groupId="cloud-types">
