@@ -4,10 +4,15 @@ icon: rocketchat
 description: "Serve a Llama 2 Model hosted in a remote storage bucket."
 ---
 
-In this example we will create a chatbot that uses the Llama2 7b chat model. This model is stored in a remote bucket (either GCS or S3) and gets downloaded and loaded when we start our application.
+In this example we will create a chatbot that uses the Llama2 7b chat model.
 
-Our model will be served using an [endpoint](/buildflow/programming-guide/endpoints) that loads our model via a [custom dependency](/buildflow/programming-guide/dependencies) that will be shared across requests.
+<img className="block dark:hidden" src="/images/model-serving-design-light.gif" />
+<img className="hidden dark:block" src="/images/model-serving-design-dark.gif" />
 
+Our application will:
+1. Download our model from remote storage in a [dependency](/buildflow/programming-guide/dependencies) ensuring the model is ready before we receive traffic, and it can be shared across requests.
+2. Expose an [endpoint](/buildflow/programming-guide/endpoints) that allows chat with the model
+3. When our endpoint is called it will send the request through the model and return the response.
 
 Before completing the example ensure you have [installed BuildFlow](/buildflow/programming-guide/install)
 with all [extra dependencies](/buildflow/programming-guide/install#extra-dependencies).

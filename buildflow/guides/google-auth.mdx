@@ -1,0 +1,134 @@
+---
+title: "Authenticate Users with Google"
+---
+
+In this guide we will implement the [OAuth2 Web Server flow](https://developers.google.com/identity/protocols/oauth2#webserver) with BuildFlow, and allow users to login to our application.
+All the code for this guide can be found on [GitHub](https://github.com/launchflow/buildflow-samples/tree/main/google-auth).
+
+To do this we will use:
+
+- [endpoints](/buildflow/programming-guide/endpoints): to create necessary endpoints for authentication
+- [Google auth dependency](/buildflow/dependencies/auth#authenticated-google-user): to ensure requests are properly authenticated
+
+<Steps>
+    <Step title="Initialize Flow">
+        First we create a new BuildFlow [Flow](/buildflow/programming-guide/flows). This will be the main entry point to our application.
+
+        ```python
+        app = Flow()
+        ```
+    </Step>
+    <Step title="Attach a Service">
+        We then attach a service to our flow object and ensure that the [SessionMiddleware](/buildflow/programming-guide/endpoints#sessionmiddleware) to allow us to store credentials in a session.
+
+        ```python
+        service = app.service(service_id="auth-sample")
+        service.add_middleware(SessionMiddleware, secret_key=str(uuid.uuid4()))
+        ```
+    </Step>
+    <Step title="Define Auth Dependency">
+        Next we define a [dependency](/buildflow/programming-guide/dependencies) that will consume an incoming HTTP request and validate the user is authenticated with Google.
+
+        <Note>
+            We set `raise_on_unauthenticated=False` to ensure that if the user is not authenticated, the dependency will return `None` instead of raising an exception.
+            This allows us to issue a redirect to our login page.
+        </Note>
+
+        ```python
+        # Set up a google user if the user is authenticated
+        # We use `session_id_token` to indicate we can use "token_id" from the session
+        # to fetch the user id token.
+        MaybeAuthenticatedGoogleUser = AuthenticatedGoogleUserDepBuilder(
+            session_id_token="id_token", raise_on_unauthenticated=False
+        )
+        ```
+    </Step>
+    <Step title="Add a Serving Endpoint">
+        Now we can add a serving endpoint to our service. This endpoint will say hello to the user, or redirect them to the login page if they have not logged in.
+
+        You see that we consume our `MaybeAuthenticatedGoogleUser` dependency to get the user's information for each request to the endpoint.
+
+        ```python
+        @service.endpoint(route="/", method="GET")
+        async def index(user_dep: MaybeAuthenticatedGoogleUser) -> str:
+            if user_dep.google_user is None:
+                return RedirectResponse("/auth/login")
+            return f"Hello {user_dep.google_user.name}"
+        ```
+    </Step>
+    <Step title="Setup our Google OAuth Client">
+        We use the [google-auth-oauthlib](https://pypi.org/project/google-auth-oauthlib/) client library to setup an OAuth client for authenticating with Google. This library takes in a [client configuration](https://github.com/googleapis/google-api-python-client/blob/main/docs/client-secrets.md) that is pointed at your configured [OAuth2 Credentials](https://support.google.com/cloud/answer/6158849?hl=en).
+
+        <Tip>
+        This config looks for your client ID and client secret as environment variables.
+        </Tip>
+
+        ```python
+        @dependency(scope=Scope.REPLICA)
+        class AuthFlow:
+            def __init__(self):
+                self.client = google_auth_flow.Flow.from_client_config(
+                    {
+                        "web": {
+                            "client_id": os.environ["CLIENT_ID"],
+                            "client_secret": os.environ["CLIENT_SECRET"],
+                            "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+                            "token_uri": "https://oauth2.googleapis.com/token",
+                            "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+                            "redirect_uris": [
+                                "http://localhost:8000/auth/callback/google",
+                            ],
+                            "javascript_origins": "http://localhost:8000",
+                        }
+                    },
+                    scopes=[
+                        "openid",
+                        "https://www.googleapis.com/auth/userinfo.email",
+                        "https://www.googleapis.com/auth/userinfo.profile",
+                    ],
+                )
+                self.client.redirect_uri = "http://localhost:8000/auth/callback/google"
+        ```
+    </Step>
+    <Step title="Add Auth Endpoints">
+    Finally we add two endpoints for authenticating a user with Google.
+
+    - **/auth/login**: This endpoint is where a user is redirected to login. It uses our google OAuth client to generate an authorization URL and redirects the user to that URL.
+    - **/auth/callback/google**: This endpoint is where Google redirects the user after they have logged in. We fetch the user's ID token and store it in the session.
+
+    ```python
+    @service.endpoint(route="/auth/login", method="GET")
+    async def auth_login(auth_flow: AuthFlow):
+        authorization_url, state = auth_flow.client.authorization_url(
+            access_type="offline",
+            include_granted_scopes="true",
+            approval_prompt="force",
+        )
+        return RedirectResponse(authorization_url)
+
+
+    def fetch_id_token(code: str, auth_flow: AuthFlow) -> str:
+        creds = dict(auth_flow.client.fetch_token(code=code))
+        return creds["id_token"]
+
+
+    @service.endpoint("/auth/callback/google", method="GET")
+    async def auth_callback(request: Request, auth_flow: AuthFlow):
+        code = request.query_params.get("code")
+        if code is None:
+            raise HTTPException(401)
+        user_id_token = fetch_id_token(code, auth_flow)
+        request.session["id_token"] = user_id_token
+        return RedirectResponse("/")
+    ```
+    </Step>
+    <Step title="Run the Code">
+    Before running either update the code to use your own client ID and client secret, or set the environment variables `CLIENT_ID` and `CLIENT_SECRET` to your own values.
+
+    You can now run the code locally with the VS Code extension or by running the below command in the root directory of the project:
+
+    ```bash
+    buildflow run
+    ```
+    </Step>
+</Steps>

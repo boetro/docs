@@ -6,8 +6,15 @@ description: "Build a journal entry app with permanent storage and user authenti
 
 In this example we will be creating a simple CRUD API that allows users to log in with their Google account and create and update journal entries. These entries will be stored in a Postgres database hosted on GCP and will be accessible to the user when they log in.
 
-Our API will be built using [endpoints](/buildflow/programming-guide/endpoints) and our databased will be hosted on [Google Cloud SQL](/buildflow/primitives/gcp/cloud_sql) that we connect to via [SQLAlchemy](/buildflow/dependencies/sqlalchemy).
 
+<img className="block dark:hidden" src="/images/saas-design-light.gif" />
+<img className="hidden dark:block" src="/images/saas-design-dark.gif" />
+
+Our application will:
+1. Connect to our postgres data base using BuildFlow's [SQLAlchemy](/buildflow/dependencies/sqlalchemy) [dependency](/buildflow/programming-guide/dependencies).
+2. Check if the request was authenticated. If not we will redirect the user to a login page, and perform the [authentication flow](https://developers.google.com/identity/protocols/oauth2#webserver).
+3. If this is the user's first time logging in we will create a new user in our database.
+4. Handle the users request to create, read, update or delete journels stored in our postgres database
 
 Before completing the example ensure you have [installed BuildFlow](/buildflow/programming-guide/install)
 with all [extra dependencies](/buildflow/programming-guide/install#extra-dependencies).
@@ -36,7 +43,7 @@ To run this example on resources created on GCP use [this github repo](https://g
         Rename the `template.env` to `.env` and update all variables
 
 <Tip>
-    You will need to create OAuth 2.0 credentials to fill out these variables: https://developers.google.com/identity/protocols/oauth2#1.-obtain-oauth-2.0-credentials-from-the-dynamic_data.setvar.console_name-.
+    You will need to [create OAuth 2.0 credentials](https://support.google.com/cloud/answer/6158849?hl=en) to fill out these variables.
 
     Or you can use one you already have in place if you want.
 </Tip>

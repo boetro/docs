@@ -75,7 +75,17 @@
         "buildflow/introduction",
         "buildflow/concepts",
         "buildflow/quickstart",
-        "buildflow/tutorial"
+        "buildflow/tutorial",
+        {
+          "group": "Guides",
+          "pages": [
+            "buildflow/guides/manage-remote-infrastructure",
+            "buildflow/guides/google-auth",
+            "buildflow/guides/load-model",
+            "buildflow/guides/serve-from-postgres",
+            "buildflow/guides/schedule-async-tasks"
+          ]
+        }
       ]
     },
     {

@@ -1,0 +1,87 @@
+---
+title: "Manage Infrastructure"
+---
+
+You can use BuildFlow to manage your infrastructure. This removes the need to have a seperate configuration management tool such as Terraform, or from managing your infrastructure manually in the cloud console.
+All the code for this guide can be found on [GitHub](https://github.com/launchflow/buildflow-samples/tree/main/managed-resources).
+
+
+To do this you simply mark your [primitives](/buildflow/programming-guide/primitives) as managed by your [flow](/buildflow/programming-guide/flows) and BuildFlow will take care of the rest.
+
+<Steps>
+    <Step title="Initialize Flow">
+        First we create a new BuildFlow [Flow](/buildflow/programming-guide/flows). This will be the main entry point to our application.
+
+        ```python
+        app = Flow()
+        ```
+    </Step>
+    <Step title="Define our Primitives">
+        Now we define the [primitives](/buildflow/programming-guide/primitives) we would like to be managed. In our example we define an [S3Bucket](/buildflow/primitives/aws/s3) and a [GCPPubSubTopic](/buildflow/primitives/gcp/pubsub).
+
+        ```python
+        bucket = S3Bucket(bucket_name="my-bucket", aws_region="us-east-1")
+        topic = GCPPubSubTopic(topic_name="my-topic", project_id=os.environ["GCP_PROJECT_ID"])
+        ```
+    </Step>
+    <Step title="Mark our Primitives as Managed">
+        Finally we mark our primitives as managed by our flow. This tells our flow that is responsible for creating, updating, and destroying these resources.
+
+        ```python
+        app.manage(bucket, topic)
+        ```
+    </Step>
+    <Step title="Preview our Changes">
+        Now we can use the VS Code extension or the BuildFlow CLI to preview our changes:
+
+        ```
+        buildflow preview
+        ```
+
+        This will output the changes that will be made to our infrastructure. In our case we will see that a new S3 bucket and GCP PubSub topic will be created.
+
+        ```
+        Primitives to create:
+        ---------------------
+        ├── S3Bucket
+        │   └── s3://my-bucket
+        └── GCPPubSubTopic
+            └── my-project/my-topic
+        ```
+    </Step>
+    <Step title="Apply our Changes">
+        If we're happy with the preview we can now use the VS Code extension or BuildFlow CLI to apply our changes.
+
+        ```
+        buildflow apply
+        ```
+
+        This will again output the preview and ask you to confirm.
+
+        <Tip>
+            You can use [FlowOptions](/buildflow/programming-guide/flows#infrastructure) to disable the confirmation requirement.
+        </Tip>
+
+        After this step you should be able to view your infrastructure in the cloud console.
+    </Step>
+    <Step title="Update our Infrastructure">
+        If we ever change our infrastructure, for example updating a confiruration option on our bucket or topic, we can run `buildflow apply` again to have the infrastructure updated.
+    </Step>
+    <Step title="Destroy your Infrastructure">
+        If you ever want to delete all of the infrastructure for your project, you can simply run `buildflow destroy`. Similar to apply this will preview the changes and ask you to confirm.
+
+        If you no longer need a resource for your project you can simply remove it from being managed and when you run `buildflow apply` it will be deleted. For example if we no longer needed our S3 bucket we could remove it from our call to `app.manage`:
+
+        ```
+        app.manage(topic)    
+        ```
+
+        Run:
+
+        ```
+        buildflow apply
+        ```
+
+        And you will see that the S3 bucket is deleted.
+    </Step>
+</Steps>
