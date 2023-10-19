@@ -9,3 +9,7 @@ Our application will:
 5. Our [consumer]((/buildflow/programming-guide/endpoints)) will receive this notification and run the image through an image classification model using [ImageAI](https://github.com/OlafenwaMoses/ImageAI)
 6. The results of the image classification will be stored in a data warehouse ([BigQuery]((/buildflow/primitives/gcp/bigquery)) or [DuckDB](/buildflow/primitives/duckdb))
 7. The data warehouse will be exposed by another endpoint
+
+If all goes well, you should have a working image classification app like this:
+
+<img src="/images/image-classification.png" />

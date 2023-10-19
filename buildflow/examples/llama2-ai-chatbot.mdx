@@ -14,6 +14,10 @@ Our application will:
 2. Expose an [endpoint](/buildflow/programming-guide/endpoints) that allows chat with the model
 3. When our endpoint is called it will send the request through the model and return the response.
 
+If all goes well, you should have a working chatbot that looks like this:
+
+<img src="/images/chat.gif" />
+
 Before completing the example ensure you have [installed BuildFlow](/buildflow/programming-guide/install)
 with all [extra dependencies](/buildflow/programming-guide/install#extra-dependencies).
 
@@ -47,8 +51,6 @@ with all [extra dependencies](/buildflow/programming-guide/install#extra-depende
         Once running you can visit http://localhost:8000 to begin chatting with the AI!
     </Step>
     <Step title="What's next?">
-        Now that you have a working chatbot, you can start to customize it to your needs. Such as adding [google auth](/buildflow/dependencies/auth#authenticated-google-user) for user authentication or a [postgres database](/buildflow/dependencies/sqlalchemy) for permanent storage. Or even hosting your own model on a private bucket.
-
-        See our [SaaS example](/buildflow/examples/saas) for an example of how to add these features.
+        Now that you have a working chatbot, you can start to customize it to your needs. Such as adding [google auth](/buildflow/guides/google-auth) for user authentication or a [postgres database](/buildflow/guides/serve-from-postgres) for permanent storage. Or even hosting your own model on a private bucket.
     </Step>
 </Steps>
