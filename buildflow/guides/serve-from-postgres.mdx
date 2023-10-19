@@ -65,6 +65,10 @@ To see a full working project example with a UI included see our [SaaS applicati
     <Step title="Initialize Database Model">
         Now we initialize our database model that is contained in `models.py`. This will create all the tables in our database.
 
+        <Tip>
+            We put our models in a different file to avoid them being serialized with our processors.
+        </Tip>
+
         <Note>
             We surround this in a try catch because when we run `buildflow apply` the database will not exist yet.
         </Note>

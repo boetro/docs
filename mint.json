@@ -77,7 +77,7 @@
         "buildflow/quickstart",
         "buildflow/tutorial",
         {
-          "group": "Guides",
+          "group": "User Guides",
           "pages": [
             "buildflow/guides/manage-remote-infrastructure",
             "buildflow/guides/google-auth",
