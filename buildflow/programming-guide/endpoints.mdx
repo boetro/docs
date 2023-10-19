@@ -206,12 +206,14 @@ The following options are available:
 | --------------------------------------------- | ------------------------------------- |
 | **service_id**                                | A unique ID for your service. Defaults to a random UUID.                  |
 | **base_route**                                | Base route for all endpoints in the service. Defaults to `/`. This must be unique for all services in a flow.
-| **num_cpus**                                  | How many CPUs should be allocated to the processor. This can be any floating point number > 0. Defaults to 1.                       |
+| **num_cpus**                                  | How many CPUs should be allocated to the processor. This can be any floating point number > 0. Defaults to `1`.                       |
 | **log_level**                                 | Log level for the processor. Defaults to `logging.INFO`. |
 | **num_replicas**                              | Number of replicas the consumer should start with. Defaults to `1`|
 | **min_replicas**                              | Minimum number of replicas the consumer should have. Defaults to `1` |
 | **max_replicas**                              | Maximum number of replicas the consumer should have. Defaults to `1` |
-| **target_num_ongoing_requests_per_replica**   | Target number of ongoing requests per replica before scaling. Setting this lower will mean replicas are added faster, setting it higher will mean replicas are added slower. Defaults to `80` |
+| **max_concurrent_queries**                    | Maximum number of queries that are sent to a replica without receving a response. Defaults to `100` |
+| **target_num_ongoing_requests_per_replica**   | Target number of ongoing requests per replica before scaling. Setting this lower will mean replicas are added faster, setting it higher will mean replicas are added slower. Defaults to `1` |
+
 
 ### Example
 

@@ -3,6 +3,8 @@
 The run command will run the BuildFlow project in the current working directory.
 
 Options:
+- `--serve-host`: The host to used for serving endpoints and collectors (defaults to `127.0.0.1`)
+- `--serve-port`: The port to used for serving endpoints and collectors (defaults to `8000`)
 - `--start-runtime-server`: Whether to start the server for the running application (defaults to `False`).
 - `--runtime-server-host`: If `start-runtime-server` is set, this is the host it will run on (defaults to 127.0.0.1)
 - `--runtime-server-port`: If `start-runtime-server` is set, this is the port it will run on (defaults to 9653)
@@ -15,19 +17,23 @@ Run `buildflow run --help` to see available options:
 
 ```
 $ buildflow run --help
- Usage: buildflow run [OPTIONS]                                                                                                                                           
-                                                                                                                                                                          
- Run a buildflow flow.                                                                                                                                                    
-                                                                                                                                                                          
-╭─ Options ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ --start-runtime-server    --no-start-runtime-server             Whether to start the server for the running flow. [default: no-start-runtime-server]                   │
-│ --runtime-server-host                                  TEXT     The host to use for the flow server. [default: 127.0.0.1]                                              │
-│ --runtime-server-port                                  INTEGER  The port to use for the flow server. [default: 9653]                                                   │
-│ --run-id                                               TEXT     The run id to use for this run. [default: None]                                                        │
-│ --reload                  --no-reload                           Whether to reload the app on change. [default: no-reload]                                              │
-│ --from-build                                           TEXT     The build to run from, only one of app and --from-build can be used.                                   │
-│ --build-output-dir                                     TEXT     The location the build will be decompressed to. Only relevent if setting --from-build, defaults to a   │
-│                                                                 temporary directory                                                                                    │
-│ --help                                                          Show this message and exit.                                                                            │
-╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+                                                                                                                                                  
+ Usage: buildflow run [OPTIONS]                                                                                                                   
+                                                                                                                                                  
+ Run a buildflow flow.                                                                                                                            
+                                                                                                                                                  
+╭─ Options ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ --serve-host                                           TEXT     The host to use for serving endpoints and collectors. [default: 127.0.0.1]     │
+│ --serve-port                                           INTEGER  The port to use for serving endpoitns and collectors. [default: 8000]          │
+│ --start-runtime-server    --no-start-runtime-server             Whether to start the server for the running flow.                              │
+│                                                                 [default: no-start-runtime-server]                                             │
+│ --runtime-server-host                                  TEXT     The host to use for the runtime server. [default: 127.0.0.1]                   │
+│ --runtime-server-port                                  INTEGER  The port to use for the runtime server. [default: 9653]                        │
+│ --run-id                                               TEXT     The run id to use for this run. [default: None]                                │
+│ --reload                  --no-reload                           Whether to reload the app on change. [default: no-reload]                      │
+│ --from-build                                           TEXT     The build to run from, only one of app and --from-build can be used.           │
+│ --build-output-dir                                     TEXT     The location the build will be decompressed to. Only relevent if setting       │
+│                                                                 --from-build, defaults to a temporary directory                                │
+│ --help                                                          Show this message and exit.                                                    │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 ```
