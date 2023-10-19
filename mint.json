@@ -18,6 +18,9 @@
       "to": "#3789ff"
     }
   },
+  "modeToggle": {
+    "default": "dark"
+  },
   "topbarCtaButton": {
     "type": "link",
     "url": "https://launchflow.com/signup",
