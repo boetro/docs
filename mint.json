@@ -69,7 +69,16 @@
     {
       "group": "LaunchFlow Cloud",
       "pages": [
-        "launchflow-cloud/introduction"
+        "launchflow-cloud/introduction",
+        "launchflow-cloud/concepts"
+      ]
+    },
+    {
+      "group": "User Guides",
+      "pages": [
+        "launchflow-cloud/user-guides/create-a-deployment",
+        "launchflow-cloud/user-guides/monitor-a-deployment",
+        "launchflow-cloud/user-guides/update-a-deployment"
       ]
     },
     {
@@ -189,15 +198,15 @@
       ]
     },
     {
-      "group": "",
+      "group": "VS Code Extension",
       "pages": [
-        "developer-tools/introduction"
+        "developer-tools/vs-code-extension/getting-started"
       ]
     },
     {
-      "group": "VS Code Extension",
+      "group": "CLI",
       "pages": [
-        "developer-tools/vs-code-extension/introduction"
+        "developer-tools/cli/getting-started"
       ]
     },
     {
