@@ -3,8 +3,8 @@ All the code for this tutorial can be found on [github](https://github.com/launc
 
 ## Define your Project
 
-Your project is defined by the presenence of a `buildflow.yaml` [file](/buildflow/programming-guide/buildflow-yaml) in the root of your project.
-This is created when we use the [BuildFlow CLI](/buildflow/reference/cli/init) to create a new project, and doesn't need to be updated unlesss you need to add something.
+Your project is defined by the presence of a `buildflow.yaml` [file](/buildflow/programming-guide/buildflow-yaml) in the root of your project.
+This is created when we use the [BuildFlow CLI](/buildflow/reference/cli/init) to create a new project, and doesn't need to be updated unless you need to add something.
 
 Our yaml file defines the following:
 - [**project**](/buildflow/programming-guide/buildflow-yaml#project): the name of our project; this can be updated to any string containing lower-case letters and hyphens
@@ -23,7 +23,7 @@ entry_point: main:app
 
 ## Initialize your Flow
 
-We define our flow in `main.py` this is the entry point we defined in our `buildflow.yaml` file. `app = Flow(...)` creates our [Flow object](/buildflow/programming-guide/flows) which is a container for all of our buisness logic and resources.
+We define our flow in `main.py` this is the entry point we defined in our `buildflow.yaml` file. `app = Flow(...)` creates our [Flow object](/buildflow/programming-guide/flows) which is a container for all of our business logic and resources.
 You'll notice we call a couple methods on our flow object.
 
 - **manage**: this method marks a [primitive](/buildflow/primitives) as being managed. Meaning it can be created, updated, and destroyed by buildflow.

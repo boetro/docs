@@ -2,7 +2,7 @@
 title: "Manage Infrastructure"
 ---
 
-You can use BuildFlow to manage your infrastructure. This removes the need to have a seperate configuration management tool such as Terraform, or from managing your infrastructure manually in the cloud console.
+You can use BuildFlow to manage your infrastructure. This removes the need to have a separate configuration management tool such as Terraform, or from managing your infrastructure manually in the cloud console.
 All the code for this guide can be found on [GitHub](https://github.com/launchflow/buildflow-samples/tree/main/managed-resources).
 
 To do this you simply mark your [primitives](/buildflow/programming-guide/primitives) as managed by your [flow](/buildflow/programming-guide/flows) and BuildFlow will take care of the rest.
@@ -66,7 +66,7 @@ To see a full working project example with a UI included see our [Image Classifi
         After this step you should be able to view your infrastructure in the cloud console.
     </Step>
     <Step title="Update our Infrastructure">
-        If we ever change our infrastructure, for example updating a confiruration option on our bucket or topic, we can run `buildflow apply` again to have the infrastructure updated.
+        If we ever change our infrastructure, for example updating a configuration option on our bucket or topic, we can run `buildflow apply` again to have the infrastructure updated.
     </Step>
     <Step title="Destroy your Infrastructure">
         If you ever want to delete all of the infrastructure for your project, you can simply run `buildflow destroy`. Similar to apply this will preview the changes and ask you to confirm.
