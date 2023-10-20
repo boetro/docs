@@ -47,7 +47,7 @@ To see a full working project example with a UI included see our [SaaS applicati
         ```
     </Step>
     <Step title="Add a Serving Endpoint">
-        Now we can add a serving endpoint to our service. This endpoint will say hello to the user, or redirect them to the login page if they have not logged in.
+        Now we can add a serving [endpoint](/buildflow/programming-guide/endpoints) to our service. This endpoint will say hello to the user, or redirect them to the login page if they have not logged in.
 
         You see that we consume our `MaybeAuthenticatedGoogleUser` dependency to get the user's information for each request to the endpoint.
 
@@ -61,6 +61,7 @@ To see a full working project example with a UI included see our [SaaS applicati
     </Step>
     <Step title="Setup our Google OAuth Client">
         We use the [google-auth-oauthlib](https://pypi.org/project/google-auth-oauthlib/) client library to setup an OAuth client for authenticating with Google. This library takes in a [client configuration](https://github.com/googleapis/google-api-python-client/blob/main/docs/client-secrets.md) that is pointed at your configured [OAuth2 Credentials](https://support.google.com/cloud/answer/6158849?hl=en).
+        We wrap our client in a [dependency](/buildflow/programming-guide/dependencies) so that we can inject it into our endpoints.
 
         <Tip>
         This config looks for your client ID and client secret as environment variables.
@@ -94,7 +95,7 @@ To see a full working project example with a UI included see our [SaaS applicati
         ```
     </Step>
     <Step title="Add Auth Endpoints">
-    Finally we add two endpoints for authenticating a user with Google.
+    Finally we add two [endpoints](/buildflow/programming-guide/endpoints) for authenticating a user with Google.
 
     - **/auth/login**: This endpoint is where a user is redirected to login. It uses our google OAuth client to generate an authorization URL and redirects the user to that URL.
     - **/auth/callback/google**: This endpoint is where Google redirects the user after they have logged in. We fetch the user's ID token and store it in the session.

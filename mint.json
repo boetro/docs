@@ -93,7 +93,7 @@
         {
           "group": "User Guides",
           "pages": [
-            "buildflow/guides/manage-remote-infrastructure",
+            "buildflow/guides/manage-cloud-resources",
             "buildflow/guides/google-auth",
             "buildflow/guides/load-model",
             "buildflow/guides/serve-from-postgres",
@@ -179,7 +179,7 @@
       "group": "Reference",
       "pages": [
         {
-          "group": "API",
+          "group": "Core API",
           "pages": [
             "buildflow/reference/api/credentials",
             "buildflow/reference/api/primitive",

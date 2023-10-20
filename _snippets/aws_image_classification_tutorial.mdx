@@ -125,7 +125,7 @@ In `service.py` we define our actual endpoints that will be called by our users.
 We define three endpoints here:
 
 - **index**: this endpoint returns a simple HTML page that allows users to upload images.
-- **image_upload**: this endpoint allows users to upload an image; then we upload them to our remote bucket. It takes in an [UploadFile](/buildflow/programming-guide/requests#uploadfile) which is a file that has been uploaded by a user. We also take in the `bucket_dep` dependency we defined earlier. This allows us to upload the file to our bucket using the [boto3 API](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/bucket/put_object.html).
+- **image_upload**: this endpoint allows users to upload an image; then we upload them to our remote bucket. It takes in an [UploadFile](/buildflow/programming-guide/endpoints#other-request-types) which is a file that has been uploaded by a user. We also take in the `bucket_dep` dependency we defined earlier. This allows us to upload the file to our bucket using the [boto3 API](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/bucket/put_object.html).
 - **image_upload_results**: this endpoint returns a simple HTML page that displays the results of our image classification model. It does this by querying our DuckDB table and then rendering the results as a table.
 
 ```python

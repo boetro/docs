@@ -6,8 +6,8 @@ Our application will:
 2. Expose an [endpoint](/buildflow/programming-guide/endpoints) that allows users to upload images
 3. When our endpoint receives an image, it will upload the image to a bucket ([GCS](/buildflow/primitives/gcp/gcs) or [S3](/buildflow/primitives/aws/s3))
 4. When the image is uploaded it will trigger a notification to our queue ([GCP Pub/Sub](/buildflow/primitives/gcp/pubsub) or [AWS SQS](/buildflow/primitives/aws/sqs))
-5. Our [consumer]((/buildflow/programming-guide/endpoints)) will receive this notification and run the image through an image classification model using [ImageAI](https://github.com/OlafenwaMoses/ImageAI)
-6. The results of the image classification will be stored in a data warehouse ([BigQuery]((/buildflow/primitives/gcp/bigquery)) or [DuckDB](/buildflow/primitives/duckdb))
+5. Our [consumer](/buildflow/programming-guide/consumers) will receive this notification and run the image through an image classification model using [ImageAI](https://github.com/OlafenwaMoses/ImageAI)
+6. The results of the image classification will be stored in a data warehouse ([BigQuery](/buildflow/primitives/gcp/bigquery)) or [DuckDB](/buildflow/primitives/duckdb))
 7. The data warehouse will be exposed by another endpoint
 
 If all goes well, you should have a working image classification app like this:

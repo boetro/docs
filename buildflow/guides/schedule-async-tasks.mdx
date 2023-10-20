@@ -8,9 +8,9 @@ All the code for this guide can be found on [GitHub](https://github.com/launchfl
 
 To do this we will use:
 - an [endpoint](/buildflow/programming-guide/endpoints) receive requests from user
-- queue [primitives](/buildflow/programming-guide/primitives) to schedule tasks on a queue for GCP we will use [Pub/Sub](/buildflow/primitives/gcp/pubsub) and for AWS we will use [SQS](/buildflow/primitives/sqs)
+- queue [primitives](/buildflow/programming-guide/primitives) to schedule tasks on a queue for GCP we will use [Pub/Sub](/buildflow/primitives/gcp/pubsub) and for AWS we will use [SQS](/buildflow/primitives/aws/sqs)
 - a [sink dependency](/buildflow/dependencies/sink) to push data to our queue
-- a [consumer](/buildflow/programming-guide/consumer) for processing data pushed to the queue
+- a [consumer](/buildflow/programming-guide/consumers) for processing data pushed to the queue
 
 To see a full working project example with a UI included see our [Image Classification example](/buildflow/examples/image-classification).
 

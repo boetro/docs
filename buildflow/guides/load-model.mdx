@@ -38,7 +38,7 @@ To see a full working project example with a UI included see our [Llama2 AI chat
     </Step>
     <Step title="Create our Custom Model Dependency">
 
-        Now we  define our custom dependency to download our model from the bucket and store it locally. This dependency consumes the bucket dependency we created in the previous step to get a connect to the bucket.
+        Now we  define our custom [dependency](/buildflow/programming-guide/dependencies) to download our model from the bucket and store it locally. This dependency consumes the bucket dependency we created in the previous step to get a connect to the bucket.
         We create the dependency by annotating our class with `@dependency(scope=Scope.REPLICA)` this marks the class as a dependency that can be injected into any [processor](/buildflow/programming-guide/processors) and only one instance of 
         the dependency should be created per [replica](/buildflow/concepts#replicas).
 
@@ -66,7 +66,7 @@ To see a full working project example with a UI included see our [Llama2 AI chat
         ```
     </Step>
     <Step title="Call our Model">
-        Now that we have loaded our model lets call it from an endpoint! We can do this by attaching the `@service.endpoint` decorator to a function that consumes a string prompt and our `ModelDep` dependency.
+        Now that we have loaded our model lets call it from an [endpoint](/buildflow/programming-guide/endpoints)! We can do this by attaching the `@service.endpoint` decorator to a function that consumes a string prompt and our `ModelDep` dependency.
         We then pass in the string prompt to the model and return the result.
 
         <Tip>
@@ -101,7 +101,7 @@ To see a full working project example with a UI included see our [Llama2 AI chat
             return StreamingResponse(iter_chunks())
         ```
     </Step>
-    <Step title="Run the Flow">
+    <Step title="Run the Code">
         You can run this guide locally with the VS Code extension or by running `buildflow run` in the projects root directory.
 
         Once running you can navigate to http://localhost:8000 to see the swagger UI and test out the endpoint.

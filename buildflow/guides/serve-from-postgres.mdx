@@ -5,6 +5,11 @@ title: "Serve from Postgres"
 In this guide we will go over how to serve data from a Postgres database that is managed by BuildFlow using [SQLAlchemy](https://docs.sqlalchemy.org/en/20/). 
 All the code for this guide can be found on [GitHub](https://github.com/launchflow/buildflow-samples/tree/main/serve-from-postgres).
 
+To do this we will use:
+
+- [endpoints](/buildflow/programming-guide/endpoints) to receive and return data
+- [Cloud SQL Instance](/buildflow/primitives/gcp/cloud_sql#cloud-sql-instance) and [Cloud SQL Database](/buildflow/primitives/gcp/cloud_sql#cloud-sql-database) [primtives](/buildflow/programming-guide/primitives) to hold our postgres database
+- a [SessionDep](/buildflow/dependencies/sqlalchemy) to maintain a connection to our database, and to setup sessions for incoming requests
 
 To see a full working project example with a UI included see our [SaaS application example](/buildflow/examples/saas).
 
@@ -48,7 +53,7 @@ To see a full working project example with a UI included see our [SaaS applicati
         ```
     </Step>
     <Step title="Initialize a SQLAlchemy Session Dependency">
-        Now we create a [SessionDep](/buildflow/dependencies/sqlalchemy) to manage our SQLAlchemy sessions for requests. This dependency opens a connection to our database when the server starts up and give each endpoint a unique Session whenever they are called.
+        Now we create a [SessionDep](/buildflow/dependencies/sqlalchemy) to manage our SQLAlchemy sessions for requests. This [dependency](/buildflow/programming-guide/dependencies) opens a connection to our database when the server starts up and give each endpoint a unique Session whenever they are called.
 
         <Tip>
             You will need to provide the user and password for authenticating with the database. You can add a user and password to your database following this [guide](https://cloud.google.com/sql/docs/postgres/create-manage-users).
@@ -86,7 +91,7 @@ To see a full working project example with a UI included see our [SaaS applicati
         ```
     </Step>
     <Step title="Add Endpoints">
-        Last we add two endpoints:
+        Last we add two [endpoints](/buildflow/programming-guide/endpoints):
         
         1. `/store` - This endpoint takes a string and stores it in our database.
         2. `/retrieve` - This endpoint retrieves all the strings in our database.

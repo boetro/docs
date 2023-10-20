@@ -29,7 +29,7 @@ def collect(request: Dict[str, Any]):
 **BuildFlow** is a Python framework that allows you to build your entire backend system using one framework.
 With our simple decorator pattern you can turn any function into a component of your backend system. Allowing you to
 **serve data over HTTP**, **dump data to a datastore**, or **process async data from message queues**. 
-All of these can use our built in IO connectors allowing you to create, manage, and connect to your infrastructure using pure Python.
+All of these can use our built in IO connectors allowing you to create, manage, and connect to your cloud resources using pure Python.
 
 Simply install BuildFlow to get started:
 
@@ -48,7 +48,7 @@ pip install buildflow
 
   </Accordion>
   <Accordion icon="road-bridge" title="Infrastructure From Code">
-    **BuildFlow** allows you to create, manage, and connect to your infrastructure using pure Python. No more manual configuration, terraform, or separate configuration management system. Simply let your logic manage your infrastructure.
+    **BuildFlow** allows you to create, manage, and connect to your cloud resources using pure Python. No more manual configuration, terraform, or separate configuration management system. Simply let your logic manage your infrastructure.
   </Accordion>
   <Accordion icon="books" title="Production Ready IO Connectors">
     Use any of our existing **BuildFlow** primitives to connect to any resource in any cloud. Including AWS, GCP, Snowflake, and DuckDB 
@@ -66,6 +66,23 @@ pip install buildflow
     You can use [LaunchFlow](https://launchflow.com) to automatically deploy and manage your BuildFlow flows and processors all from within VSCode.
     </Accordion>
 </AccordionGroup>
+
+## Guides
+
+<CardGroup cols={2}>
+  <Card title="Tutorial: Image Classification" href="/buildflow/tutorial">
+  </Card>
+  <Card title="Manage Cloud Resources" href="/buildflow/guides/manage-cloud-resources">
+  </Card>
+  <Card title="Setup Google Authentication" href="/buildflow/guides/google-auth">
+  </Card>
+  <Card title="Load and Serve a Model" href="/buildflow/guides/load-model">
+  </Card>
+  <Card title="Serve Data from Postgres" href="/buildflow/guides/serve-from-postgres">
+  </Card>
+  <Card title="Schedule Async Tasks" href="/buildflow/guides/schedule-async-tasks">
+  </Card>
+</CardGroup>
 
 ## Ready to Use Examples
 
