@@ -1,3 +1,53 @@
 ---
 title: Concepts
+description: "Important concepts and terminology used throughout LaunchFlow"
 ---
+
+LaunchFlow has three main components to understand. Accounts, Projects, and Deployments. These three components are hierarchical in nature. An account can have many projects, and a project can have many deployments.
+
+<img className="block dark:hidden" src="/images/launchflow-resource-hierarchy-light.png" />
+<img className="hidden dark:block" src="/images/launchflow-resource-hierarchy-dark.png" />
+
+
+|            |                                                                                                                                   |
+|------------|-----------------------------------------------------------------------------------------------------------------------------------|
+| **Account**    | An account is the top level resource in LaunchFlow. When you first sign up for LaunchFlow an account will be created for you.     |
+| **Project**    | A project maps to a BuildFlow project defined in your [buildflow.yaml](/buildflow/programming-guide/buildflow-yaml#project). Projects are contained in an account.                     |
+| **Deployment** | A Deployment is an instance of a BuildFlow application running inside of LaunchFlow Cloud. Depoyments are contained in a project. |
+
+## Accounts
+
+An account is the top level resource in LaunchFlow. When you first sign up for LaunchFlow an account will be created for you. 
+All billing information is tied to your account; all of the usage from your [deployments](#deployments) will be billed to your account.
+
+Inside of an account you can see:
+- Your total usage for the month (CPU and $$)
+- A list of projects that are contained in the account  
+
+<Note>
+    In the near future we will allow sharing accounts with users, and creating multiple accounts.
+</Note>
+
+## Projects
+
+A project maps to a BuildFlow project defined in your [buildflow.yaml](/buildflow/programming-guide/buildflow-yaml#project). When you first create a deployment a project will be created with the same project name defined in your buildflow.yaml.
+
+Inside of a project you can see:
+- A history of all deployments for the project
+
+<Note>
+    In the near future we will allow sharing projects with users.
+</Note>
+
+## Deployments
+
+A deployment is created when you launch your BuildFlow application on LaunchFlow cloud.
+
+Inside of a deployment you can see:
+- Status of the deployment (running, stopped, etc)
+- Logs for the deployment
+- Metrics for the deployment
+- Previously updated deployments
+- The URL that is serving your application
+    - This will be a URL ending in `launchflow.app`
+    - If you update a deployment it will be deployed to this same URL.

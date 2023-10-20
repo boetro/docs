@@ -70,7 +70,9 @@
       "group": "LaunchFlow Cloud",
       "pages": [
         "launchflow-cloud/introduction",
-        "launchflow-cloud/concepts"
+        "launchflow-cloud/concepts",
+        "launchflow-cloud/frequently-asked-questions",
+        "launchflow-cloud/subscription-billing"
       ]
     },
     {
