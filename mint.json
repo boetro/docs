@@ -80,7 +80,8 @@
       "pages": [
         "launchflow-cloud/user-guides/create-a-deployment",
         "launchflow-cloud/user-guides/monitor-a-deployment",
-        "launchflow-cloud/user-guides/update-a-deployment"
+        "launchflow-cloud/user-guides/update-a-deployment",
+        "launchflow-cloud/user-guides/custom-domain"
       ]
     },
     {
