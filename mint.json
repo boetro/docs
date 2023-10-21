@@ -29,6 +29,11 @@
   "primaryTab": {
     "name": "Home"
   },
+  "analytics": {
+    "posthog": {
+      "apiKey": "phc_Df3dveOW6gG1ERjM1TQ8qBp7BRwEvLCjiB2FPUJPSwj"
+    }
+  },
   "tabs": [
     {
       "name": "BuildFlow",
