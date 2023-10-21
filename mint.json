@@ -82,7 +82,8 @@
         "launchflow-cloud/user-guides/create-a-deployment",
         "launchflow-cloud/user-guides/monitor-a-deployment",
         "launchflow-cloud/user-guides/update-a-deployment",
-        "launchflow-cloud/user-guides/custom-domain"
+        "launchflow-cloud/user-guides/custom-domain",
+        "launchflow-cloud/user-guides/user-provided-credentials"
       ]
     },
     {
@@ -166,6 +167,7 @@
       "pages": [
         "buildflow/dependencies/auth",
         "buildflow/dependencies/bucket",
+        "buildflow/dependencies/credentials",
         "buildflow/dependencies/headers",
         "buildflow/dependencies/sink",
         "buildflow/dependencies/sqlalchemy"
