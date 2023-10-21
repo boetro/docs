@@ -1,3 +1,21 @@
 ---
 title: Update a Deployment
 ---
+
+To update a deployment you can click the `Update Deployment` button in the VSCode extension or use the `deployments update` command in the CLI. Updating a deployment will drain a previous deployment and migrate all traffic to your new deployment. The new deployment will share the same URL as the previous deployment.
+
+TODO update link to CLI.
+TODO add extension gif
+
+<Tabs>
+  <Tab title="VS Code Extension">
+  TODO
+  </Tab>
+  <Tab title="CLI">
+    Use the [deployment update](TODO) command from the root directory of your project to update a previous deployment.
+
+    ```
+        launch deployments update $PREVIOUS_DEPLOYMENT_ID
+    ```
+  </Tab>
+</Tabs>

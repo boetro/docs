@@ -72,7 +72,8 @@
         "launchflow-cloud/introduction",
         "launchflow-cloud/concepts",
         "launchflow-cloud/frequently-asked-questions",
-        "launchflow-cloud/subscription-billing"
+        "launchflow-cloud/subscription-billing",
+        "launchflow-cloud/machine-types"
       ]
     },
     {
