@@ -18,6 +18,9 @@
       "to": "#3789ff"
     }
   },
+  "metadata": {
+    "og:image": "/images/image-classification-design.gif"
+  },
   "modeToggle": {
     "default": "dark"
   },
