@@ -1,0 +1,23 @@
+---
+title: Projects
+---
+
+## List
+
+```
+$ launch projects list --help
+                                                                                                                               
+ Usage: launch projects list [OPTIONS]                                                                                         
+                                                                                                                               
+ List projects for an account                                                                                                  
+                                                                                                                               
+╭─ Options ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ --account-id          TEXT  The name of the account to apply the operation on. If this is unset we will use the default     │
+│                             account set in the config. Should be of the format:`account_XXXXX`                              │
+│                             [default: None]                                                                                 │
+│ --expand      -e            Show all resources below projects (deployments)                                                 │
+│ --active      -a            Only to include active deployments in expansion. NOTE: this only applies if you pass the        │
+│                             --expand or -e flag                                                                             │
+│ --help                      Show this message and exit.                                                                     │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+```

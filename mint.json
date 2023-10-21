@@ -210,7 +210,17 @@
     {
       "group": "CLI",
       "pages": [
-        "developer-tools/cli/getting-started"
+        "developer-tools/cli/getting-started",
+        {
+          "group": "Reference",
+          "pages": [
+            "developer-tools/cli/reference/accounts",
+            "developer-tools/cli/reference/auth",
+            "developer-tools/cli/reference/config",
+            "developer-tools/cli/reference/deployments",
+            "developer-tools/cli/reference/projects"
+          ]
+        }
       ]
     },
     {

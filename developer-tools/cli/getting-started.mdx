@@ -1,3 +1,86 @@
 ---
 title: Getting Started
 ---
+
+## Install the CLI
+
+The CLI can be installed via pip:
+
+```bash
+pip install launchflow
+```
+
+## Login with the CLI
+
+<Tip>
+    If you ever need help with any command you can add `--help` to print out the documentation for that command.
+
+    Some examples:
+
+    ```
+    launch --help
+    launch auth --help
+    launch auth login --help
+    ```
+</Tip>
+
+To login to LaunchFlow cloud using the CLI run the following command:
+
+```bash
+launch auth login
+```
+
+This will prompt you to login in using either GitHub or Google.
+
+<Tip>
+    If you don't have an account this will create one for you.
+</Tip>
+
+## Launch your First Deployment
+
+To launch your first deployment simply create a [new BuildFlow project](/buildflow/reference/cli/init) using the BuildFlow CLI in a directory of your choosing:
+
+```bash
+buildflow init
+```
+
+This will create a simple HTTP serve that displays a "Hello World" message.
+
+To launch the deployment run the following command in the same directory that you ran `buildflow init` in:
+
+```bash
+launch deployments submit
+```
+
+This will deploy your project to LaunchFlow cloud, and spit out a deployment ID and other useful commands to track the progress of the deployment.
+For instance, you can track the progress using the `launch deployments ping` command:
+
+```bash
+launch deployments ping $DEPLOYMENT_ID
+```
+
+Once the deployment is running you should be able to find the URL of the HTTP server using the `launch deployments ping` command and visiting the URL in your browser:
+
+```bash
+Deployments
+-----------
+-   id: deployment_37019776288
+    ...
+    url: https://<PROJECT-NAME>-<DEPLOYMENT_ID_NUMBER>.dev.launchflow.app
+    ...
+```
+
+When you're done you can drain or stop you deployment using the `launch deployments drain` or `launch deployments stop` commands respectively.
+Drain will ensure all active requests complete before stopping the deployment, while stop will immediately stop the deployment.
+
+```
+launch deployments drain
+```
+
+```
+launch deployment stop
+```
+
+## What's Next?
+
+Now that you've launched your first deployment, you can follow the [BuildFlow docs](/buildflow) to add even more functionality to your project, and [update your existing deployment](/launchflow-cloud/user-guides/update-a-deployment) using the `launch deployments update` command.
