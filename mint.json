@@ -59,6 +59,11 @@
       "url": "https://launchflow.com"
     },
     {
+      "name": "Platform Quickstart",
+      "icon": "book",
+      "url": "https://docs.launchflow.com/platform-quickstart"
+    },
+    {
       "name": "Community",
       "icon": "discord",
       "url": "https://discordapp.com/invite/wz7fjHyrCA"
