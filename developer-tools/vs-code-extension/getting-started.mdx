@@ -1,3 +1,69 @@
 ---
 title: Getting Started
 ---
+
+## Install the VS Code Extension
+
+<a 
+  style={{
+    height: 'fit-content', 
+    display: 'inline-block', 
+    alignItems: 'center', 
+    gap: '8px', 
+    paddingTop: '0', 
+    paddingLeft: '16px', 
+    paddingRight: '12px', 
+    borderRadius: '15px', 
+    fontSize: '1rem', 
+    backgroundColor: '#3789ff', 
+    color: 'white',
+  }}
+  href="/signup"
+  onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#4994ff'}
+  onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#3789ff'}
+>
+  Install in VS Code
+</a>
+
+## Login to LaunchFlow Cloud
+
+
+TODO - add extension gif and details
+
+## Signup For a Standard Subscription
+
+To launch your first deployment you'll need to signup for a standard subscription.
+
+TODO - add extension gif and details
+
+## Launch your First Deployment
+
+First you'll need to create a new BuildFlow project that you will deploy. You can use any of LaunchFlow's preconfigured templates, or create a new project from scratch. In this example we'll use your `Hello World` template for a simple server that serves the string `Hellow World`.
+
+<Tip>
+    You can also create project this way
+    TODO - add details
+</Tip>
+
+TODO - add extension gif
+
+Launch a remote deployment with the `Launch Remote` button.
+
+TODO - add extension gif
+
+This will deploy your project to LaunchFlow cloud, and immediately attach to the deployment. From the launch UI you can track the state of your deployment.
+
+TODO - add extension screenshot
+
+Once the deployment is running you should be able to find the URL of the HTTP server in the `Services` tab.
+
+TODO - add extension screenshot
+
+When you're done you can drain or stop you deployment using the `Drain Deployment` or `Stop Deployment` commands respectively.
+Drain will ensure all active requests complete before stopping the deployment, while stop will immediately stop the deployment.
+
+TODO - add extension screenshot
+
+## What's Next?
+
+Now that you've launched your first deployment, you can follow the [BuildFlow docs](/buildflow) to add even more functionality to your project, and [update your existing deployment](/launchflow-cloud/user-guides/update-a-deployment).
