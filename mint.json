@@ -89,8 +89,11 @@
     {
       "group": "User Guides",
       "pages": [
+        "launchflow-cloud/user-guides/projects",
+        "launchflow-cloud/user-guides/environments",
         "launchflow-cloud/user-guides/create-a-deployment",
         "launchflow-cloud/user-guides/monitor-a-deployment",
+        "launchflow-cloud/user-guides/setup-a-release-pipeline",
         "launchflow-cloud/user-guides/update-a-deployment",
         "launchflow-cloud/user-guides/custom-domain",
         "launchflow-cloud/user-guides/user-provided-credentials"
