@@ -1,10 +1,17 @@
 ---
-title: Create a Deployment
+title: Launch a Deployment
+description: "Create and manage deployments"
 ---
 
-Creating a deployment is as simple as clicking the `Launch Deployment` button in the VSCode extension, or by using the `deployment submit` command in the CLI.
+## Launch a Deployment
 
-TODO update gif when UI is cleanedup
+Creating a deployment is as simple as clicking the `Launch Deployment` button in the VSCode extension, or by using the `deployment submit` command in the CLI. Once your deployment is launched it will be assigned a unique ID that you can use to manage it.
+
+<Tip>
+  When launching a deployment you must specify what project and optionally an environment to launch the deployment in.
+</Tip>
+
+TODO update gif when UI is cleanedup, add docs about environments / projects
 
 <Tabs>
   <Tab title="VS Code Extension">
@@ -13,8 +20,46 @@ TODO update gif when UI is cleanedup
   <Tab title="CLI">
     Use the [deployment submit](/developer-tools/cli/reference/deployments#submit) command from the root directory of your project to create a new deployment.
 
+    <Tip>
+      You can use the `--project` and `--environment` flags to specify what project and environment to launch the deployment in.
+    </Tip>
+
     ```
         launch deployments submit
     ```
+
+    Once this command finishes it will output the deployment ID that you can use to manage your deployment.
   </Tab>
 </Tabs>
+
+## Manage a Deployment
+
+Once your deployment is running you can shut it down any time by draining or stopping it. Draining your application will ensure all current traffic is handled before shutting down the deployment. Stopping your deployment will immediately shut down all running instances.
+
+<Tabs>
+  <Tab title="VS Code Extension">
+     TODO
+  </Tab>
+  <Tab title="CLI">
+
+    Use the [deployment drain](/developer-tools/cli/reference/deployments#drain) command to drain your deployment.
+
+    ```
+        launch deployments drain $DEPLOYMENT_ID
+    ```
+
+
+    Use the [deployment stop](/developer-tools/cli/reference/deployments#stop) command to stop your deployment.
+
+    ```
+        launch deployments stop $DEPLOYMENT_ID
+    ```
+  </Tab>
+</Tabs>
+
+## What's next?
+
+- [Monitor your deployment](/launchflow-cloud/user-guides/monitor-a-deployment)
+- [Update your deployment](/launchflow-cloud/user-guides/update-a-deployment)
+- [Setup a release pipeline](/launchflow-cloud/user-guides/setup-a-release-pipeline) to deploy your application across environments
+- [Use a custom domain](/launchflow-cloud/user-guides/custom-domain) for your application

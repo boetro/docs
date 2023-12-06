@@ -42,12 +42,29 @@ No matter what type of machine you use your billing rate will always be the same
 </table>
 
 
-Machine types can be specified when you launch a deployment via the CLI; if no machine type is specific the default is 2 CPUs and 7.5 GB of RAM. For example, to launch a deployment with 8 CPUs you would run the following command:
+Machine types can be specified in two ways:
+
+1. Configuring the machine information in an [environment](/launchflow-cloud/user-guides/environments) and launching a deployment to the environment.
+
+<Tip>
+   Once you configure the machine information in an environment, all deployments launched in the environment will use the machine information.
+</Tip>
+
+<Tabs>
+  <Tab title="VS Code Extension">
+   TODO: add extension
+  </Tab>
+  <Tab title="CLI">
+    ```
+      launch environments update --num-cpus=8 --name=dev
+      launch deploy --environment=dev
+    ```
+  </Tab>
+</Tabs>
+
+2. When you launch a deployment via the CLI; if no machine type is specific the default is 2 CPUs and 7.5 GB of RAM. For example, to launch a deployment with 8 CPUs you would run the following command:
 
 ```
-launch deployments submit --num-cpus=8
+launch deploy --num-cpus=8
 ```
 
-<Note>
-    Specifying a machine type is not currently supported in the VS Code extension and the default of two will be used.
-</Note>

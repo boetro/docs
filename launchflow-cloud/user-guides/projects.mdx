@@ -1,5 +1,83 @@
 ---
 title: Projects
+description: "Create and manage projects"
 ---
 
-TODO fill this out
+## Creating a Project
+
+To a create a project you will need to specify a display name for the project. This name must contain only numbers, letters (lower or upper case), hypens (`-`), and be less than 64 characters.
+
+
+<Tabs>
+  <Tab title="VS Code Extension">
+    TODO
+  </Tab>
+  <Tab title="CLI">
+    Use the [project create](/developer-tools/cli/reference/projects#create) command to create a project.
+
+    ```
+        launch projects create $PROJECT_DISPLAY_NAME
+    ```
+
+    Once this command finishes it will output the project ID that you can use to manage your project.
+
+    <Tip>
+        If you plan to use this as your main / default project you can run:
+
+        ```
+            launch config set-default-project $PROJECT_ID
+        ```
+
+        And all future commands will use this project by default.
+    </Tip>
+  </Tab>
+</Tabs>
+
+## Managing a Project
+
+TODO
+
+### Rename a Project
+
+At any time you can rename a project. The name must conform the requirements above.
+
+<Tabs>
+  <Tab title="VS Code Extension">
+    TODO
+  </Tab>
+  <Tab title="CLI">
+    Use the [project create](/developer-tools/cli/reference/projects#update) command to update a project. The `--display-name` flag should take in the new name of the project.
+
+    ```
+        launch projects update --display-name$PROJECT_DISPLAY_NAME
+    ```
+  </Tab>
+</Tabs>
+
+
+### Deleting a Project
+
+Deleting a project will delete all environments and deployments in the project. A project can only be deleted if there are no running deployments in the project.
+
+<Warning>
+    This action cannot be undone.
+</Warning>
+
+<Tabs>
+  <Tab title="VS Code Extension">
+    TODO
+  </Tab>
+  <Tab title="CLI">
+    Use the [project delete](/developer-tools/cli/reference/projects#delete) command to delete a project.
+
+    ```
+        launch projects delete $PROJECT_ID
+    ```
+  </Tab>
+</Tabs>
+
+
+## What's next?
+
+- [Create an environment](/launchflow-cloud/user-guides/environments) in your projects
+- [Launch a deployment](/launchflow-cloud/user-guides/environments) in your project
