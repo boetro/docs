@@ -42,17 +42,30 @@ No matter what type of machine you use your billing rate will always be the same
 </table>
 
 
-Machine types can be specified in two ways:
+## Environment Machine Configuration
 
-1. Configuring the machine information in an [environment](/launchflow-cloud/user-guides/environments) and launching a deployment to the environment.
-
-<Tip>
-   Once you configure the machine information in an environment, all deployments launched in the environment will use the machine information.
-</Tip>
+You can configuration the machine information in an [environment](/launchflow-cloud/user-guides/environments) and all deployments launched in the environment will use this configuration.
 
 <Tabs>
-  <Tab title="VS Code Extension">
-   TODO: add extension
+  <Tab className="tailwind styles" title="VS Code Extension">
+
+<div className="grid sm:grid-cols-2">
+  <div>
+  <ol>
+      <li>Navigate to the <code>Projects</code> tab</li>
+      <li>Select a project</li>
+      <li>Select an environment</li>
+      <li>Click <code>Edit Environment</code></li>
+      <li>Select your <code>Machine Type</code></li>
+      <li>Click <code>Save Environment Changes</code></li>
+   </ol>
+   </div>
+  <div>
+   <Frame className="tailwind styles sm:hidden">
+      <img style={{maxHeight: "500px", margin: 0}} alt="Environment Machine Configuration "src="/images/edit-environment.png"/>
+   </Frame>
+   </div>
+</div>
   </Tab>
   <Tab title="CLI">
     ```
@@ -62,7 +75,10 @@ Machine types can be specified in two ways:
   </Tab>
 </Tabs>
 
-2. When you launch a deployment via the CLI; if no machine type is specific the default is 2 CPUs and 7.5 GB of RAM. For example, to launch a deployment with 8 CPUs you would run the following command:
+## Individual Deployment Configuration
+
+
+When you launch a deployment via the CLI; if no machine type is specific the default is 2 CPUs and 7.5 GB of RAM. For example, to launch a deployment with 8 CPUs you would run the following command:
 
 ```
 launch deploy --num-cpus=8
