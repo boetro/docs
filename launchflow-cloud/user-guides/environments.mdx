@@ -3,11 +3,74 @@ title: Environments
 description: "Create and manage environments"
 ---
 
+Environments allow you to save a configuration for running your deployment. You do this by creating an environment and configuring it with environment variables that will be set when a deployment is launched in the environment.
+
+Any number of environments can be created within a project. We recommend having one environment per set of configuration. For example you might have a `dev`, `staging` and `production` environment. With these environments you can easily set up a release pipeline to deploy from `dev` -> `staging` -> `production`. See our guide on [creating a release pipeline](/launchflow-cloud/user-guides/setup-a-release-pipeline) for more information.
+
+
 ## Creating an Environment
 
-TODO
+When creating a new environment you must specify a name and a project to create the environment in. The name must be unique for your project, contain only alphanumeric characters, hyphens (`-`), and be between 3 and 30 characters long.
+
+When you create your environment you will be given a `deployment_key` that can be used to launch, update, and manage deployments in the environment. This deployment key can be use in any environment allowing you do things like deploy from a GitHub Action.
+
+<Warning>
+
+    You will only be shown the `deployment_key` once when you create the environment. Ensure you record it somewhere secure. You can [regenerate a new deployment key](/launchflow-cloud/user-guides/environments#regenerate-deployment-key) at any time though.
+
+</Warning>
+
+<Tabs>
+  <Tab title="VS Code Extension">
+    TODO
+  </Tab>
+  <Tab title="CLI">
+    Use the [environments create](/developer-tools/cli/reference/environments#create) command to create an environment.
+
+    ```
+        launch environments create --name=$ENVIRONMENT_NAME --project-id=$PROJECT_ID
+    ```
+
+    <Tip>
+        If you have set a [default project](/developer-tools/cli/reference/config#set-default-project) you can omit the `--project-id` flag.
+    </Tip>
+  </Tab>
+</Tabs>
 
 ## Managing an Environment
+
+### Update Environment variables
+
+<Tabs>
+  <Tab title="VS Code Extension">
+    TODO
+  </Tab>
+  <Tab title="CLI">
+  There are three commands for updating environment variables in an environment.
+
+  1. `clear-env-vars`
+  </Tab>
+</Tabs>
+
+### Update Environment Configuration
+
+<Tabs>
+  <Tab title="VS Code Extension">
+    TODO
+  </Tab>
+  <Tab title="CLI">
+  </Tab>
+</Tabs>
+
+### Regenerate Deployment Key
+
+<Tabs>
+  <Tab title="VS Code Extension">
+    TODO
+  </Tab>
+  <Tab title="CLI">
+  </Tab>
+</Tabs>
 
 TODO
 

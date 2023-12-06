@@ -1,5 +1,5 @@
 ---
-description: "Build your entire system in minutes using pure Python"
+description: "Build your entire backend in minutes using just Python"
 ---
 
 <img className="block dark:hidden" src="/logo/buildflow-logo-light.png" />
@@ -26,9 +26,9 @@ def collect(request: Dict[str, Any]):
 
 ## What is BuildFlow?
 
-**BuildFlow** is a Python framework that allows you to build your entire backend system using one framework.
-With our simple decorator pattern you can turn any function into a component of your backend system. Allowing you to
-**serve data over HTTP**, **dump data to a datastore**, or **process async data from message queues**. 
+**BuildFlow** is a Python framework that allows you to build your entire backend application in minutes.
+With our simple decorator patterns you can turn any function into a component of your backend. Allowing you to
+**serve data over HTTP**, **dump data to a datastore**, or **process async data from a message queues**. 
 All of these can use our built in IO connectors allowing you to create, manage, and connect to your cloud resources using pure Python.
 
 Simply install BuildFlow to get started:
@@ -41,7 +41,7 @@ pip install buildflow
 
 <AccordionGroup>
   <Accordion icon="microchip" title="Common serving and processing patterns">
-    **BuildFlow** offers a simple decorator pattern that allows you to turn any function into a part of your backend system.
+    **BuildFlow** offers a simple decorator patterns that allows you to turn any function into a part of your backend.
     - **endpoints**: Receive and respond to HTTP requests
     - **collectors**: Receive HTTP requests and dump them to a data store
     - **consumers**: Process data from message queues such as Pub/Sub and Kafka
@@ -54,7 +54,7 @@ pip install buildflow
     Use any of our existing **BuildFlow** primitives to connect to any resource in any cloud. Including AWS, GCP, Snowflake, and DuckDB 
   </Accordion>
   <Accordion icon="chart-line-up" title="Scalable by Default">
-    **BuildFlow** will automatically scale to whatever your current demands are. This ensures your system can handle any surge in traffic while still be cost effective during low traffic periods.
+    **BuildFlow** will automatically scale to whatever your current demands are. This ensures your application can handle any surge in traffic while still be cost effective during low traffic periods.
   </Accordion>
   <Accordion icon="syringe" title="Dependency Injection">
     **BuildFlow** allows you to define custom dependencies for your processor that can be injected whenever your processor is called. This enable you to easily integrate other components into your processor (such as loading models, handling auth, or connecting to a database).
