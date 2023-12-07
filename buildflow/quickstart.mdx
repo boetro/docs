@@ -13,13 +13,13 @@ pip install buildflow
     [LaunchFlow](https://launchflow.com) offers a [free VSCode extension](https://marketplace.visualstudio.com/items?itemName=LaunchFlow.launchflow) that can help you get started even quicker!
 </Tip>
 
-## Create a new project
+## Create a new application
 
-Once installed you will now have access to the `buildflow` CLI tool. First create a directory for your application and then run the `init` command which will prompt you to enter a project name.
+Once installed you will now have access to the `buildflow` CLI tool. First create a directory for your application and then run the `init` command which will prompt you to enter an application name.
 
 ```bash
-mkdir my-project-dir
-cd my-project-dir
+mkdir my-app-dir
+cd my-app-dir
 buildflow init
 ```
 
@@ -44,12 +44,12 @@ At the root level there are three important files:
 
 Below the root level we have:
 
-**Project Code Directory**
+**Application Code Directory**
 
 This is the directory where your application code lives. It will match the name of your application. You can put any files you want in here and they will be available to your application. We create a couple directories for you:
 
 - **processors**: This is where you can put any custom processors you want to use in your application. In here you will see we have defined a *service.py* for a service in your application and a *hello_world.py* file for a custom endpoint processor.
-- **resources**: This is where you can define any custom primitive resources that your application will need. Note it is empty right now since your initial project is so simple.
+- **resources**: This is where you can define any custom primitive resources that your application will need. Note it is empty right now since your initial application is so simple.
 
 **.buildflow**
 

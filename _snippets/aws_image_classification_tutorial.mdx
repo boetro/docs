@@ -5,21 +5,23 @@ All the code for this tutorial can be found on [github](https://github.com/launc
 ## Define your Applicatoin
 
 Your application is defined by the presence of a `buildflow.yaml` [file](/buildflow/programming-guide/buildflow-yaml) in the root of your application.
-This is created when we use the [BuildFlow CLI](/buildflow/reference/cli/init) to create a new project, and doesn't need to be updated unless you need to add something.
+This is created when we use the [BuildFlow CLI](/buildflow/reference/cli/init) to create a new application, and doesn't need to be updated unless you need to add something.
 
 Our yaml file defines the following:
-- [**project**](/buildflow/programming-guide/buildflow-yaml#project): the name of our project; this can be updated to any string containing lower-case letters and hyphens
+- [**application**](/buildflow/programming-guide/buildflow-yaml#app): the name of our application; this can be updated to any string containing lower-case letters and hyphens
 - [**pulumi_config**](/buildflow/programming-guide/buildflow-yaml#pulumi-configure): our pulumi configuration; here we say we have one stack that is stored locally
 - [**entry_point**](/buildflow/programming-guide/buildflow-yaml#entry-point): defines how our application is run
 
 ```yaml
-project: buildflow-aws-image-classification-walkthrough
+app: buildflow-aws-image-classification-walkthrough
 pulumi_config:
-  pulumi_home: .buildflow/_pulumi
-  stacks:
-    - name: local
-      backend_url: file://.buildflow/_pulumi/local
+    stacks:
+    -   name: local
+        backend_url: file://./.buildflow/_pulumi/local
+    pulumi_home: ./.buildflow/_pulumi
+    default_stack: local
 entry_point: main:app
+build_ignores: []
 ```
 
 ## Initialize your Flow

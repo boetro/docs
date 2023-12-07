@@ -9,18 +9,19 @@ The buildflow.yaml file is the only configuration file for your application. It 
 When you run `buildflow init` a default buildflow.yaml file is created for you, and it will look something like:
 
 ```yaml
-project: hello
-entry_point: main:app
+app: hello-world
 pulumi_config:
+    default_stack: local
     stacks:
-    -   name: local
+    - name: local
         backend_url: file://./.buildflow/_pulumi/local
     pulumi_home: ./.buildflow/_pulumi
+entry_point: main:app
 build_ignores:
 - my-large-file.bin
 ```
 
-## Project
+## Application
 
 This is the name of your application. It can be any string containing lowercase letters and hyphens.
 
@@ -40,15 +41,18 @@ To do this you can add a new stack with a remote `backend_url`. This can be an `
 To store your remote stack state in an S3 bucket you can use the following configuration:
 
 ```yaml
-project: hello
-entry_point: main:app
+app: hello-world
 pulumi_config:
+    default_stack: local
     stacks:
-    -   name: local
+    - name: local
         backend_url: file://./.buildflow/_pulumi/local
     -   name: dev
         backend_url: s3://your-state-bucket-name
     pulumi_home: ./.buildflow/_pulumi
+entry_point: main:app
+build_ignores:
+- my-large-file.bin
 ```
 
 ### GCS Remote state
@@ -56,15 +60,18 @@ pulumi_config:
 To store your remote stack state in a GCS bucket you can use the following configuration:
 
 ```yaml
-project: hello
-entry_point: main:app
+app: hello-world
 pulumi_config:
+    default_stack: local
     stacks:
-    -   name: local
+    - name: local
         backend_url: file://./.buildflow/_pulumi/local
     -   name: dev
         backend_url: gcs://your-state-bucket-name
     pulumi_home: ./.buildflow/_pulumi
+entry_point: main:app
+build_ignores:
+- my-large-file.bin
 ```
 
 ### Referencing Different stacks
