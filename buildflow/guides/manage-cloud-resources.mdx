@@ -69,9 +69,9 @@ To see a full working project example with a UI included see our [Image Classifi
         If we ever change our resources, for example updating a configuration option on our bucket or topic, we can run `buildflow apply` again to have the resource updated.
     </Step>
     <Step title="Destroy your Resources">
-        If you ever want to delete all of the resources for your project, you can simply run `buildflow destroy`. Similar to apply this will preview the changes and ask you to confirm.
+        If you ever want to delete all of the resources for your application, you can simply run `buildflow destroy`. Similar to apply this will preview the changes and ask you to confirm.
 
-        If you no longer need a resource for your project you can simply remove it from being managed and when you run `buildflow apply` it will be deleted. For example if we no longer needed our S3 bucket we could remove it from our call to `app.manage`:
+        If you no longer need a resource for your application you can simply remove it from being managed and when you run `buildflow apply` it will be deleted. For example if we no longer needed our S3 bucket we could remove it from our call to `app.manage`:
 
         ```
         app.manage(topic)    

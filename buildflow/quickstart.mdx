@@ -15,7 +15,7 @@ pip install buildflow
 
 ## Create a new project
 
-Once installed you will now have access to the `buildflow` CLI tool. First create a directory for your project and then run the `init` command which will prompt you to enter a project name.
+Once installed you will now have access to the `buildflow` CLI tool. First create a directory for your application and then run the `init` command which will prompt you to enter a project name.
 
 ```bash
 mkdir my-project-dir
@@ -23,39 +23,39 @@ cd my-project-dir
 buildflow init
 ```
 
-The `init` command creates a basic structure for your project. You are of course free to change this in any way you like.
+The `init` command creates a basic structure for your application. You are of course free to change this in any way you like.
 
 
-If you want to just get started quickly you can run start your project with:
+If you want to just get started quickly you can run start your application with:
 
 ```
 buildflow run
 ```
 
-Then you can visit http://localhost:8000 to see your project running.
+Then you can visit http://localhost:8000 to see your application running.
 
 ### Directory Structure
 
 At the root level there are three important files:
 
-- `buildflow.yml` - This is the main configuration file for your project. It contains all the information about your project and how it should be built.
-- `main.py` - This is the entry point to your project and where your `Flow` is initialized.
-- `requirements.txt` - This is where you can specify any Python dependencies your project has.
+- `buildflow.yml` - This is the main configuration file for your appliction. It contains all the information about your application and how it should be built.
+- `main.py` - This is the entry point to your application and where your `Flow` is initialized.
+- `requirements.txt` - This is where you can specify any Python dependencies your application has.
 
 Below the root level we have:
 
 **Project Code Directory**
 
-This is the directory where your project code lives. It will match the name of your project. You can put any files you want in here and they will be available to your project. We create a couple directories for you:
+This is the directory where your application code lives. It will match the name of your application. You can put any files you want in here and they will be available to your application. We create a couple directories for you:
 
-- **processors**: This is where you can put any custom processors you want to use in your project. In here you will see we have defined a *service.py* for a service in your project and a *hello_world.py* file for a custom endpoint processor.
-- **resources**: This is where you can define any custom primitive resources that your project will need. Note it is empty right now since your initial project is so simple.
+- **processors**: This is where you can put any custom processors you want to use in your application. In here you will see we have defined a *service.py* for a service in your application and a *hello_world.py* file for a custom endpoint processor.
+- **resources**: This is where you can define any custom primitive resources that your application will need. Note it is empty right now since your initial project is so simple.
 
 **.buildflow**
 
-This is a hidden directory that contains all the build artifacts for your project. You can general ignore this directory and it will be automatically generated for you. If you are using github you probably want to put this in your *.gitignore* file.
+This is a hidden directory that contains all the build artifacts for your application. You can general ignore this directory and it will be automatically generated for you. If you are using github you probably want to put this in your *.gitignore* file.
 
-## Running your project
+## Running your application
 
 Simply run:
 
@@ -63,4 +63,4 @@ Simply run:
 buildflow run
 ```
 
-Then you can visit http://localhost:8000 to see your project running.
+Then you can visit http://localhost:8000 to see your application running.

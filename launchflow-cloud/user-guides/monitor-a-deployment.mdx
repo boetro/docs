@@ -9,42 +9,68 @@ To monitor a deployment you can:
 
 ## Deployment logs
 
-To view deployment metrics you can click the `Open Logs` button in the VS Code Extension or run the `launch deployments logs` command.
-
-<Tip>
-    You can also view logs for historical deployments this way to.
-</Tip>
-
-TODO add extension gif
+You can live stream logs for running deployments or view historical logs for any stopped deployments.
 
 <Tabs>
   <Tab title="VS Code Extension">
-  TODO
+    <div className="grid sm:grid-cols-2 space-x-2">
+      <div>
+        <ol>
+          <li>Navigate to the <code>Launches Page</code></li>
+          <li>Click a deployment</li>
+          <li>Click the <code>Open Logs Stream</code> button for running deployments or the <code>View Remote Logs</code> button for stopped deployments.</li>
+          <li>This will open up the logs in the <code>OUTPUT</code> tab in VSCode.</li>
+        </ol>
+        <Tip>
+          If the deployment is currently running this will live stream logs in until you navigate away from the launch.
+        </Tip>
+      </div>
+      <div>
+      <Frame className="tailwind styles sm:hidden">
+          <img style={{maxHeight: "500px", margin: 0}} alt="Deployment Logs"src="/images/deployment-logs.png"/>
+      </Frame>
+      </div>
+    </div>
+
   </Tab>
   <Tab title="CLI">
     Use the [deployment logs](/developer-tools/cli/reference/deployments#logs) command to view deployment logs.
 
     ```
-        launch deployments logs $DEPLOYMENT_ID
+    launch deployments logs $DEPLOYMENT_ID
     ```
   </Tab>
 </Tabs>
 
 ## Deployment metrics
 
-Deployment metrics can be viewed in realtime in the VS Code Extension by attaching to a running deployment (this happens automatically when you launch a new deployment). Or you can use the `launch deployments ping` CLI command to view the latest metrics.
-
-TODO add extension gif
+Deployment metrics can be viewed in realtime. Metrics are collected via prometheus for all deployments. A UI for viewing historical metrics will be coming soon!
 
 <Tabs>
   <Tab title="VS Code Extension">
-  TODO
+    <div className="grid sm:grid-cols-2 space-x-2">
+      <div>
+        <ol>
+          <li>Navigate to the <code>Launches Page</code></li>
+          <li>Click a running deployment deployment</li>
+          <li>Select the metrics tab</li>
+        </ol>
+        <Tip>
+          Clicking on a `processor` will filter the metrics to only that processor.
+        </Tip>
+      </div>
+      <div>
+      <Frame className="tailwind styles sm:hidden">
+          <img style={{maxHeight: "500px", margin: 0}} alt="Deployment Metrics"src="/images/deployment-metrics.png"/>
+      </Frame>
+      </div>
+    </div>
   </Tab>
   <Tab title="CLI">
     Use the [deployment ping](/developer-tools/cli/reference/deployments#ping) command to view realtime metrics.
 
     ```
-        launch deployments ping $DEPLOYMENT_ID
+    launch deployments ping $DEPLOYMENT_ID
     ```
   </Tab>
 </Tabs>

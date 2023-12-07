@@ -91,7 +91,7 @@
       "pages": [
         "launchflow-cloud/user-guides/projects",
         "launchflow-cloud/user-guides/environments",
-        "launchflow-cloud/user-guides/create-a-deployment",
+        "launchflow-cloud/user-guides/launch-a-deployment",
         "launchflow-cloud/user-guides/monitor-a-deployment",
         "launchflow-cloud/user-guides/setup-a-release-pipeline",
         "launchflow-cloud/user-guides/update-a-deployment",
@@ -233,6 +233,7 @@
             "developer-tools/cli/reference/auth",
             "developer-tools/cli/reference/config",
             "developer-tools/cli/reference/deployments",
+            "developer-tools/cli/reference/environments",
             "developer-tools/cli/reference/projects"
           ]
         }

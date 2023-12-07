@@ -4,7 +4,7 @@ icon: 'file'
 description: 'Configure your application.'
 ---
 
-The buildflow.yaml file is the only configuration file for your project. It defines the name of your project and the different stacks (group of resources) that your project manages.
+The buildflow.yaml file is the only configuration file for your application. It defines the name of your application and the different stacks (group of resources) that your application manages.
 
 When you run `buildflow init` a default buildflow.yaml file is created for you, and it will look something like:
 
@@ -22,15 +22,15 @@ build_ignores:
 
 ## Project
 
-This is the name of your project. It can be any string containing lowercase letters and hyphens.
+This is the name of your application. It can be any string containing lowercase letters and hyphens.
 
 ## Entry Point
 
-The entry point defines how to run your project. This is what `buildflow run` and similar commands will use to execute your code.. If you ever rename you main file or update your flow definition you can update this field to ensure all of the buildflow cli still works as expected.
+The entry point defines how to run your application. This is what `buildflow run` and similar commands will use to execute your code.. If you ever rename you main file or update your flow definition you can update this field to ensure all of the buildflow cli still works as expected.
 
 ## Pulumi Configure
 
-The pulumi config defines what stacks your project manages. Each stack is a group of resources that are deployed together. For example, you might have a stack for your dev environment and another for your production environment.
+The pulumi config defines what stacks your application manages. Each stack is a group of resources that are deployed together. For example, you might have a stack for your dev environment and another for your production environment.
 By default we set up one stack for you that is stored locally. This stack is great for spinning up local dev environments, but you will likely want to add additional stacks that can be shared with your team.
 
 To do this you can add a new stack with a remote `backend_url`. This can be an `S3 Bucket`, `GCS Bucket`, or you can use Pulumi cloud to store your state. You can read more about Pulumi backends [here](https://www.pulumi.com/docs/intro/concepts/state/).
@@ -69,7 +69,7 @@ pulumi_config:
 
 ### Referencing Different stacks
 
-Which stack your project uses when you run `buildflow run` or similar commands is determined by the `stack` argument to [FlowOptions](/buildflow/programming-guide/flows#infrastructure). We find that it is often useful to set this variable via an environment variable making it easy to swap between your different stacks.
+Which stack your application uses when you run `buildflow run` or similar commands is determined by the `stack` argument to [FlowOptions](/buildflow/programming-guide/flows#infrastructure). We find that it is often useful to set this variable via an environment variable making it easy to swap between your different stacks.
 
 ```python
 from buildflow import Flow, FlowOptions
@@ -83,7 +83,7 @@ flow = Flow(
 
 ## Build Ignores
 
-This is a list of files that should be ignored when building your project. You can use the same syntax as a [.gitignore file](https://git-scm.com/docs/gitignore). 
+This is a list of files that should be ignored when building your application. You can use the same syntax as a [.gitignore file](https://git-scm.com/docs/gitignore). 
 This is useful for large files that you don't want to include in your build.
 For example, you might have a large binary file that is used by your application.
 
