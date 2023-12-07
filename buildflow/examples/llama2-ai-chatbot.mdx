@@ -4,7 +4,7 @@ icon: rocketchat
 description: "Serve a Llama 2 Model hosted in a remote storage bucket."
 ---
 
-In this example we will create a chatbot that uses the Llama2 7b chat model. All the code for this example can be found on [GitHub](https://github.com/launchflow/launchflow-model-serving).
+In this example we will create a chatbot that uses the Llama2 7b chat model. All the code for this example can be found on [GitHub](https://github.com/launchflow/buildflow-templates/tree/main/walkthroughs/llama2-chat-bot).
 
 <img className="block dark:hidden" src="/images/model-serving-design-light.gif" />
 <img className="hidden dark:block" src="/images/model-serving-design-dark.gif" />
@@ -18,6 +18,8 @@ If all goes well, you should have a working chatbot that looks like this:
 
 <img src="/images/chat.gif" />
 
+## Running the Example
+
 Before completing the example ensure you have [installed BuildFlow](/buildflow/programming-guide/install)
 with all [extra dependencies](/buildflow/programming-guide/install#extra-dependencies).
 
@@ -25,32 +27,101 @@ with all [extra dependencies](/buildflow/programming-guide/install#extra-depende
     Our basic model is hosted on a public bucket, but you can also host your own model on a private bucket.
 </Tip>
 
-<Steps>
-    <Step title="Clone the GitHub Repo">
-    ```
-    git clone git@github.com:launchflow/launchflow-model-serving.git
-    cd launchflow-model-serving
-    ```
-    </Step>
-    <Step title="Install your requirements">
-        ```
-            pip install -r requirements.txt
-        ```
-    </Step>
-    <Step title="Run your application">
-        Run your application with:
+<Tabs>
+    <Tab title="LaunchFlow VS Code Extension">
+        <Steps>
+            <Step title="Create from Template">
+                <div className="grid sm:grid-cols-2 space-x-2">
+                    <div>
+                        TODO update screenshot and template name
+                        <ol>
+                            <li>From the `Apps` tab click `Create from Template`</li>
+                            <li>Click `Llama 2 ChatBot`</li>
+                            <li>Select a directory to save the project</li>
+                            <li>This will download the template and add it to your workspace</li>
+                        </ol>
+                        <Tip>
+                            You will now see the `launchflow-chat` app on the `Apps` tab.
+                        </Tip>
+                    </div>
+                    <div>
+                        <Frame className="tailwind styles sm:hidden">
+                            <img style={{maxHeight: "500px", margin: 0}} alt="Create from template"src="/images/llama-chatgpt.png"/>
+                        </Frame>
+                    </div>
+                </div>
+            </Step>
+            <Step title="Install your dependencies">
+                <div className="grid sm:grid-cols-2">
+                    <div>
+                        <ol>
+                            <li>Select the `Utility` tab</li>
+                            <li>Click `Install Requirements`</li>
+                        </ol>
+                    </div>
+                    <div>
+                        <Frame className="tailwind styles sm:hidden">
+                            <img style={{maxHeight: "500px", margin: 0}} alt="Install Dependencies"src="/images/install-requirements.png"/>
+                        </Frame>
+                    </div>
+                </div>
+            </Step>
+            <Step title="Run your application">
+                <div className="grid sm:grid-cols-2 space-x-2">
+                    <div>
+                        <ol>
+                            <li>Select the `Runtime` tab</li>
+                            <li>Click `Run Local`</li>
+                            <li>Visit http://localhost:8000 to begin chatting with the AI!</li>
+                        </ol>
+                        <Warning>
+                            If this is the first time you are running the application it will take several minutes to download the model from the remote storage bucket. The overal model size is about 8GB. Subsequent runs will not need to download the model again unless to delete.
+                        </Warning>
+                        <Tip>
+                            If you want to experiment loading the model from S3 instead of GCS simply set `USE_GCP=false` in the `.env` file
+                        </Tip>
+                    </div>
+                    <div>
+                        <Frame className="tailwind styles sm:hidden">
+                            <img style={{maxHeight: "500px", margin: 0}} alt="Runtime"src="/images/runtime.png"/>
+                        </Frame>
+                    </div>
+                </div>
+            </Step>
+            <Step title="What's next?">
+                Now that you have a working chatbot, you can start to customize it to your needs. Such as adding [google auth](/buildflow/guides/google-auth) for user authentication or a [postgres database](/buildflow/guides/serve-from-postgres) for permanent storage. Or even hosting your own model on a private bucket.
+            </Step>
+        </Steps>
+    </Tab>
+    <Tab title="BuildFlow CLI">
+        <Steps>
+            <Step title="Clone the GitHub Repo">
+            ```
+            git clone git@github.com:launchflow/launchflow-model-serving.git
+            cd launchflow-model-serving
+            ```
+            </Step>
+            <Step title="Install your dependencies">
+                ```
+                    pip install -r requirements.txt
+                ```
+            </Step>
+            <Step title="Run your application">
+                Run your application with:
 
-        ```
-            buildflow run
-        ```
+                ```
+                    buildflow run
+                ```
 
-        <Tip>
-            If you want to experiment loading the model from S3 instead of GCS simply set `USE_GCP=false` in the `.env` file
-        </Tip>
+                <Tip>
+                    If you want to experiment loading the model from S3 instead of GCS simply set `USE_GCP=false` in the `.env` file
+                </Tip>
 
-        Once running you can visit http://localhost:8000 to begin chatting with the AI!
-    </Step>
-    <Step title="What's next?">
-        Now that you have a working chatbot, you can start to customize it to your needs. Such as adding [google auth](/buildflow/guides/google-auth) for user authentication or a [postgres database](/buildflow/guides/serve-from-postgres) for permanent storage. Or even hosting your own model on a private bucket.
-    </Step>
-</Steps>
+                Once running you can visit http://localhost:8000 to begin chatting with the AI!
+            </Step>
+            <Step title="What's next?">
+                Now that you have a working chatbot, you can start to customize it to your needs. Such as adding [google auth](/buildflow/guides/google-auth) for user authentication or a [postgres database](/buildflow/guides/serve-from-postgres) for permanent storage. Or even hosting your own model on a private bucket.
+            </Step>
+        </Steps>
+    </Tab>
+</Tabs>

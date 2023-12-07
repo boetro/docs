@@ -1,5 +1,5 @@
 
-To run this example using AWS and Motherduck resources use [this github repo](https://github.com/launchflow/buildflow-aws-image-classification)
+To run this example using AWS and Motherduck resources use [this github repo](https://github.com/launchflow/buildflow-templates/tree/main/walkthroughs/realtime-image-classification-aws)
 <Note>
 In order to run this code you will need to have a AWS and [Motherduck](https://motherduck.com) account created that you have access to.
 
@@ -9,7 +9,7 @@ You can signup for a Motherduck account [here](https://motherduck.com).
 </Note>
 
 <Tabs>
-    <Tab title="LaunchFlow VSCode Extension">
+    <Tab title="LaunchFlow VS Code Extension">
         <Steps>
             <Step title="Create from Template">
                 <div className="grid sm:grid-cols-2">
@@ -107,7 +107,29 @@ You can signup for a Motherduck account [here](https://motherduck.com).
                             <img style={{maxHeight: "500px", margin: 0}} alt="Runtime"src="/images/runtime.png"/>
                         </Frame>
                     </div>
-                </div>            </Step>
+                </div>
+            </Step>
+            <Step title="What's next?">
+                Now that you have a working image classification app, you can start to customize it to your needs. Such as adding [google auth](/buildflow/guides/google-auth) for user authentication or a [postgres database](/buildflow/guides/serve-from-postgres) for permanent storage. Or even hosting your own model on a private bucket.
+            </Step>
+            <Step title="Clean up your resources">
+                This step will delete all cloud resources there were created in the previous step.
+
+                <div className="grid sm:grid-cols-2 space-x-2">
+                    <div>
+                        <ol>
+                            <li>Select the `Infra` tab</li>
+                            <li>Click `Destroy Resources`</li>
+                            <li>Confirm the output in the terminal</li>
+                        </ol>
+                    </div>
+                    <div>
+                        <Frame className="tailwind styles sm:hidden">
+                            <img style={{maxHeight: "500px", margin: 0}} alt="Infra"src="/images/create-resources.png"/>
+                        </Frame>
+                    </div>
+                </div>
+            </Step>
         </Steps>
     </Tab>
     <Tab title="BuildFlow CLI">

@@ -1,7 +1,7 @@
-To run this using no remote resources use [this github repo](https://github.com/launchflow/buildflow-local-image-classification)
+To run this using no remote resources use [this github repo](https://github.com/launchflow/buildflow-templates/tree/main/walkthroughs/realtime-image-classification-local)
 
 <Tabs>
-    <Tab title="LaunchFlow VSCode Extension">
+    <Tab title="LaunchFlow VS Code Extension">
         <Steps>
             <Step title="Create from Template">
                 <div className="grid sm:grid-cols-2">
@@ -38,9 +38,6 @@ To run this using no remote resources use [this github repo](https://github.com/
                     </div>
                 </div>1
             </Step>
-            <Step title="Create a .env file">
-                Rename the `template.env` to `.env` and update all variables
-            </Step>
             <Step title="Run your application">
                 <div className="grid sm:grid-cols-2 space-x-2">
                     <div>
@@ -61,6 +58,9 @@ To run this using no remote resources use [this github repo](https://github.com/
                         </Frame>
                     </div>
                 </div>            
+            </Step>
+            <Step title="What's next?">
+                Now that you have a working image classification app, you can start to customize it to your needs. Such as adding [google auth](/buildflow/guides/google-auth) for user authentication or a [postgres database](/buildflow/guides/serve-from-postgres) for permanent storage. Or even hosting your own model on a private bucket.
             </Step>
         </Steps>
     </Tab>
