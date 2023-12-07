@@ -1,37 +1,104 @@
 To run this using no remote resources use [this github repo](https://github.com/launchflow/buildflow-local-image-classification)
 
-<Steps>
-    <Step title="Clone the GitHub Repo">
-```
-git clone git@github.com:launchflow/buildflow-local-image-classification.git 
-cd buildflow-local-image-classification
-```
-    </Step>
-    <Step title="Install your requirements">
-        ```
-            pip install -r requirements.txt
-        ```
-    </Step>
-    <Step title="Create a .env file">
-        Rename the `template.env` to `.env` and update all variables
-    </Step>
-    <Step title="Run your application">
-        Run your application with:
+<Tabs>
+    <Tab title="LaunchFlow VSCode Extension">
+        <Steps>
+            <Step title="Create from Template">
+                <div className="grid sm:grid-cols-2">
+                    <div>
+                        <ol>
+                            <li>From the `Apps` tab click `Create from Template`</li>
+                            <li>Click `Realtime Image Classification (Local)`</li>
+                            <li>Select a directory to save the project</li>
+                            <li>This will download the template and add it to your workspace</li>
+                        </ol>
+                        <Tip>
+                            You will now see the `image-classification-local` app on the `Apps` tab.
+                        </Tip>
+                    </div>
+                    <div>
+                        <Frame className="tailwind styles sm:hidden">
+                            <img style={{maxHeight: "500px", margin: 0}} alt="Create from template"src="/images/local-template-image-class.png"/>
+                        </Frame>
+                    </div>
+                </div>
+            </Step>
+            <Step title="Install your dependencies">
+                <div className="grid sm:grid-cols-2">
+                    <div>
+                        <ol>
+                            <li>Select the `Utility` tab</li>
+                            <li>Click `Install Requirements`</li>
+                        </ol>
+                    </div>
+                    <div>
+                        <Frame className="tailwind styles sm:hidden">
+                            <img style={{maxHeight: "500px", margin: 0}} alt="Install Dependencies"src="/images/install-requirements.png"/>
+                        </Frame>
+                    </div>
+                </div>1
+            </Step>
+            <Step title="Create a .env file">
+                Rename the `template.env` to `.env` and update all variables
+            </Step>
+            <Step title="Run your application">
+                <div className="grid sm:grid-cols-2 space-x-2">
+                    <div>
+                        <ol>
+                            <li>Select the `Runtime` tab</li>
+                            <li>Click `Run Local`</li>
+                            <li>Visit http://localhost:8000 to begin uploading images!</li>
+                        </ol>
+                        <Tip>
+                            We provide a picture of [Caleb's](https://github.com/boetro) dog in the repo to help get you started!
 
+                            ![Dog](/images/founders_dog.jpg)
+                        </Tip>
+                    </div>
+                    <div>
+                        <Frame className="tailwind styles sm:hidden">
+                            <img style={{maxHeight: "500px", margin: 0}} alt="Runtime"src="/images/runtime.png"/>
+                        </Frame>
+                    </div>
+                </div>            
+            </Step>
+        </Steps>
+    </Tab>
+    <Tab title="BuildFlow CLI">
+        <Steps>
+            <Step title="Clone the GitHub Repo">
         ```
-            buildflow run
+        git clone git@github.com:launchflow/buildflow-local-image-classification.git 
+        cd buildflow-local-image-classification
         ```
+            </Step>
+            <Step title="Install your requirements">
+                ```
+                    pip install -r requirements.txt
+                ```
+            </Step>
+            <Step title="Create a .env file">
+                Rename the `template.env` to `.env` and update all variables
+            </Step>
+            <Step title="Run your application">
+                Run your application with:
 
-        Once running you can visit http://localhost:8000 to see and begin uploading images!
+                ```
+                    buildflow run
+                ```
 
-        <Tip>
-            We provide a picture of [Caleb's](https://github.com/boetro) dog in the repo to help get you started!
+                Once running you can visit http://localhost:8000 to see and begin uploading images!
 
-            ![Dog](/images/founders_dog.jpg)
-        </Tip>
-    </Step>
-    <Step title="What's next?">
-        Now that you have a working image classification app, you can start to customize it to your needs. Such as adding [google auth](/buildflow/guides/google-auth) for user authentication or a [postgres database](/buildflow/guides/serve-from-postgres) for permanent storage. Or even hosting your own model on a private bucket.
-    </Step>
-</Steps>
+                <Tip>
+                    We provide a picture of [Caleb's](https://github.com/boetro) dog in the repo to help get you started!
+
+                    ![Dog](/images/founders_dog.jpg)
+                </Tip>
+            </Step>
+            <Step title="What's next?">
+                Now that you have a working image classification app, you can start to customize it to your needs. Such as adding [google auth](/buildflow/guides/google-auth) for user authentication or a [postgres database](/buildflow/guides/serve-from-postgres) for permanent storage. Or even hosting your own model on a private bucket.
+            </Step>
+        </Steps>
+    </Tab>
+</Tabs>
 

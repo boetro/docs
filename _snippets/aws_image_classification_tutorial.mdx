@@ -2,13 +2,13 @@
 
 All the code for this tutorial can be found on [github](https://github.com/launchflow/buildflow-aws-image-classification); we will be walking through this repo step by step.
 
-## Define your Applicatoin
+## Define your Application
 
 Your application is defined by the presence of a `buildflow.yaml` [file](/buildflow/programming-guide/buildflow-yaml) in the root of your application.
 This is created when we use the [BuildFlow CLI](/buildflow/reference/cli/init) to create a new application, and doesn't need to be updated unless you need to add something.
 
 Our yaml file defines the following:
-- [**application**](/buildflow/programming-guide/buildflow-yaml#app): the name of our application; this can be updated to any string containing lower-case letters and hyphens
+- [**app**](/buildflow/programming-guide/buildflow-yaml#app): the name of our application; this can be updated to any string containing lower-case letters and hyphens
 - [**pulumi_config**](/buildflow/programming-guide/buildflow-yaml#pulumi-configure): our pulumi configuration; here we say we have one stack that is stored locally
 - [**entry_point**](/buildflow/programming-guide/buildflow-yaml#entry-point): defines how our application is run
 

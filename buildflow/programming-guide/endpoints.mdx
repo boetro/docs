@@ -8,7 +8,7 @@ The **Endpoint** pattern enables serving HTTP traffic via an API.
 
 An endpoint is composed of:
 - A `route`: this is the path that the endpoint will be available at.
-- A `method`: this is the HTTP method that the endpoint will be available at currently GET and POST are supported.
+- A `method`: this is the method that the endpoint will be available at currently `GET`, `POST`, and `WEBSOCKET` are supported.
 - Your processing Logic.
 
 Endpoints are created as part of a `Service`. A Service is a collection of endpoints that all share the same set of resources.
@@ -130,13 +130,15 @@ def my_endpoint(request: Request):
 We also offer additional request types that can be used to receive different types other than JSON. Such as form data or files. These are available in the `buildflow.requests` module. 
 
 <Note>
-    Note these are just proxy imports for FastAPI request types for convenience. You can find more details on these in the [FastAPI docs](https://fastapi.tiangolo.com/tutorial/request-forms/).
+    Note these are just proxy imports for FastAPI and Starlette request types for convenience. You can find more details on these in the [FastAPI docs](https://fastapi.tiangolo.com/tutorial/request-forms/) and [Starlette docs](https://www.starlette.io/requests/).
 </Note>
 
 | Request Type         | Description                           |
 | --------------------- | ------------------------------------- |
 | **Form**      | Process a form from an http body. Proxy for [fastapi.Form](https://fastapi.tiangolo.com/tutorial/request-forms/).                  |
-| **UploadFile**      | Return a file from and http request. Proxy for [fastapi.UploadFile](https://fastapi.tiangolo.com/tutorial/request-files/#file-parameters-with-uploadfile).
+| **UploadFile**      | Process a file from an http request. Proxy for [fastapi.UploadFile](https://fastapi.tiangolo.com/tutorial/request-files/#file-parameters-with-uploadfile).
+| **WebSocket**      | Process a websocket request. Proxy for [starlette.websockets.WebSocket](https://www.starlette.io/websockets/).
+
 
 ### Other Response Types
 
@@ -156,6 +158,22 @@ These can all be found in the `buildflow.responses` module.
 | **RedirectResponse**  | Return a redirect. Proxy for [starlette.responses.RedirectResponse](https://www.starlette.io/responses/#redirectresponse).|
 | **StreamingResponse** | Returns a streaming response. Proxy for [starlette.responses.StreamingResponse](https://www.starlette.io/responses/#streamingresponse).|
 
+
+## WebSockets
+
+WebSockets are full supported inside of a service. To use a websocket endpoint simply set the `method` to `WEBSOCKET`. Your endpoint will take in a `buildflow.requests.WebSocket` object that can be used to communicated with the client.
+
+```python
+from buildflow import endpoint
+from buildflow.requests import WebSocket
+
+@endpoint("/websocket-endpoint", method="websocket")
+async def tail_logs(websocket: WebSocket):
+    await websocket.accept()
+    while True:
+        data = await websocket.receive_text()
+        await websocket.send_text(f"Message text was: {data}")
+```
 
 ## Middleware
 

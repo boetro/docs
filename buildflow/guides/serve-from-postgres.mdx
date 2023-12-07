@@ -126,7 +126,7 @@ To see a full working application example with a UI included see our [SaaS appli
             You will need to provide the user and password for authenticating with the database. You can add a user and password to your database following this [guide](https://cloud.google.com/sql/docs/postgres/create-manage-users).
         </Tip>
 
-        ```bash
+        ```
         export GCP_PROJECT_ID=<your-project-id>
         export DB_USER=<your-db-user>
         export DB_PASSWORD=<your-db-password>
@@ -138,13 +138,13 @@ To see a full working application example with a UI included see our [SaaS appli
             After confirming it will take several minutes to actually provision the database.
         </Note>
 
-        ```bash
+        ```
         buildflow apply
         ```
 
         Once completed you can run the code with the VSCode extension or the CLI:
 
-        ```bash
+        ```
         buildflow run
         ```
 
@@ -154,8 +154,15 @@ To see a full working application example with a UI included see our [SaaS appli
     <Step title="Clean up Resources">
         Once your done you can use the VSCode extension or the CLI to clean up all the resources:
 
-        ```bash
+        ```
         buildflow destroy
         ```
     </Step>
 </Steps>
+
+## What's next?
+
+- [Launch a deployment with LaunchFlow Cloud](/launchflow-cloud/user-guides/launch-a-deployment)
+- [Llama 2 AI Chatbot](/buildflow/examples/llama2-ai-chatbot)
+- [Software as a Service](/buildflow/examples/saas) example
+- [Realtime Image Classification](/buildflow/tutorial)

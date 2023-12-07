@@ -44,7 +44,7 @@ When running `buildflow apply` a Cloud SQL instance will be created in your GCP 
 ## Cloud SQL Database
 
 CloudSQLDatabase is a primitive type that can only be managed. It can be used to create a database in a Cloud SQL Instance.
-To create a CloudSQLInstance simply provide:
+To create a CloudSQLDatabase simply provide:
 
 | Arg             | Description                                                                                                                                                                 |
 |-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -76,4 +76,47 @@ app.manage(cloud_sql_instance, cloud_sql_database)
 ### Resource Creation
 
 When running `buildflow apply` a database will be created in your Cloud SQL instance.
+
+## Cloud SQL User
+
+ClouseSQLUser is a primitive type that can only be managed. It can be used to create a database in a Cloud SQL Instance.
+To create a CloudSQLInstance simply provide:
+
+| Arg             | Description                                                                                                                                                                 |
+|-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **user_name** | The user name to attach to the instance                                                                                                                                           |
+| **password**   | The password of the user |
+| **instance**   | The [CloudSQLInstance](#cloud-sql-instance) that should hold the user |
+
+
+<Tip>
+    We recommend storing the password somewhere clear such as a secret manager instead of directly in your code.
+</Tip>
+
+Example usage:
+
+```python
+from buildflow.io.gcp import CloudSQLInstance, CloudSQLUser
+from buildflow.types.gcp import CloudSQLDatabaseVersion, CloudSQLInstanceSettings
+
+cloud_sql_instance = CloudSQLInstance(
+    instance_name="instance-name",
+    project_id="project-id",
+    database_version=CloudSQLDatabaseVersion.POSTGRES_15,
+    region="us-central1",
+    settings=CloudSQLInstanceSettings(tier="db-custom-1-3840"),
+
+)
+cloud_sql_user = CloudSQLUser(
+    user_name="user-name",
+    password="password",
+    instance=cloud_sql_instance,
+)
+
+app.manage(cloud_sql_instance, cloud_sql_database)
+```
+
+### Resource Creation
+
+When running `buildflow apply` a user will be created in your Cloud SQL instance.
 

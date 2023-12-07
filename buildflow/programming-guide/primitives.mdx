@@ -6,7 +6,7 @@ description: 'Create, manage, and connect to your resources'
 
 
 Primitives are resources that a processor may read from, write to, or reference. For example a primitive might be a Postgres Database managed by GCP, or a S3 bucket managed by AWS.
-Primitives can be uses as sources or sinks in your [processors](/buildflow/programming-guide/processors), and they can also be managed by your [flow](/buildflow/programming-guide/flows).
+Primitives can be used as sources or sinks in your [processors](/buildflow/programming-guide/processors), and they can also be managed by your [flow](/buildflow/programming-guide/flows).
 If a primitive is managed it can automatically be created, managed, and destroyed with BuildFlow
 
 BuildFlow provides many primitives out of the box, and you can also create your own custom primitives. All of our primitives can be found in our [primitive docs](/buildflow/primitives/)
@@ -27,13 +27,13 @@ app.manage(AWSBucket("my-bucket"), GCSBucket("my-bucket"))
 
 Now resource creation can be done by running the below command in the root directory of your application.
 
-```bash
+```
 buildflow apply
 ```
 
 And the resources and be destroyed by running:
 
-```bash
+```
 buildflow destroy
 ```
 
@@ -160,7 +160,11 @@ class CustomPrimitiveSink(SinkStrategy):
 Once complete you can plug your custom primitive directly into the `app.pipeline` decorator.
 
 ```python
-@app.pipeline(source=CustomPrimitive(), sink=CustomPrimitive())
+custom_primitive = CustomPrimitive(input_field1="foo", input_field2="bar")
+
+app.manage(custom_primitive)
+
+@app.pipeline(source=custom_primitive, sink=custom_primitive)
 def my_pipeline():
     ...
 ```

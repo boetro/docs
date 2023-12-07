@@ -8,11 +8,11 @@ A processor is where you will define your actual business logic. We offer three 
 
 | Pattern                    | Description                           |
 | ------------------------------------ | ------------------------------------- |
-| **[Endpoints](./endpoints)**         | Takes in data from an HTTP endpoint via a GET or POST request and returns a user defined response.|
+| **[Endpoints](./endpoints)**         | Takes in data from an HTTP endpoint via a `GET`, `POST`, or `WEBSOCKET` request and returns a user defined response.|
 | **[Consumers](./consumers)**         | Event-driven processor that reads data from a source and writes data to a sink. |
-| **[Collectors](./collectors)**       | Takes in data from an HTTP endpoint via a GET or POST request and writes it to a sink. Then returns a success or failure response. |
+| **[Collectors](./collectors)**       | Takes in data from an HTTP endpoint via a `GET` or `POST` request and writes it to a sink. Then returns a success or failure response. |
 
-Some additional patterns we hope to support in the future are open websocket connections and batch pipelines.
+In the future we plan on supporting batch pipelines and scheduled tasks as different patterns.
 
 ## Async Processors
 
@@ -64,7 +64,7 @@ async def my_consumer(elem: InputType) -> OutputType:
 
 ### For Consumers
 
-For consumers the input type defines what data time is coming from your sink, and the output type defines what will be written to your sink.
+For consumers the input type defines what data type is coming from your sink, and the output type defines what will be written to your sink.
 For more details on how to use additional types with sources and sinks see our [source and sink documentation](/buildflow/programming-guide/source-sink-types).
 
 ### For Collectors

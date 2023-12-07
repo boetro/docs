@@ -19,7 +19,7 @@ Congrats! You've built your application and now you're ready to deploy it and ha
 
 You can also self host your BuildFlow application on any [Ray cluster](https://docs.ray.io/en/latest/cluster/getting-started.html). We recommend deploying to a Ray cluster using the [Ray Jobs](https://docs.ray.io/en/latest/cluster/running-applications/job-submission/index.html) API like:
 
-```bash
+```
 ray job submit \
     --runtime-env-json='{"pip": ["requirements.txt"]}' \
     --working-dir . \

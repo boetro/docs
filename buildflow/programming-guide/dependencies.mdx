@@ -11,7 +11,7 @@ BuildFlow provides many ready to use dependencies to make integrations even quic
 ## What do dependencies enable?
 
 - Shared logic: dependencies can be used across processor
-- Stateful processors: dependencies can be scoped allowing the results to be "cached"
+- Stateful processors: dependencies can be scoped allowing the results to be cached and shared
 - Shared state: global dependencies mean processors can share state across an entire flow
 - Security, Authentication: common dependencies can be used to ensure you are authenticating requests the same way everytime
 
@@ -54,8 +54,8 @@ There are several options for scope:
 | Scope    | Description                                                                                                                             |
 |----------|-----------------------------------------------------------------------------------------------------------------------------------------|
 | PROCESS  | A new dependency will be made available for every call to your processor and will be destroyed once the call to your processor is over. |
-| REPLICA  | A new dependency will be made available when ever a replica is created and destroyed whenever the replica is drained.                   |
-| GLOBAL   | A new dependency will be made available when your flow is started and destroyed whenever the flow is drained.                           |
+| REPLICA  | A new dependency will be made available when ever a replica is created and destroyed whenever the replica is drained. **Must be serializable.**                   |
+| GLOBAL   | A new dependency will be made available when your flow is started and destroyed whenever the flow is drained. **Must be serializable.**                            |
 | NO_SCOPE | A new dependency will be created every time this dependency is accessed (nothing will be cached).                                       |
 
 In our above example we mark the dependency as `GLOBAL` which means it will be created when the flow is started and destroyed when the flow is drained. This means that the dependency will be available for the lifetime of the flow and will be shared across all processors. So no matter how many times you call your processor it will always reference the same string object.

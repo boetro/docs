@@ -6,7 +6,7 @@ title: Getting Started
 
 The CLI can be installed via pip:
 
-```bash
+```
 pip install launchflow
 ```
 
@@ -26,7 +26,7 @@ pip install launchflow
 
 To login to LaunchFlow cloud using the CLI run the following command:
 
-```bash
+```
 launch auth login
 ```
 
@@ -56,7 +56,7 @@ This will generate a URL for you to upgrade your account.
 
 To launch your first deployment simply create a [new BuildFlow application](/buildflow/reference/cli/init) using the BuildFlow CLI in a directory of your choosing:
 
-```bash
+```
 buildflow init
 ```
 
@@ -64,20 +64,20 @@ This will create a simple HTTP serve that displays a "Hello World" message.
 
 To launch the deployment run the following command in the same directory that you ran `buildflow init` in:
 
-```bash
+```
 launch deployments submit
 ```
 
 This will deploy your application to LaunchFlow cloud, and spit out a deployment ID and other useful commands to track the progress of the deployment.
 For instance, you can track the progress using the `launch deployments ping` command:
 
-```bash
+```
 launch deployments ping $DEPLOYMENT_ID
 ```
 
 Once the deployment is running you should be able to find the URL of the HTTP server using the `launch deployments ping` command and visiting the URL in your browser:
 
-```bash
+```
 Deployments
 -----------
 -   id: deployment_37019776288
