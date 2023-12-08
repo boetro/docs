@@ -79,8 +79,7 @@
     {
       "group": "Quickstarts",
       "pages": [
-        "platform/platform-quickstart",
-        "platform/buildflow-Quickstart"
+        "platform/platform-quickstart"
       ]
     },
     {
