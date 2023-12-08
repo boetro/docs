@@ -3,7 +3,9 @@ title: "Load and Serve a Model"
 ---
 
 In this guide we will go over how to load and serve a model that is stored in a remote bucket (GCS or S3). We will load the model at server startup and ensure that it gets used across requests.
-All the code for this guide can be found on [GitHub](https://github.com/launchflow/buildflow-samples/tree/main/google-auth).
+All the code for this guide can be found on GitHub:
+- [Loading from AWS S3 Bucket](https://github.com/launchflow/buildflow-templates/tree/main/samples/load-model-from-s3).
+- [Loading from Google Cloud Storage Bucket](https://github.com/launchflow/buildflow-templates/tree/main/samples/load-model-from-gcs).
 
 
 To do this we will use:
@@ -35,6 +37,10 @@ To see a full working application example with a UI included see our [Llama2 AI 
         bucket = S3Bucket(bucket_name="launchflow-llama-models")
         ModelBucketDep = BucketDependencyBuilder(bucket)
         ```
+
+        <Tip>
+            `S3Bucket` can be repleced with [GCSBucket](/buildflow/primitives/gcp/gcs) if you are using Google Cloud Storage.
+        </Tip>
     </Step>
     <Step title="Create our Custom Model Dependency">
 
@@ -107,6 +113,27 @@ To see a full working application example with a UI included see our [Llama2 AI 
         Once running you can navigate to http://localhost:8000 to see the swagger UI and test out the endpoint.
     </Step>
 </Steps>
+
+You can clone this repo locally to run it or create it from a template using the LaunchFlow VS Code Extension.
+
+<div className="grid sm:grid-cols-2">
+    <div>
+        <ol>
+            <li>From the `Apps` tab click `Create from Template`</li>
+            <li>Click `Google Auth`</li>
+            <li>Select a directory to save the project</li>
+            <li>This will download the template and add it to your workspace</li>
+        </ol>
+        <Tip>
+            You will now see the `load-model` app on the `Apps` tab.
+        </Tip>
+    </div>
+    <div>
+        <Frame className="tailwind styles sm:hidden">
+            <img style={{maxHeight: "500px", margin: 0}} alt="Create from template"src="/images/load-model-template.png"/>
+        </Frame>
+    </div>
+</div>
 
 ## What's next?
 

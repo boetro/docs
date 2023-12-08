@@ -3,7 +3,7 @@ title: "Serve from Postgres"
 ---
 
 In this guide we will go over how to serve data from a Postgres database that is managed by BuildFlow using [SQLAlchemy](https://docs.sqlalchemy.org/en/20/). 
-All the code for this guide can be found on [GitHub](https://github.com/launchflow/buildflow-samples/tree/main/serve-from-postgres).
+All the code for this guide can be found on [GitHub](https://github.com/launchflow/buildflow-templates/tree/main/samples/serve-from-postgres-gcp).
 
 To do this we will use:
 
@@ -48,8 +48,13 @@ To see a full working application example with a UI included see our [SaaS appli
             instance=cloud_sql_instance,
             database_name="launchflow-serve-from-postgres-db",
         )
+        cloud_sql_user = CloudSQLUser(
+            instance=cloud_sql_instance,
+            user_name="my-user",
+            password="my-password",
+        )
 
-        app.manage(cloud_sql_instance, cloud_sql_database)
+        app.manage(cloud_sql_instance, cloud_sql_database, cloud_sql_user)
         ```
     </Step>
     <Step title="Initialize a SQLAlchemy Session Dependency">

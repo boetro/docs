@@ -2,8 +2,15 @@
 title: "Schedule Async Tasks"
 ---
 
-In this guide we will go over how to schedule async tasks in your application.
-All the code for this guide can be found on [GitHub](https://github.com/launchflow/buildflow-samples/tree/main/schedule-async-tasks).
+In this guide we will go over how to schedule async tasks in your application. This specific example will simulate a dead letter queue, where we schedule failed work on a queue for reliable processing.
+
+All the code for this guide can be found on GitHub:
+- [Scheduling Tasks on AWS SQS](https://github.com/launchflow/buildflow-templates/tree/main/samples/dead-letter-queue-sqs).
+- [Scheduling Tasks on GCP Pub/Sub](https://github.com/launchflow/buildflow-templates/tree/main/samples/dead-letter-queue-pubsub).
+
+<Note>
+    The code below uses GCP Pub/Sub but the only difference is the primitives that are used.
+</Note>
 
 
 To do this we will use:
@@ -15,95 +22,86 @@ To do this we will use:
 To see a full working applications example with a UI included see our [Image Classification example](/buildflow/examples/image-classification).
 
 <Steps>
+    <Step title="Define our Resources">
+    First we define our queue primitives. This will be the dead letter queue we send failed tasks to.
+    ```python
+    # TODO(developer): Set this to your GCP project ID
+    GCP_PROJECT_ID = "your-gcp-project-id"
+
+    # The topic is where the messages are published.
+    dlq_topic = GCPPubSubTopic(
+        project_id=GCP_PROJECT_ID,
+        topic_name="dead-letter-queue-topic",
+    )
+    # The subscription is where the messages are received.
+    dlq_subscription = GCPPubSubSubscription(
+        project_id=GCP_PROJECT_ID,
+        subscription_name="dead-letter-queue-subscription",
+    ).options(topic=dlq_topic, batch_size=1, enable_exactly_once_delivery=True)
+    ```
+
+    </Step>
     <Step title="Initialize Flow">
-        First we create a new BuildFlow [Flow](/buildflow/programming-guide/flows). This will be the main entry point to our application.
+        Next we create a new BuildFlow [Flow](/buildflow/programming-guide/flows). This will be the main entry point to our application, and we mark our infrastructure as managed allowing it be created by `buildflow apply`
 
         ```python
         app = Flow()
+
+        # Infrastructure state is managed by BuildFlow.
+        app.manage(dlq_topic, dlq_subscription)
+        ```
+    </Step>
+    <Step title="Attach our Dead Letter Queue Consumer">
+        Now we attach a consumer to our application. This consumer has a source that is our dead letter queue subscription. Meaning it will receive any messages that are pushed to the queue.
+
+        ```python
+        @app.consumer(source=dlq_subscription)
+        def handle_errors(payload: FailedPayload):
+            # TODO: Handle the error.
+            print(f"Received error: {payload.message}")
         ```
     </Step>
     <Step title="Attach a Service">
         We then attach a service to our flow object. We will later attach an endpoint for receiving data.
 
         ```python
-        service = app.service(service_id="schedule-async-tasks")
-        ```
-    </Step>
-    <Step title="Define Queue Primitives">
-
-        Next we define [primitives](/buildflow/programming-guide/primitives) to enque data for async tasks, and mark them as managed by BuildFlow.
-
-        - For GCP we use a [Pub/Sub topic](/buildflow/primitives/gcp/pubsub#gcp-pub-sub-topic) and [Pub/Sub subscription](/buildflow/primitives/gcp/pubsub#gcp-pub-sub-subscription)
-        - For AWS we use a [SQS queue](/buildflow/primitives/aws/sqs)
-
-        <Tip>
-            If you would like to use AWS simply comment out the GCP lines, and uncomment the AWS lines.
-        </Tip>
-
-        ```python
-        gcp_pubsub_topic = GCPPubSubTopic(
-            project_id=os.environ["GCP_PROJECT_ID"], topic_name="sample-topic"
-        )
-        gcp_pubsub_subscription = GCPPubSubSubscription(
-            project_id=os.environ["GCP_PROJECT_ID"],
-            subscription_name="sample-subscription",
-        ).options(topic=gcp_pubsub_topic)
-
-        # sqs_queue = SQSQueue(queue_name="sample-queue")
-
-        app.manage(gcp_pubsub_topic, gcp_pubsub_subscription)
-        # app.manage(sqs_queue)
+        # This is an example service that uses the dead letter queue.
+        service = app.service(service_id="service-id")
         ```
     </Step>
     <Step title="Create a Sink Dependency">
         Now we create a [sink dependency](/buildflow/dependencies/sink) to push data to our queue.
 
-        <Tip>
-            Swap the comments on these lines if you are using AWS.
-        </Tip>
-
-
         ```python
-        Sink = SinkDependencyBuilder(gcp_pubsub_topic)
-        # Sink = SinkDependencyBuilder(sqs_queue)
+        # This dependency builder lets us inject a sink that can be used to push data to
+        # the dead letter queue.
+        DLQ = SinkDependencyBuilder(dlq_topic)
         ```
     </Step>
     <Step title="Attach Endpoint for Receiving Data">
         Next we attach an [endpoint](/buildflow/programming-guide/endpoints) to our service to receive data from the user.
 
-        This endpoint takes in two arguments.
-        1. The number provided by the user
-        2. The sink we defined in the previous step
+        This endpoint takes in one argument.
+        1. The sink dependency we defined in the previous step. BuildFlow will automatically inject this when you receive requests.
 
-        We then call `sink.push` to push a JSON object to our queue.
+        This endpoint will randomly fail every other request to simulate a flakey service. We then call `dlq.push` to push a JSON object to our dead letter queue if an exception is thrown.
 
         <Tip>
-            Notice that `sink.push` is an async method so we must use `await` to call it, and we mark our endpoint processor as async by using `async def`.
+            Notice that `dlq.push` is an async method so we must use `await` to call it, and we mark our endpoint processor as async by using `async def`.
         </Tip>
 
         ```python
-        @service.endpoint("/square", method="GET")
-        async def square_endpoint(num: int, sink: Sink):
-            await sink.push({"num": num})
-            return {"success": True}
+        @service.endpoint("/", "GET")
+        async def some_endpoint(dlq: DLQ):
+            try:
+                # Simulate an error.
+                if random.random() < 0.5:
+                    raise Exception("Something went wrong!")
+                return "Success!"
+            except Exception as e:
+                await dlq.push(FailedPayload(message=str(e)))
+                return "Failure!"
         ```
-    </Step>
-    <Step title="Consume the Queue">
-        Finally we consume the data that was put on the queue using a [consumer](/buildflow/programming-guide/consumers).
-
-        <Tip>
-            Swap the comments on these lines if you are using AWS.
-        </Tip>
-
-        ```python
-        # @app.consumer(source=sqs_queue)
-        @app.consumer(source=gcp_pubsub_subscription)
-        def square_consumer(element: Dict[str, int]):
-            square = element["num"] * element["num"]
-            print(f"square of: {element['num']} is {square}")
-        ```
-
-        All this consumer does is print the square of the number that was pushed to the queue. You could optional add a `sink` to allow the consumer to push data to another primitive.
     </Step>
     <Step title="Run the Code">
         <Tip>
@@ -122,10 +120,29 @@ To see a full working applications example with a UI included see our [Image Cla
         buildflow run
         ```
 
-        Now you can visit: http://localhost:8000/docs to see the swagger UI to send a request and watch it be enqueue and processed by your consumer.
+        Now you can visit: http://localhost:8000/docs to see the swagger UI to send a request and watch it be enqueue and be processed by your consumer.
 
     </Step>
 </Steps>
+
+<div className="grid sm:grid-cols-2">
+    <div>
+        <ol>
+            <li>From the `Apps` tab click `Create from Template`</li>
+            <li>Click `Google Auth`</li>
+            <li>Select a directory to save the project</li>
+            <li>This will download the template and add it to your workspace</li>
+        </ol>
+        <Tip>
+            You will now see the `dead-letter-queue` app on the `Apps` tab.
+        </Tip>
+    </div>
+    <div>
+        <Frame className="tailwind styles sm:hidden">
+            <img style={{maxHeight: "500px", margin: 0}} alt="Create from template"src="/images/dead-letter-queue-template.png"/>
+        </Frame>
+    </div>
+</div>
 
 ## What's next?
 

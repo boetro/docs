@@ -3,7 +3,7 @@ title: "Authenticate Users with Google"
 ---
 
 In this guide we will implement the [OAuth2 Web Server flow](https://developers.google.com/identity/protocols/oauth2#webserver) with BuildFlow, and allow users to login to our application.
-All the code for this guide can be found on [GitHub](https://github.com/launchflow/buildflow-samples/tree/main/google-auth).
+All the code for this guide can be found on [GitHub](https://github.com/launchflow/buildflow-templates/tree/main/samples/google-auth).
 
 To do this we will use:
 
@@ -136,6 +136,27 @@ To see a full working application example with a UI included see our [SaaS appli
     ```
     </Step>
 </Steps>
+
+You can clone this repo locally to run it or create it from a template using the LaunchFlow VS Code Extension.
+
+<div className="grid sm:grid-cols-2">
+    <div>
+        <ol>
+            <li>From the `Apps` tab click `Create from Template`</li>
+            <li>Click `Google Auth`</li>
+            <li>Select a directory to save the project</li>
+            <li>This will download the template and add it to your workspace</li>
+        </ol>
+        <Tip>
+            You will now see the `google-auth-sample` app on the `Apps` tab.
+        </Tip>
+    </div>
+    <div>
+        <Frame className="tailwind styles sm:hidden">
+            <img style={{maxHeight: "500px", margin: 0}} alt="Create from template"src="/images/google-auth-template.png"/>
+        </Frame>
+    </div>
+</div>
 
 ## What's next?
 

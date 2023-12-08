@@ -15,6 +15,26 @@ There are two main ways to interact with LaunchFlow. Through our VS Code extensi
   <Tab title="VS Code Extension">
     <Steps>
       <Step title="Install LaunchFlow VS Code Extension">
+        <a 
+          style={{
+            height: 'fit-content', 
+            display: 'inline-block', 
+            alignItems: 'center', 
+            gap: '8px', 
+            paddingTop: '0', 
+            paddingLeft: '16px', 
+            paddingRight: '12px', 
+            borderRadius: '15px', 
+            fontSize: '1rem', 
+            backgroundColor: '#3789ff', 
+            color: 'white',
+          }}
+          href="vscode:extension/LaunchFlow.launchflow"
+          onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#4994ff'}
+          onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#3789ff'}
+        >
+          Install in VS Code
+        </a>
       </Step>
       <Step title="Create your First Application">
       </Step>
@@ -41,7 +61,7 @@ There are two main ways to interact with LaunchFlow. Through our VS Code extensi
         pip install buildflow
         ``` 
       </Step>
-      <Step title="Create your Application">
+      <Step title="Create your first Application">
         First create a directory to house your application. Then you can create a new simple application by running:
 
         ```

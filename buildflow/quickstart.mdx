@@ -38,7 +38,7 @@ Then you can visit http://localhost:8000 to see your application running.
 
 At the root level there are three important files:
 
-- `buildflow.yml` - This is the main configuration file for your appliction. It contains all the information about your application and how it should be built.
+- `buildflow.yaml` - This is the main configuration file for your appliction. It contains all the information about your application and how it should be built.
 - `main.py` - This is the entry point to your application and where your `Flow` is initialized.
 - `requirements.txt` - This is where you can specify any Python dependencies your application has.
 
@@ -46,14 +46,20 @@ Below the root level we have:
 
 **Application Code Directory**
 
-This is the directory where your application code lives. It will match the name of your application. You can put any files you want in here and they will be available to your application. We create a couple directories for you:
+This is the directory where your application code lives. It will match the name of your application. You can put any files you want in here and they will be available to your application. We create a couple of files for you:
 
-- **processors**: This is where you can put any custom processors you want to use in your application. In here you will see we have defined a *service.py* for a service in your application and a *hello_world.py* file for a custom endpoint processor.
-- **resources**: This is where you can define any custom primitive resources that your application will need. Note it is empty right now since your initial application is so simple.
+- **service.py**: This file contains the definition of your application service. This is where you can define any [custom endpoints](/buildflow/programming-guide/endpoints) you want to expose in your application. It starts out with a simple endpoint that serves a "Hello World" message.
+- **dependencies.py**: This file will typically hold any [dependencies](/buildflow/programming-guide/dependencies). It starts out as empty but the comment at the top describes how you can add and use dependencies.
+- **primitives.py**: This file will typically hold any [primitives](/buildflow/programming-guide/primitives). It starts out as empty but the comment at the top describes how you can add and use primitives.
 
 **.buildflow**
 
-This is a hidden directory that contains all the build artifacts for your application. You can general ignore this directory and it will be automatically generated for you. If you are using github you probably want to put this in your *.gitignore* file.
+This is a hidden directory that contains all the build artifacts for your application. You can general ignore this directory and it will be automatically generated for you.
+
+<Tip>
+    If you are using github you probably want to put this in your *.gitignore* file
+</Tip>
+
 
 ## Running your application
 
