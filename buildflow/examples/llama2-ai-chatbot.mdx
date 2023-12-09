@@ -1,15 +1,22 @@
 ---
-title: Llama 2 AI ChatBot
+title: Llama 2 Chat Bot
 icon: rocketchat
 description: "Serve a Llama 2 Model hosted in a remote storage bucket."
 ---
 
 In this example we will create a chatbot that uses the Llama2 7b chat model. All the code for this example can be found on [GitHub](https://github.com/launchflow/buildflow-templates/tree/main/walkthroughs/llama2-chat-bot).
 
-<img className="block dark:hidden" src="/images/model-serving-design-light.gif" />
-<img className="hidden dark:block" src="/images/model-serving-design-dark.gif" />
+<img
+  className="block dark:hidden"
+  src="/images/model-serving-design-light.gif"
+/>
+<img
+  className="hidden dark:block"
+  src="/images/model-serving-design-dark.gif"
+/>
 
 Our application will:
+
 1. Download our model from remote storage in a [dependency](/buildflow/programming-guide/dependencies) ensuring the model is ready before we receive traffic, and it can be shared across requests.
 2. Expose an [endpoint](/buildflow/programming-guide/endpoints) that allows chat with the model
 3. When our endpoint is called it will send the request through the model and return the response.
@@ -24,7 +31,8 @@ Before completing the example ensure you have [installed BuildFlow](/buildflow/p
 with all [extra dependencies](/buildflow/programming-guide/install#extra-dependencies).
 
 <Tip>
-    Our basic model is hosted on a public bucket, but you can also host your own model on a private bucket.
+  Our basic model is hosted on a public bucket, but you can also host your own
+  model on a private bucket.
 </Tip>
 
 <Tabs>
@@ -32,21 +40,20 @@ with all [extra dependencies](/buildflow/programming-guide/install#extra-depende
         <Steps>
             <Step title="Create from Template">
                 <div className="grid sm:grid-cols-2 space-x-2">
-                    <div>
-                        TODO update screenshot and template name
+                    <div>                   
                         <ol>
                             <li>From the `Apps` tab click `Create from Template`</li>
-                            <li>Click `Llama 2 ChatBot`</li>
+                            <li>Click `Llama 2 Chat Bot`</li>
                             <li>Select a directory to save the project</li>
                             <li>This will download the template and add it to your workspace</li>
                         </ol>
                         <Tip>
-                            You will now see the `launchflow-chat` app on the `Apps` tab.
+                            You will now see the `llama2-chat-bot` app on the `Apps` tab.
                         </Tip>
                     </div>
                     <div>
                         <Frame className="tailwind styles sm:hidden">
-                            <img style={{maxHeight: "500px", margin: 0}} alt="Create from template" src="/images/llama-chatgpt.png"/>
+                            <img style={{maxHeight: "500px", margin: 0}} alt="Create from template" src="/images/llama2-template-image-class.png"/>
                         </Frame>
                     </div>
                 </div>
@@ -124,4 +131,5 @@ with all [extra dependencies](/buildflow/programming-guide/install#extra-depende
             </Step>
         </Steps>
     </Tab>
+
 </Tabs>
