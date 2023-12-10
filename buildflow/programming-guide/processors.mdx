@@ -1,27 +1,27 @@
 ---
-title: 'Processors'
-icon: 'microchip'
-description: 'Your business logic'
+title: "Processors"
+icon: "microchip"
+description: "Processors are the container type for your application & business logic."
 ---
 
 A processor is where you will define your actual business logic. We offer three different patterns of processors to support a wide variety of use cases.
 
-| Pattern                    | Description                           |
-| ------------------------------------ | ------------------------------------- |
-| **[Endpoints](./endpoints)**         | Takes in data from an HTTP endpoint via a `GET`, `POST`, or `WEBSOCKET` request and returns a user defined response.|
-| **[Consumers](./consumers)**         | Event-driven processor that reads data from a source and writes data to a sink. |
-| **[Collectors](./collectors)**       | Takes in data from an HTTP endpoint via a `GET` or `POST` request and writes it to a sink. Then returns a success or failure response. |
+| Pattern                        | Description                                                                                                                            |
+| ------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------- |
+| **[Endpoints](./endpoints)**   | Takes in data from an HTTP endpoint via a `GET`, `POST`, or `WEBSOCKET` request and returns a user defined response.                   |
+| **[Consumers](./consumers)**   | Event-driven processor that reads data from a source and writes data to a sink.                                                        |
+| **[Collectors](./collectors)** | Takes in data from an HTTP endpoint via a `GET` or `POST` request and writes it to a sink. Then returns a success or failure response. |
 
 In the future we plan on supporting batch pipelines and scheduled tasks as different patterns.
 
 ## Async Processors
 
 <Tip>
-    **TL:DR;** If you are using any libraries that require you to use `await`. You should make your processor async.
+  **TL:DR;** If you are using any libraries that require you to use `await`. You
+  should make your processor async.
 </Tip>
 
 All BuildFlow processors patterns run in an async runtime. So you can make your process async by simply adding the `async` keyword.
-
 
 ```python
 @app.consumer(source=Primitive(...), sink=Primitive(...))
@@ -77,18 +77,15 @@ For more details on how to use additional types with sources and sinks see our [
 For endpoints the input type defines the JSON payload that is expected from the HTTPrequest. The output type defines the JSON payload that will be sent back in the response.
 For more details on different types of requests and response payload specific to endpoints see our [endpoint documentation](/buildflow/programming-guide/endpoints#request-and-response-type).
 
-
-
 ## Autoscaling Options
 
 These options control how the autoscaler should scale individual processors can be passed when creating a processor of any type. All options are optional and have reasonable defaults. Your options are:
 
-| Option                                        | Description                           |
-| --------------------------------------------- | ------------------------------------- |
-| **num_replicas**                              | Number of replicas the consumer should start with. Defaults to `1`|
-| **min_replicas**                              | Minimum number of replicas the consumer should have. Defaults to `1` |
-| **max_replicas**                              | Maximum number of replicas the consumer should have. Defaults to `1` |
-
+| Option           | Description                                                          |
+| ---------------- | -------------------------------------------------------------------- |
+| **num_replicas** | Number of replicas the consumer should start with. Defaults to `1`   |
+| **min_replicas** | Minimum number of replicas the consumer should have. Defaults to `1` |
+| **max_replicas** | Maximum number of replicas the consumer should have. Defaults to `1` |
 
 All of these options can be set when creating a processor of any type. For example:
 
@@ -97,5 +94,9 @@ All of these options can be set when creating a processor of any type. For examp
 ```
 
 <Note>
-    Different processor types have different options for configuring autoscaling. See the specific processor type documentation for more details ([endpoints](/buildflow/programming-guide/endpoints#service-options), [collectors](/buildflow/programming-guide/collectors#collector-options), [consumers](/buildflow/programming-guide/consumers#consumer-options)).
+  Different processor types have different options for configuring autoscaling.
+  See the specific processor type documentation for more details
+  ([endpoints](/buildflow/programming-guide/endpoints#service-options),
+  [collectors](/buildflow/programming-guide/collectors#collector-options),
+  [consumers](/buildflow/programming-guide/consumers#consumer-options)).
 </Note>

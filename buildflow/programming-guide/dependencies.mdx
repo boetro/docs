@@ -1,9 +1,8 @@
 ---
-title: 'Dependencies'
-icon: 'family'
-description: 'Inject any dependency into your processors.'
+title: "Dependencies"
+icon: "family"
+description: "Inject any dependency into your Processors."
 ---
-
 
 BuildFlow allows you to define custom dependencies for your processor that can be injected whenever your processor is called. This enable you to easily integrate other components into your processor.
 BuildFlow provides many ready to use dependencies to make integrations even quicker.
@@ -44,24 +43,26 @@ def sally(my_string_dep: MyStringDependency):
 That's it! You simply define your class and add it as an argument to your procssor.
 
 <Tip>
-    Even though we only use endpoints in the above example, dependencies can be used with any processor pattern (endpoints, consumers, or collectors),
+  Even though we only use endpoints in the above example, dependencies can be
+  used with any processor pattern (endpoints, consumers, or collectors),
 </Tip>
 
 We define the `MyStringDependency` class by attaching the `@dependency` decorator to it. This decorator can be attached to any class you define.
-The decorator takes a single argument `scope` which defines where the dependency is available. A dependency will always be cached for the lifetime of the scope. 
+The decorator takes a single argument `scope` which defines where the dependency is available. A dependency will always be cached for the lifetime of the scope.
 There are several options for scope:
 
-| Scope    | Description                                                                                                                             |
-|----------|-----------------------------------------------------------------------------------------------------------------------------------------|
-| PROCESS  | A new dependency will be made available for every call to your processor and will be destroyed once the call to your processor is over. |
-| REPLICA  | A new dependency will be made available when ever a replica is created and destroyed whenever the replica is drained. **Must be serializable.**                   |
-| GLOBAL   | A new dependency will be made available when your flow is started and destroyed whenever the flow is drained. **Must be serializable.**                            |
-| NO_SCOPE | A new dependency will be created every time this dependency is accessed (nothing will be cached).                                       |
+| Scope    | Description                                                                                                                                     |
+| -------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| PROCESS  | A new dependency will be made available for every call to your processor and will be destroyed once the call to your processor is over.         |
+| REPLICA  | A new dependency will be made available when ever a replica is created and destroyed whenever the replica is drained. **Must be serializable.** |
+| GLOBAL   | A new dependency will be made available when your flow is started and destroyed whenever the flow is drained. **Must be serializable.**         |
+| NO_SCOPE | A new dependency will be created every time this dependency is accessed (nothing will be cached).                                               |
 
 In our above example we mark the dependency as `GLOBAL` which means it will be created when the flow is started and destroyed when the flow is drained. This means that the dependency will be available for the lifetime of the flow and will be shared across all processors. So no matter how many times you call your processor it will always reference the same string object.
 
 <Note>
-    `GLOBAL` scoped dependencies **must be serializable** since they are stored in an object store that is shared across replicas.
+  `GLOBAL` scoped dependencies **must be serializable** since they are stored in
+  an object store that is shared across replicas.
 </Note>
 
 ## Chaining Dependencies
@@ -70,7 +71,6 @@ Dependencies can also depend on other dependencies. This allows you build any hi
 
 1. Your first dependency sets up the database connection
 2. Your second dependency depends on the first and fetches the common state
-
 
 ```python
 from buildflow import Flow
@@ -101,13 +101,12 @@ In this example you can see that both the `index` processor and `DBStateDep` bot
 
 You'll also note that we marked our `ConnectDep` dependency as `REPLICA` scoped so this database connection will be kept alive and reused for all calls to your processor (unless a new replica is added for a scaling event).
 
-
 ## Request Dependencies
 
 If you are using your dependency in an endpoint or collector you can reference the `buildflow.requests.Request` (or `starlette.requests.Request`) object in your dependency to access things specific to your request.
 
 <Note>
-    Your dependency must be marked as `PROCESS` scoped to use the request object.
+  Your dependency must be marked as `PROCESS` scoped to use the request object.
 </Note>
 
 ```python
