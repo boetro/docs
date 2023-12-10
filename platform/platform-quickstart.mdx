@@ -2,9 +2,10 @@
 title: Platform Quickstart
 ---
 
-LaunchFlow provides the [framework](/buildflow/quickstart), [tools](/developer-tools/vs-code-extension/getting-started), and [infrastructure](/launchflow-cloud/introduction) you need to build your backend application.
+LaunchFlow provides the [framework](/buildflow/quickstart), [tools](/developer-tools/vs-code-extension/getting-started), and [infrastructure](/launchflow-cloud/introduction) you need to build reliable backend applications using just Python.
 
 In this walkthrough we'll show you how to:
+
 - Run and debug a simple HTTP server locally
 - Launch your HTTP server to the cloud
 - Monitoring and debug your remote deployment
@@ -35,10 +36,21 @@ There are two main ways to interact with LaunchFlow. Through our VS Code extensi
         >
           Install in VS Code
         </a>
+        Once installed you can open the extension by clicking the LaunchFlow logo in the side bar, or by running the `LaunchFlow: Focus on Workspace View` VS Code command.
+        <Frame className="tailwind styles sm:hidden">
+                <img style={{maxHeight: "500px", margin: 0}} alt="Open Extension" src="/images/open-extension.png"/>
+        </Frame>
+      </Step>
+      <Step title="Install BuildFlow">
+        Install the [BuildFlow](/buildflow/introduction) Python framework. **BuildFlow** is the open source Python framework that powers the LaunchFlow platform.
+
+        ```
+        pip install buildflow
+        ```
       </Step>
       <Step title="Create your First Application">
         The first screen of the extension houses all of the BuildFlow applications that are in your current workspace. You can always navigate back to this screen by clicking the `Home` icon in the top bar, or by click `Apps` in the hamburger menu.
-                  
+
           To create your first application select `Create from Template`. This will open a prompt for you to select a template, select `BuildFlow Service`, and select a directory to save your application in. This will add the application to your workspace and should appear as `buildflow-service` on the `Apps` page.
 
           <Tip>
@@ -112,7 +124,7 @@ There are two main ways to interact with LaunchFlow. Through our VS Code extensi
       <Step title="View Historical Deployments">
         <div className="grid sm:grid-cols-2 space-x-2">
             <div>
-              After your deployment is stopped you can view it at anytime by opening the `Launches` page by clicking the `Rocket` icon in the top bar or by clicking `Launches` in the hamburger menu. You can also view your deployments by clicking the `Services` icon in the top bar or by clicking `Services` in the hamburger menu. 
+              After your deployment is stopped you can view it at anytime by opening the `Launches` page by clicking the `Rocket` icon in the top bar or by clicking `Launches` in the hamburger menu. You can also view your deployments by clicking the `Services` icon in the top bar or by clicking `Services` in the hamburger menu.
 
               From this view you can click the deployment ID and view the status and **historical logs** of your deployment.
             </div>
@@ -124,6 +136,7 @@ There are two main ways to interact with LaunchFlow. Through our VS Code extensi
         </div>
       </Step>
     </Steps>
+
   </Tab>
   <Tab title="CLI">
     <Steps>
@@ -132,7 +145,7 @@ There are two main ways to interact with LaunchFlow. Through our VS Code extensi
 
         ```
         pip install buildflow
-        ``` 
+        ```
       </Step>
       <Step title="Create your first Application">
         First create a directory to house your application. Then you can create a new simple application by running:
@@ -258,6 +271,7 @@ There are two main ways to interact with LaunchFlow. Through our VS Code extensi
       ```
       </Step>
     </Steps>
+
   </Tab>
 </Tabs>
 

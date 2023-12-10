@@ -1,12 +1,13 @@
 ---
-title: 'Endpoints'
-icon: 'globe'
-description: 'Receive and respond to HTTP requests.'
+title: "Endpoints"
+icon: "globe"
+description: "Receive and respond to HTTP requests and Websocket connections."
 ---
 
-The **Endpoint** pattern enables serving HTTP traffic via an API. 
+The **Endpoint** pattern enables serving HTTP and Websocket traffic using Python.
 
 An endpoint is composed of:
+
 - A `route`: this is the path that the endpoint will be available at.
 - A `method`: this is the method that the endpoint will be available at currently `GET`, `POST`, and `WEBSOCKET` are supported.
 - Your processing Logic.
@@ -111,6 +112,7 @@ If you need access to the entire request you can also import `from buildflow.req
     `buildflow.requests.Request` is just a proxy for the [starlette.requests.Request](https://www.starlette.io/requests/) object.
 
     We simply provide it as a convenience to avoid having to import `starlette.requests.Request` directly.
+
 </Note>
 
 ```python
@@ -127,18 +129,20 @@ def my_endpoint(request: Request):
 
 ### Other Request Types
 
-We also offer additional request types that can be used to receive different types other than JSON. Such as form data or files. These are available in the `buildflow.requests` module. 
+We also offer additional request types that can be used to receive different types other than JSON. Such as form data or files. These are available in the `buildflow.requests` module.
 
 <Note>
-    Note these are just proxy imports for FastAPI and Starlette request types for convenience. You can find more details on these in the [FastAPI docs](https://fastapi.tiangolo.com/tutorial/request-forms/) and [Starlette docs](https://www.starlette.io/requests/).
+  Note these are just proxy imports for FastAPI and Starlette request types for
+  convenience. You can find more details on these in the [FastAPI
+  docs](https://fastapi.tiangolo.com/tutorial/request-forms/) and [Starlette
+  docs](https://www.starlette.io/requests/).
 </Note>
 
-| Request Type         | Description                           |
-| --------------------- | ------------------------------------- |
-| **Form**      | Process a form from an http body. Proxy for [fastapi.Form](https://fastapi.tiangolo.com/tutorial/request-forms/).                  |
-| **UploadFile**      | Process a file from an http request. Proxy for [fastapi.UploadFile](https://fastapi.tiangolo.com/tutorial/request-files/#file-parameters-with-uploadfile).
-| **WebSocket**      | Process a websocket request. Proxy for [starlette.websockets.WebSocket](https://www.starlette.io/websockets/).
-
+| Request Type   | Description                                                                                                                                                |
+| -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Form**       | Process a form from an http body. Proxy for [fastapi.Form](https://fastapi.tiangolo.com/tutorial/request-forms/).                                          |
+| **UploadFile** | Process a file from an http request. Proxy for [fastapi.UploadFile](https://fastapi.tiangolo.com/tutorial/request-files/#file-parameters-with-uploadfile). |
+| **WebSocket**  | Process a websocket request. Proxy for [starlette.websockets.WebSocket](https://www.starlette.io/websockets/).                                             |
 
 ### Other Response Types
 
@@ -146,18 +150,19 @@ We also offer additional response types that can be used to return different typ
 These can all be found in the `buildflow.responses` module.
 
 <Note>
-    These responses are all proxies for different [starlette.responses](https://www.starlette.io/responses/) objects, and can be used interchangeably.
+  These responses are all proxies for different
+  [starlette.responses](https://www.starlette.io/responses/) objects, and can be
+  used interchangeably.
 </Note>
 
-| Response Type         | Description                           |
-| --------------------- | ------------------------------------- |
-| **FileResponse**      | Return a file from disk. Proxy for [starlette.responses.FileResponse](https://www.starlette.io/responses/#fileresponse).                  |
-| **HTMLResponse**      | Return an HTML file. Proxy for [starlette.responses.HTMLResponse](https://www.starlette.io/responses/#htmlresponse).
-| **JSONResponse**      | Return a JSON response. Proxy for [starlette.responses.JSONResponse](https://www.starlette.io/responses/#jsonresponse).                       |
+| Response Type         | Description                                                                                                                             |
+| --------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| **FileResponse**      | Return a file from disk. Proxy for [starlette.responses.FileResponse](https://www.starlette.io/responses/#fileresponse).                |
+| **HTMLResponse**      | Return an HTML file. Proxy for [starlette.responses.HTMLResponse](https://www.starlette.io/responses/#htmlresponse).                    |
+| **JSONResponse**      | Return a JSON response. Proxy for [starlette.responses.JSONResponse](https://www.starlette.io/responses/#jsonresponse).                 |
 | **PlainTextResponse** | Return a plain text response. Proxy for [starlette.responses.PlainTextResponse](https://www.starlette.io/responses/#plaintextresponse). |
-| **RedirectResponse**  | Return a redirect. Proxy for [starlette.responses.RedirectResponse](https://www.starlette.io/responses/#redirectresponse).|
-| **StreamingResponse** | Returns a streaming response. Proxy for [starlette.responses.StreamingResponse](https://www.starlette.io/responses/#streamingresponse).|
-
+| **RedirectResponse**  | Return a redirect. Proxy for [starlette.responses.RedirectResponse](https://www.starlette.io/responses/#redirectresponse).              |
+| **StreamingResponse** | Returns a streaming response. Proxy for [starlette.responses.StreamingResponse](https://www.starlette.io/responses/#streamingresponse). |
 
 ## WebSockets
 
@@ -183,7 +188,6 @@ You can attach middle ware to your service using the `add_middleware` method on 
 
 For additional details see the starlette [CORS middleware](https://www.starlette.io/middleware/#corsmiddleware).
 
-
 ```python
 from buildflow import Service
 from buildflow.middleware import CORSMiddleware
@@ -197,7 +201,6 @@ service.add_middleware(
     allow_headers=["*"],
 )
 ```
-
 
 ### SessionMiddleware
 
@@ -220,18 +223,17 @@ BuildFlow also automatically provides open API docs for your serivces. You can a
 Services can be individually configured for different resource requirements.
 
 The following options are available:
-| Option                                        | Description                           |
+| Option | Description |
 | --------------------------------------------- | ------------------------------------- |
-| **service_id**                                | A unique ID for your service. Defaults to a random UUID.                  |
-| **base_route**                                | Base route for all endpoints in the service. Defaults to `/`. This must be unique for all services in a flow.
-| **num_cpus**                                  | How many CPUs should be allocated to the processor. This can be any floating point number > 0. Defaults to `1`.                       |
-| **log_level**                                 | Log level for the processor. Defaults to `logging.INFO`. |
-| **num_replicas**                              | Number of replicas the consumer should start with. Defaults to `1`|
-| **min_replicas**                              | Minimum number of replicas the consumer should have. Defaults to `1` |
-| **max_replicas**                              | Maximum number of replicas the consumer should have. Defaults to `1` |
-| **max_concurrent_queries**                    | Maximum number of queries that are sent to a replica without receving a response. Defaults to `100` |
-| **target_num_ongoing_requests_per_replica**   | Target number of ongoing requests per replica before scaling. Setting this lower will mean replicas are added faster, setting it higher will mean replicas are added slower. Defaults to `1` |
-
+| **service_id** | A unique ID for your service. Defaults to a random UUID. |
+| **base_route** | Base route for all endpoints in the service. Defaults to `/`. This must be unique for all services in a flow.
+| **num_cpus** | How many CPUs should be allocated to the processor. This can be any floating point number > 0. Defaults to `1`. |
+| **log_level** | Log level for the processor. Defaults to `logging.INFO`. |
+| **num_replicas** | Number of replicas the consumer should start with. Defaults to `1`|
+| **min_replicas** | Minimum number of replicas the consumer should have. Defaults to `1` |
+| **max_replicas** | Maximum number of replicas the consumer should have. Defaults to `1` |
+| **max_concurrent_queries** | Maximum number of queries that are sent to a replica without receving a response. Defaults to `100` |
+| **target_num_ongoing_requests_per_replica** | Target number of ongoing requests per replica before scaling. Setting this lower will mean replicas are added faster, setting it higher will mean replicas are added slower. Defaults to `1` |
 
 ### Example
 
@@ -246,4 +248,3 @@ service = app.service(num_cpus=2)
 def my_endpoint(request: Request):
     ...
 ```
-

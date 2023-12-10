@@ -1,6 +1,6 @@
 ---
-title: 'Quickstart'
-description: 'Start building something awesome in under 60 seconds'
+title: "Quickstart"
+description: "Build your first application in under 60 seconds"
 ---
 
 ## Install buildflow
@@ -10,7 +10,9 @@ pip install buildflow
 ```
 
 <Tip>
-    [LaunchFlow](https://launchflow.com) offers a [free VS Code extension](https://marketplace.visualstudio.com/items?itemName=LaunchFlow.launchflow) that can help you get started even quicker!
+  [LaunchFlow](https://launchflow.com) offers a [free VS Code
+  extension](https://marketplace.visualstudio.com/items?itemName=LaunchFlow.launchflow)
+  that can help you get started even quicker!
 </Tip>
 
 ## Create a new application
@@ -23,10 +25,9 @@ cd my-app-dir
 buildflow init
 ```
 
-The `init` command creates a basic structure for your application. You are of course free to change this in any way you like.
+The `init` command creates a basic project structure for your application. You are free to change this in any way you like.
 
-
-If you want to just get started quickly you can run start your application with:
+If you want to get started quickly you can run your application with:
 
 ```
 buildflow run
@@ -48,22 +49,19 @@ Below the root level we have:
 
 This is the directory where your application code lives. It will match the name of your application. You can put any files you want in here and they will be available to your application. We create a couple of files for you:
 
-- **service.py**: This file contains the definition of your application service. This is where you can define any [custom endpoints](/buildflow/programming-guide/endpoints) you want to expose in your application. It starts out with a simple endpoint that serves a "Hello World" message.
+- **service.py**: This file contains the definition of your application's service. This is where you can define any [custom endpoints](/buildflow/programming-guide/endpoints) you want to expose in your application. It starts out with a simple endpoint that serves a "Hello World" message.
 - **dependencies.py**: This file will typically hold any [dependencies](/buildflow/programming-guide/dependencies). It starts out as empty but the comment at the top describes how you can add and use dependencies.
 - **primitives.py**: This file will typically hold any [primitives](/buildflow/programming-guide/primitives). It starts out as empty but the comment at the top describes how you can add and use primitives.
-
-**.buildflow**
-
-This is a hidden directory that contains all the build artifacts for your application. You can general ignore this directory and it will be automatically generated for you.
+- **.buildflow**: This is a hidden directory that contains all the build artifacts for your application. You can generally ignore this directory and it will be automatically generated for you.
 
 <Tip>
-    If you are using github you probably want to put this in your *.gitignore* file
+  If you are using github you probably want to put `.buildflow/` in your
+  *.gitignore* file
 </Tip>
-
 
 ## Running your application
 
-Simply run:
+To run your application simply run this command from your project directory:
 
 ```
 buildflow run
