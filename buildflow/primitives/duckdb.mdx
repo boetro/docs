@@ -2,7 +2,7 @@
 title: 'DuckDB Table'
 ---
 
-DuckDB is a **sink** that can be used to write data to a DuckDB table. To create a DuckDB simply provide:
+DuckDBTable is a **sink** that can be used to write data to a DuckDB table. To create a DuckDB simply provide:
 
 | Arg          | Description                                         |
 |--------------|-----------------------------------------------------|
@@ -13,7 +13,7 @@ DuckDB is a **sink** that can be used to write data to a DuckDB table. To create
 ```python
 from buildflow.io.duckdb import DuckDB
 
-duckdb_table = DuckDB(database="database", table="table")
+duckdb_table = DuckDBTable(database="database", table="table")
 
 @app.consumer(source=..., sink=duckdb_table)
 ```
@@ -23,7 +23,7 @@ duckdb_table = DuckDB(database="database", table="table")
 ```python
 from buildflow.io.duckdb import DuckDB
 
-duckdb_table = DuckDB(database="md:database", table="table", motherduck_token="XXXXX")
+duckdb_table = DuckDBTable(database="md:database", table="table", motherduck_token="XXXXX")
 
 @app.consumer(source=..., sink=duckdb_table)
 ```
@@ -42,7 +42,7 @@ class CustomType:
     def to_json(self):
         return {"b": self.b}
 
-duckdb_table = DuckDB(database="database", table="table")
+duckdb_table = DuckDBTable(database="database", table="table")
 
 @app.consumer(source=..., sink=duckdb_table)
 async def my_processor(elem: int) -> CustomType:
