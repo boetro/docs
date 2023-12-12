@@ -8,28 +8,41 @@ description: "Build your entire backend using just Python"
 ```python
 app = Flow()
 
+# Serve traffic over HTTP or Websockets
 service = app.service("my-service")
 @service.endpoint("/", method="GET")
 def get():
-    return "Hello World"
+  # TODO(developer): Add your logic here
+  return "Hello World"
 
+# Create event-driven workflows and background tasks
 @app.consumer(
-  source=Topic(topic_id="input-topic"),
-  sink=AnalysisTable("output-table"))
+  source=SQSQueue("my-queue"),
+  sink=SnowflakeTable("output-table"),
+  num_concurrency=10,
+)
 def process(element: Dict[str, Any]):
-    return element
+  # TODO(developer): Add your logic here
+  return element
 
-@app.collector("/collect", method="POST", sink=AnalysisTable("output-table"))
+# Collect data over HTTP
+@app.collector(
+  "/collect",
+  method="POST",
+  sink=BigQueryTable("output-table"),
+)
 def collect(request: Dict[str, Any]):
+  # TODO(developer): Add your logic here
   return element
 ```
 
 ## What is BuildFlow?
 
-**BuildFlow** is a Python framework that allows you to build your entire backend application.
-With our simple decorator patterns you can turn any function into a component of your backend. Allowing you to
-**serve data over HTTP**, **dump data to a datastore**, or **process async data from a message queues**. 
-All of these can use our built in IO connectors allowing you to create, manage, and connect to your cloud resources using pure Python.
+**BuildFlow** is a Python framework that enables you to build your entire backend application.
+BuildFlow's specialized decorator patterns can transform any Python function into a reliable component of your backend, allowing you to
+**serve data over HTTP**, **transform data and dump to a datastore**, or **process data asynchronously from a message queues**.
+
+All of these patterns include **automatic scaling**, **dependency injection**, and **infrastructure state management**. This means you can focus on writing your application logic and not worry about infrastructure or configuration.
 
 Simply install BuildFlow to get started:
 
@@ -41,47 +54,59 @@ pip install buildflow
 
 <AccordionGroup>
   <Accordion icon="microchip" title="Common serving and processing patterns">
-    **BuildFlow** offers a simple decorator patterns that allows you to turn any function into a part of your backend.
-    - **endpoints**: Receive and respond to HTTP requests
-    - **collectors**: Receive HTTP requests and dump them to a data store
+    **BuildFlow** offers simple decorator patterns that allow you to turn any function into a reliable component of your backend.
+    - **endpoints**: Receive and respond to HTTP requests and Websocket connections
+    - **collectors**: Receive HTTP requests, process them, and dump them to a data store
     - **consumers**: Process data from message queues such as Pub/Sub and Kafka
 
   </Accordion>
   <Accordion icon="road-bridge" title="Infrastructure From Code">
-    **BuildFlow** allows you to create, manage, and connect to your cloud resources using pure Python. No more manual configuration, terraform, or separate configuration management system. Simply let your logic manage your infrastructure.
+    **BuildFlow** manages its own infrastructure and configuration, allowing you to create, manage, and connect to your cloud resources using pure Python. No more manual configuration, terraform, or separate configuration management system. Simply let your logic manage your infrastructure.
   </Accordion>
   <Accordion icon="books" title="Production Ready IO Connectors">
-    Use any of our existing **BuildFlow** primitives to connect to any resource in any cloud. Including AWS, GCP, Snowflake, and DuckDB 
+    Use any of our existing **BuildFlow** primitives to connect to any resource in any cloud. Includes AWS, GCP, Snowflake, and DuckDB 
   </Accordion>
   <Accordion icon="chart-line-up" title="Scalable by Default">
     **BuildFlow** will automatically scale to whatever your current demands are. This ensures your application can handle any surge in traffic while still be cost effective during low traffic periods.
   </Accordion>
   <Accordion icon="syringe" title="Dependency Injection">
-    **BuildFlow** allows you to define custom dependencies for your processor that can be injected whenever your processor is called. This enable you to easily integrate other components into your processor (such as loading models, handling auth, or connecting to a database).
+    **BuildFlow** allows you to define custom dependencies for your processor that can be injected whenever your processor is called. This enable you to easily integrate other components into your processor, such as loading models, handling auth, or connecting to a database.
   </Accordion>
   <Accordion icon="person-running-fast" title="Async Runtime">
     **BuildFlow** runs in an asyncrounous Ray runtime allowing you to easily scale out parallel tasks with Ray or any other async framework.
   </Accordion>
   <Accordion icon="rocket" title="LaunchFlow">
-    You can use [LaunchFlow](https://launchflow.com) to automatically deploy and manage your BuildFlow flows and processors all from within  .
+    You can use [LaunchFlow](https://launchflow.com) to automatically deploy and manage your BuildFlow applications from VS Code or the command line.
     </Accordion>
 </AccordionGroup>
 
 ## Guides
 
 <CardGroup cols={2}>
-  <Card title="Tutorial: Image Classification" href="/buildflow/tutorial">
-  </Card>
-  <Card title="Manage Cloud Resources" href="/buildflow/guides/manage-cloud-resources">
-  </Card>
-  <Card title="Setup Google Authentication" href="/buildflow/guides/google-auth">
-  </Card>
-  <Card title="Load and Serve a Model" href="/buildflow/guides/load-model">
-  </Card>
-  <Card title="Serve Data from Postgres" href="/buildflow/guides/serve-from-postgres">
-  </Card>
-  <Card title="Schedule Async Tasks" href="/buildflow/guides/schedule-async-tasks">
-  </Card>
+  <Card
+    title="Tutorial: Image Classification"
+    href="/buildflow/tutorial"
+  ></Card>
+  <Card
+    title="Manage Cloud Resources"
+    href="/buildflow/guides/manage-cloud-resources"
+  ></Card>
+  <Card
+    title="Setup Google Authentication"
+    href="/buildflow/guides/google-auth"
+  ></Card>
+  <Card
+    title="Load and Serve a Model"
+    href="/buildflow/guides/load-model"
+  ></Card>
+  <Card
+    title="Serve Data from Postgres"
+    href="/buildflow/guides/serve-from-postgres"
+  ></Card>
+  <Card
+    title="Schedule Async Tasks"
+    href="/buildflow/guides/schedule-async-tasks"
+  ></Card>
 </CardGroup>
 
 ## Ready to Use Examples
@@ -108,25 +133,18 @@ Get started quickly with any of our example applications.
     icon="database"
     href="/buildflow/examples/saas"
   >
-    Build a SaaS application that uses Google authentication and postgres for permanent storage.
+    Build a SaaS application that uses Google authentication and postgres for
+    permanent storage.
   </Card>
 </CardGroup>
 
 ## Learn more
 
 <CardGroup cols={2}>
-  <Card
-    title="Quickstart"
-    icon="play"
-    href="./quickstart"
-  >
+  <Card title="Quickstart" icon="play" href="./quickstart">
     Learn about important BuildFlow concepts.
   </Card>
-  <Card
-    title="Concepts"
-    icon="image"
-    href="./concepts"
-  >
+  <Card title="Concepts" icon="image" href="./concepts">
     Learn about important BuildFlow concepts.
   </Card>
 </CardGroup>
