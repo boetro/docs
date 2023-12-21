@@ -248,6 +248,7 @@
     {
       "group": "BuildFlow",
       "pages": [
+        "release-notes/buildflow-0.3.1",
         "release-notes/buildflow-0.3.0"
       ]
     }
