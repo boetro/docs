@@ -127,3 +127,16 @@ service = app.service()
 def bob(my_header_dep: ExtractHeaderDep):
     return my_header_dep.header
 ```
+
+## Async Dependencies
+
+Dependencies can also perform async operations during their setup. This is useful if you need to make an async call to a database or other service. To do this simply mark your `__init__` method as `async` and use async functions.
+
+```python
+from buildflow.dependencies import dependency, Scope
+
+@dependency(Scope.GLOBAL)
+class MyAsyncDependency:
+    async def __init__(self):
+        self.result = await some_async_function()
+```

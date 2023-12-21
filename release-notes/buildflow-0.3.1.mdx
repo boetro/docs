@@ -1,0 +1,9 @@
+---
+title: '0.3.1'
+---
+
+BuildFlow 0.3.1 contains some minor bug fixes.
+
+- Allow test event from S3 notifications to be ignored.
+- Remove `motherduck_token` from DuckDBTable primitive. Instead users should set this as an environment variable.
+- Fix bug in S3FileChangeStream primitive where it failed to fetch the blob if the name contained spaces in it.

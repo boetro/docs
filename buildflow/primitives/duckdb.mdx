@@ -8,7 +8,6 @@ DuckDBTable is a **sink** that can be used to write data to a DuckDB table. To c
 |--------------|-----------------------------------------------------|
 | **database** | The name of the DuckDB database the table exists in |
 | **table**    | The name of the table                                  |
-| **motherduck_token**    | The token to use for authenticating to [MotherDuck](https://motherduck.com/docs/authenticating-to-motherduck#authentication-using-a-service-token)                                |
 
 ```python
 from buildflow.io.duckdb import DuckDB
@@ -18,12 +17,14 @@ duckdb_table = DuckDBTable(database="database", table="table")
 @app.consumer(source=..., sink=duckdb_table)
 ```
 
-### Connecting to Motherduck
+### Connecting to MotherDuck
+
+For connecting to MotherDuck we recommend using the `MOTHERDUCK_TOKEN` environment variable. Then prefix your database with `md:`.
 
 ```python
 from buildflow.io.duckdb import DuckDB
 
-duckdb_table = DuckDBTable(database="md:database", table="table", motherduck_token="XXXXX")
+duckdb_table = DuckDBTable(database="md:database", table="table")
 
 @app.consumer(source=..., sink=duckdb_table)
 ```
