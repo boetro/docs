@@ -1,30 +1,29 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "LaunchFlow",
+  "name": "BuildFlow",
   "logo": {
-    "dark": "/logo/launchflow-docs-logo-dark.png",
-    "light": "/logo/launchflow-docs-logo-light.png"
+    "dark": "/logo/buildflow-logo-dark.png",
+    "light": "/logo/buildflow-logo-light.png"
   },
   "favicon": "/favicon.png",
   "colors": {
-    "primary": "#932aff",
-    "light": "#3789ff",
-    "dark": "#932aff",
+    "primary": "#1065FF",
+    "light": "#04ABF2",
+    "dark": "#04ABF2",
     "background": {
       "dark": "#1b1b1d"
     },
     "anchors": {
-      "from": "#932aff",
-      "to": "#3789ff"
+      "from": "#1065FF",
+      "to": "#04ABF2"
     }
   },
   "modeToggle": {
     "default": "dark"
   },
   "topbarCtaButton": {
-    "type": "link",
-    "url": "https://launchflow.com/signup",
-    "name": "Sign Up"
+    "type": "github",
+    "url": "https://github.com/launchflow/buildflow"
   },
   "primaryTab": {
     "name": "Home"
@@ -34,92 +33,29 @@
       "apiKey": "phc_Df3dveOW6gG1ERjM1TQ8qBp7BRwEvLCjiB2FPUJPSwj"
     }
   },
-  "tabs": [
-    {
-      "name": "BuildFlow",
-      "url": "buildflow"
-    },
-    {
-      "name": "LaunchFlow Cloud",
-      "url": "launchflow-cloud"
-    },
-    {
-      "name": "Developer Tools",
-      "url": "developer-tools"
-    },
-    {
-      "name": "Release Notes",
-      "url": "release-notes"
-    }
-  ],
   "anchors": [
     {
-      "name": "LaunchFlow",
-      "icon": "rocket-launch",
-      "url": "https://launchflow.com"
-    },
-    {
-      "name": "Platform Quickstart",
-      "icon": "book",
-      "url": "platform"
-    },
-    {
       "name": "Community",
-      "icon": "slack",
-      "url": "https://join.slack.com/t/launchflowusers/shared_invite/zt-280e6a5ck-zfCrKbqw5w89L~0Xl55G4w"
+      "icon": "Discord",
+      "url": "https://discord.gg/jRpkTAeEWx"
     }
   ],
   "navigation": [
     {
-      "group": "",
-      "pages": [
-        "home"
-      ]
-    },
-    {
-      "group": "Quickstarts",
-      "pages": [
-        "platform/platform-quickstart"
-      ]
-    },
-    {
-      "group": "LaunchFlow Cloud",
-      "pages": [
-        "launchflow-cloud/introduction",
-        "launchflow-cloud/concepts",
-        "launchflow-cloud/frequently-asked-questions",
-        "launchflow-cloud/subscription-billing",
-        "launchflow-cloud/machine-types"
-      ]
-    },
-    {
-      "group": "User Guides",
-      "pages": [
-        "launchflow-cloud/user-guides/projects",
-        "launchflow-cloud/user-guides/environments",
-        "launchflow-cloud/user-guides/launch-a-deployment",
-        "launchflow-cloud/user-guides/monitor-a-deployment",
-        "launchflow-cloud/user-guides/setup-a-release-pipeline",
-        "launchflow-cloud/user-guides/update-a-deployment",
-        "launchflow-cloud/user-guides/custom-domain",
-        "launchflow-cloud/user-guides/user-provided-credentials"
-      ]
-    },
-    {
       "group": "Get Started",
       "pages": [
-        "buildflow/introduction",
-        "buildflow/concepts",
-        "buildflow/quickstart",
-        "buildflow/tutorial",
+        "introduction",
+        "concepts",
+        "quickstart",
+        "tutorial",
         {
           "group": "User Guides",
           "pages": [
-            "buildflow/guides/manage-cloud-resources",
-            "buildflow/guides/google-auth",
-            "buildflow/guides/load-model",
-            "buildflow/guides/serve-from-postgres",
-            "buildflow/guides/schedule-async-tasks"
+            "guides/manage-cloud-resources",
+            "guides/google-auth",
+            "guides/load-model",
+            "guides/serve-from-postgres",
+            "guides/schedule-async-tasks"
           ]
         }
       ]
@@ -127,25 +63,25 @@
     {
       "group": "Complete Programming Guide",
       "pages": [
-        "buildflow/programming-guide/install",
-        "buildflow/programming-guide/buildflow-yaml",
-        "buildflow/programming-guide/flows",
-        "buildflow/programming-guide/processors",
-        "buildflow/programming-guide/endpoints",
-        "buildflow/programming-guide/collectors",
-        "buildflow/programming-guide/consumers",
-        "buildflow/programming-guide/primitives",
-        "buildflow/programming-guide/dependencies",
-        "buildflow/programming-guide/source-sink-types",
-        "buildflow/programming-guide/deploying"
+        "programming-guide/install",
+        "programming-guide/buildflow-yaml",
+        "programming-guide/flows",
+        "programming-guide/processors",
+        "programming-guide/endpoints",
+        "programming-guide/collectors",
+        "programming-guide/consumers",
+        "programming-guide/primitives",
+        "programming-guide/dependencies",
+        "programming-guide/source-sink-types",
+        "programming-guide/deploying"
       ]
     },
     {
       "group": "Examples",
       "pages": [
-        "buildflow/examples/image-classification",
-        "buildflow/examples/llama2-ai-chatbot",
-        "buildflow/examples/saas"
+        "examples/image-classification",
+        "examples/llama2-ai-chatbot",
+        "examples/saas"
       ]
     },
     {
@@ -154,48 +90,48 @@
         {
           "group": "Amazon Web Services",
           "pages": [
-            "buildflow/primitives/aws/s3",
-            "buildflow/primitives/aws/s3_file_change_stream",
-            "buildflow/primitives/aws/sqs"
+            "primitives/aws/s3",
+            "primitives/aws/s3_file_change_stream",
+            "primitives/aws/sqs"
           ]
         },
         {
           "group": "Google Cloud Platform",
           "pages": [
-            "buildflow/primitives/gcp/bigquery",
-            "buildflow/primitives/gcp/cloud_sql",
-            "buildflow/primitives/gcp/gcs",
-            "buildflow/primitives/gcp/pubsub",
-            "buildflow/primitives/gcp/gcs_file_change_stream"
+            "primitives/gcp/bigquery",
+            "primitives/gcp/cloud_sql",
+            "primitives/gcp/gcs",
+            "primitives/gcp/pubsub",
+            "primitives/gcp/gcs_file_change_stream"
           ]
         },
         {
           "group": "Local",
           "pages": [
-            "buildflow/primitives/local/file",
-            "buildflow/primitives/local/pulse",
-            "buildflow/primitives/local/file_change_stream"
+            "primitives/local/file",
+            "primitives/local/pulse",
+            "primitives/local/file_change_stream"
           ]
         },
-        "buildflow/primitives/duckdb",
-        "buildflow/primitives/snowflake"
+        "primitives/duckdb",
+        "primitives/snowflake"
       ]
     },
     {
       "group": "Dependencies",
       "pages": [
-        "buildflow/dependencies/auth",
-        "buildflow/dependencies/bucket",
-        "buildflow/dependencies/credentials",
-        "buildflow/dependencies/headers",
-        "buildflow/dependencies/sink",
-        "buildflow/dependencies/sqlalchemy"
+        "dependencies/auth",
+        "dependencies/bucket",
+        "dependencies/credentials",
+        "dependencies/headers",
+        "dependencies/sink",
+        "dependencies/sqlalchemy"
       ]
     },
     {
       "group": "Developers",
       "pages": [
-        "buildflow/developers/contribute"
+        "developers/contribute"
       ]
     },
     {
@@ -204,49 +140,26 @@
         {
           "group": "Core API",
           "pages": [
-            "buildflow/reference/api/credentials",
-            "buildflow/reference/api/primitive",
-            "buildflow/reference/api/strategy"
+            "reference/api/credentials",
+            "reference/api/primitive",
+            "reference/api/strategy"
           ]
         },
         {
           "group": "CLI",
           "pages": [
-            "buildflow/reference/cli/apply",
-            "buildflow/reference/cli/build",
-            "buildflow/reference/cli/destroy",
-            "buildflow/reference/cli/init",
-            "buildflow/reference/cli/preview",
-            "buildflow/reference/cli/run"
+            "reference/cli/apply",
+            "reference/cli/build",
+            "reference/cli/destroy",
+            "reference/cli/init",
+            "reference/cli/preview",
+            "reference/cli/run"
           ]
         }
       ]
     },
     {
-      "group": "VS Code Extension",
-      "pages": [
-        "developer-tools/vs-code-extension/getting-started"
-      ]
-    },
-    {
-      "group": "CLI",
-      "pages": [
-        "developer-tools/cli/getting-started",
-        {
-          "group": "Reference",
-          "pages": [
-            "developer-tools/cli/reference/accounts",
-            "developer-tools/cli/reference/auth",
-            "developer-tools/cli/reference/config",
-            "developer-tools/cli/reference/deployments",
-            "developer-tools/cli/reference/environments",
-            "developer-tools/cli/reference/projects"
-          ]
-        }
-      ]
-    },
-    {
-      "group": "BuildFlow",
+      "group": "Release Notes",
       "pages": [
         "release-notes/buildflow-0.3.1",
         "release-notes/buildflow-0.3.0"
@@ -254,19 +167,8 @@
     }
   ],
   "footerSocials": {
-    "website": "https://launchflow.com",
-    "slack": "https://join.slack.com/t/launchflowusers/shared_invite/zt-280e6a5ck-zfCrKbqw5w89L~0Xl55G4w",
-    "linkedin": "https://www.linkedin.com/company/launchflow-inc",
-    "twitter": "https://twitter.com/Launch_Flow"
-  },
-  "redirects": [
-    {
-      "source": "/platform-quickstart",
-      "destination": "/platform/platform-quickstart"
-    },
-    {
-      "source": "/platform/buildflow-Quickstart",
-      "destination": "/buildflow/quickstart"
-    }
-  ]
+    "website": "https://buildflow.dev",
+    "discord": "https://discord.gg/jRpkTAeEWx",
+    "twitter": "https://twitter.com/BuildFlowDev"
+  }
 }

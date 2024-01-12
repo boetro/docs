@@ -1,0 +1,172 @@
+---
+title: "Serve from Postgres"
+---
+
+In this guide we will go over how to serve data from a Postgres database that is managed by BuildFlow using [SQLAlchemy](https://docs.sqlalchemy.org/en/20/). 
+All the code for this guide can be found on [GitHub](https://github.com/launchflow/buildflow-templates/tree/main/samples/serve-from-postgres-gcp).
+
+To do this we will use:
+
+- [endpoints](/buildflow/programming-guide/endpoints) to receive and return data
+- [Cloud SQL Instance](/buildflow/primitives/gcp/cloud_sql#cloud-sql-instance) and [Cloud SQL Database](/buildflow/primitives/gcp/cloud_sql#cloud-sql-database) [primtives](/buildflow/programming-guide/primitives) to hold our postgres database
+- a [SessionDep](/buildflow/dependencies/sqlalchemy) to maintain a connection to our database, and to setup sessions for incoming requests
+
+To see a full working application example with a UI included see our [SaaS application example](/buildflow/examples/saas).
+
+<Note>
+    We currently only support managing postgres databases hosted on [GCP Cloud SQL](https://cloud.google.com/sql?hl=en), but more support will be coming soon!
+</Note>
+
+<Steps>
+    <Step title="Initialize Flow">
+        First we create a new BuildFlow [Flow](/buildflow/programming-guide/flows). This will be the main entry point to our application.
+
+        ```python
+        app = Flow()
+        ```
+    </Step>
+    <Step title="Attach a Service">
+        We then attach a service to our flow object. We will later attach endpoints to store and retrieve data from our database.
+
+        ```python
+        service = app.service(service_id="serve-from-postgres")
+        ```
+    </Step>
+    <Step title="Define Database Primitives">
+        Next we define a [primitive](/buildflow/programming-guide/primitives) to manage our database. For GCP we use a [Cloud SQL Instance](/buildflow/primitives/gcp/cloud_sql#cloud-sql-instance) and a [Cloud SQL Database](/buildflow/primitives/gcp/cloud_sql#cloud-sql-database).
+
+        ```python
+        cloud_sql_instance = CloudSQLInstance(
+            instance_name="launchflow-serve-from-postgres",
+            project_id=os.environ["GCP_PROJECT_ID"],
+            database_version=CloudSQLDatabaseVersion.POSTGRES_15,
+            region="us-central1",
+            settings=CloudSQLInstanceSettings(tier="db-custom-1-3840"),
+        )
+
+        cloud_sql_database = CloudSQLDatabase(
+            instance=cloud_sql_instance,
+            database_name="launchflow-serve-from-postgres-db",
+        )
+        cloud_sql_user = CloudSQLUser(
+            instance=cloud_sql_instance,
+            user_name="my-user",
+            password="my-password",
+        )
+
+        app.manage(cloud_sql_instance, cloud_sql_database, cloud_sql_user)
+        ```
+    </Step>
+    <Step title="Initialize a SQLAlchemy Session Dependency">
+        Now we create a [SessionDep](/buildflow/dependencies/sqlalchemy) to manage our SQLAlchemy sessions for requests. This [dependency](/buildflow/programming-guide/dependencies) opens a connection to our database when the server starts up and give each endpoint a unique Session whenever they are called.
+
+        <Tip>
+            You will need to provide the user and password for authenticating with the database. You can add a user and password to your database following this [guide](https://cloud.google.com/sql/docs/postgres/create-manage-users).
+        </Tip>
+
+        ```python
+        DB = SessionDep(
+            db_primitive=cloud_sql_database,
+            db_user=os.environ["DB_USER"],
+            db_password=os.environ["DB_PASSWORD"],
+        )
+        ```
+    </Step>
+    <Step title="Initialize Database Model">
+        Now we initialize our database model that is contained in `models.py`. This will create all the tables in our database.
+
+        <Tip>
+            We put our models in a different file to avoid them being serialized with our processors.
+        </Tip>
+
+        <Note>
+            We surround this in a try catch because when we run `buildflow apply` the database will not exist yet.
+        </Note>
+
+        ```python
+        try:
+            models.Base.metadata.create_all(
+                bind=engine(
+                    cloud_sql_database, os.environ["DB_USER"], os.environ["DB_PASSWORD"]
+                )
+            )
+        except aiohttp.ClientResponseError as e:
+            if e.status != 404:
+                raise e
+        ```
+    </Step>
+    <Step title="Add Endpoints">
+        Last we add two [endpoints](/buildflow/programming-guide/endpoints):
+        
+        1. `/store` - This endpoint takes a string and stores it in our database.
+        2. `/retrieve` - This endpoint retrieves all the strings in our database.
+
+        Both of these endpoints take in our `DB` dependency we defined above letting them use a shared connect, but still have a unique session.
+
+        ```python
+        @service.endpoint("/store", method="POST")
+        def store_string(string: str, db: DB):
+            with db.session as session:
+                session.add(models.Strings(string=string))
+                session.commit()
+            return {"status": "success"}
+
+
+        @service.endpoint("/retrieve", method="GET")
+        def retrieve_string(db: DB) -> api_schemas.RetrieveResponse:
+            with db.session as session:
+                strings = session.query(models.Strings).all()
+                string_responses = []
+                for string in strings:
+                    string_responses.append(
+                        api_schemas.StringResponse(id=string.id, string=string.string)
+                    )
+                return api_schemas.RetrieveResponse(strings=string_responses)
+        ```
+    </Step>
+    <Step title="Run the Code">
+        Before running make sure you either update the code, or set the following environment variables:
+        
+        <Tip>
+            You will need to provide the user and password for authenticating with the database. You can add a user and password to your database following this [guide](https://cloud.google.com/sql/docs/postgres/create-manage-users).
+        </Tip>
+
+        ```
+        export GCP_PROJECT_ID=<your-project-id>
+        export DB_USER=<your-db-user>
+        export DB_PASSWORD=<your-db-password>
+        ```
+
+        First create all the resources with the VS Code extension or the CLI:
+
+        <Note>
+            After confirming it will take several minutes to actually provision the database.
+        </Note>
+
+        ```
+        buildflow apply
+        ```
+
+        Once completed you can run the code with the VS Code extension or the CLI:
+
+        ```
+        buildflow run
+        ```
+
+        Now you can visit: http://localhost:8000/docs to see the swagger UI and test out the endpoints.
+
+    </Step>
+    <Step title="Clean up Resources">
+        Once your done you can use the VS Code extension or the CLI to clean up all the resources:
+
+        ```
+        buildflow destroy
+        ```
+    </Step>
+</Steps>
+
+## What's next?
+
+- [Llama 2 AI Chatbot](/buildflow/examples/llama2-ai-chatbot)
+- [Software as a Service](/buildflow/examples/saas) example
+- [Realtime Image Classification](/buildflow/tutorial)

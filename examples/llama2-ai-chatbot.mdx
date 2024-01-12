@@ -1,0 +1,66 @@
+---
+title: Llama 2 Chat Bot
+icon: rocketchat
+description: "Serve a Llama 2 Model hosted in a remote storage bucket."
+---
+
+In this example we will create a chatbot that uses the Llama2 7b chat model. All the code for this example can be found on [GitHub](https://github.com/launchflow/buildflow-templates/tree/main/walkthroughs/llama2-chat-bot).
+
+<img
+  className="block dark:hidden"
+  src="/images/model-serving-design-light.gif"
+/>
+<img
+  className="hidden dark:block"
+  src="/images/model-serving-design-dark.gif"
+/>
+
+Our application will:
+
+1. Download our model from remote storage in a [dependency](/buildflow/programming-guide/dependencies) ensuring the model is ready before we receive traffic, and it can be shared across requests.
+2. Expose an [endpoint](/buildflow/programming-guide/endpoints) that allows chat with the model
+3. When our endpoint is called it will send the request through the model and return the response.
+
+If all goes well, you should have a working chatbot that looks like this:
+
+<img src="/images/chat.gif" />
+
+## Run the Example
+
+Before completing the example ensure you have [installed BuildFlow](/buildflow/programming-guide/install)
+with all [extra dependencies](/buildflow/programming-guide/install#extra-dependencies).
+
+<Tip>
+  Our basic model is hosted on a public bucket, but you can also host your own
+  model on a private bucket.
+</Tip>
+
+<Steps>
+    <Step title="Clone the GitHub Repo">
+    ```
+    git clone git@github.com:launchflow/launchflow-model-serving.git
+    cd launchflow-model-serving
+    ```
+    </Step>
+    <Step title="Install your dependencies">
+        ```
+            pip install -r requirements.txt
+        ```
+    </Step>
+    <Step title="Run your application">
+        Run your application with:
+
+        ```
+            buildflow run
+        ```
+
+        <Tip>
+            If you want to experiment loading the model from S3 instead of GCS simply set `USE_GCP=false` in the `.env` file
+        </Tip>
+
+        Once running you can visit http://localhost:8000 to begin chatting with the AI!
+    </Step>
+    <Step title="What's next?">
+        Now that you have a working chatbot, you can start to customize it to your needs. Such as adding [google auth](/buildflow/guides/google-auth) for user authentication or a [postgres database](/buildflow/guides/serve-from-postgres) for permanent storage. Or even hosting your own model on a private bucket.
+    </Step>
+</Steps>

@@ -7,196 +7,67 @@ Follow the [AWS Walkthrough](https://docs.aws.amazon.com/accounts/latest/buildfl
 
 You can signup for a Motherduck account [here](https://motherduck.com).
 </Note>
-
-<Tabs>
-    <Tab title="LaunchFlow VS Code Extension">
-        <Steps>
-            <Step title="Create from Template">
-                <div className="grid sm:grid-cols-2">
-                    <div>
-                        <ol>
-                            <li>From the `Apps` tab click `Create from Template`</li>
-                            <li>Click `Realtime Image Classification (AWS)`</li>
-                            <li>Select a directory to save the project</li>
-                            <li>This will download the template and add it to your workspace</li>
-                        </ol>
-                        <Tip>
-                            You will now see the `image-classification-aws` app on the `Apps` tab.
-                        </Tip>
-                    </div>
-                    <div>
-                        <Frame className="tailwind styles sm:hidden">
-                            <img style={{maxHeight: "500px", margin: 0}} alt="Create from template" src="/images/aws-template-image-class.png"/>
-                        </Frame>
-                    </div>
-                </div>
-            </Step>
-            <Step title="Install your dependencies">
-                <div className="grid sm:grid-cols-2">
-                    <div>
-                        <ol>
-                            <li>Select the `Utility` tab</li>
-                            <li>Click `Install Requirements`</li>
-                        </ol>
-                    </div>
-                    <div>
-                        <Frame className="tailwind styles sm:hidden">
-                            <img style={{maxHeight: "500px", margin: 0}} alt="Install Dependencies" src="/images/install-requirements.png"/>
-                        </Frame>
-                    </div>
-                </div>
-            </Step>
-            <Step title="Create a .env file">
-                Rename the `template.env` to `.env` and update all variables
-                <Tip>
-                    You can follow the instructions [here](https://motherduck.com/docs/authenticating-to-motherduck#authentication-using-a-service-token) to find your Motherduck token.
-                </Tip>
-            </Step>
-            <Step title="Create your resources">
-                <Tip>
-                    Make sure you have logged in with AWS with: `aws sso login`
-                </Tip>
-                <div className="grid sm:grid-cols-2">
-                    <div>
-                        <ol>
-                            <li>Select the `Infra` tab</li>
-                            <li>Click `Create Resources`</li>
-                            <li>Confirm by typing `yes` in the terminal</li>
-                        </ol>
-                    </div>
-                    <div>
-                        <Frame className="tailwind styles sm:hidden">
-                            <img style={{maxHeight: "500px", margin: 0}} alt="Create Resources" src="/images/create-resources.png"/>
-                        </Frame>
-                    </div>
-                </div>
-
-                When you click `Create Resources` the terminal will prompt you to confirm the resources that will be created:
-
-                ```
-                Primitives to create:
-                ---------------------
-                ├── S3Bucket
-                │   └── s3://caleb-aws-buildflow-image-classification
-                ├── S3FileChangeStream
-                │   └── caleb-aws-buildflow-image-classification:caleb-aws-buildflow-image-classification_queue
-                └── SQSQueue
-                    └── us-east-1-caleb-aws-buildflow-image-classification_queue
-
-
-                Would you like to apply these changes?
-                Enter "y (yes)" to confirm, "n (no) to reject": 
-                ```
-            </Step>
-            <Step title="Run your application">
-                <div className="grid sm:grid-cols-2 space-x-2">
-                    <div>
-                        <ol>
-                            <li>Select the `Runtime` tab</li>
-                            <li>Click `Run Local`</li>
-                            <li>Visit http://localhost:8000 to begin uploading images!</li>
-                        </ol>
-                        <Tip>
-                            We provide a picture of [Caleb's](https://github.com/boetro) dog in the repo to help get you started!
-
-                            ![Dog](/images/founders_dog.jpg)
-                        </Tip>
-                    </div>
-                    <div>
-                        <Frame className="tailwind styles sm:hidden">
-                            <img style={{maxHeight: "500px", margin: 0}} alt="Runtime" src="/images/runtime.png"/>
-                        </Frame>
-                    </div>
-                </div>
-            </Step>
-            <Step title="What's next?">
-                Now that you have a working image classification app, you can start to customize it to your needs. Such as adding [google auth](/buildflow/guides/google-auth) for user authentication or a [postgres database](/buildflow/guides/serve-from-postgres) for permanent storage. Or even hosting your own model on a private bucket.
-            </Step>
-            <Step title="Clean up your resources">
-                This step will delete all cloud resources there were created in the previous step.
-
-                <div className="grid sm:grid-cols-2 space-x-2">
-                    <div>
-                        <ol>
-                            <li>Select the `Infra` tab</li>
-                            <li>Click `Destroy Resources`</li>
-                            <li>Confirm the output in the terminal</li>
-                        </ol>
-                    </div>
-                    <div>
-                        <Frame className="tailwind styles sm:hidden">
-                            <img style={{maxHeight: "500px", margin: 0}} alt="Infra" src="/images/create-resources.png"/>
-                        </Frame>
-                    </div>
-                </div>
-            </Step>
-        </Steps>
-    </Tab>
-    <Tab title="BuildFlow CLI">
-        <Steps>
-            <Step title="Clone the GitHub Repo">
+<Steps>
+    <Step title="Clone the GitHub Repo">
+```
+git clone git@github.com:launchflow/buildflow-aws-image-classification.git 
+cd buildflow-aws-image-classification
+```
+    </Step>
+    <Step title="Install your requirements">
         ```
-        git clone git@github.com:launchflow/buildflow-aws-image-classification.git 
-        cd buildflow-aws-image-classification
+        pip install -r requirements.txt
         ```
-            </Step>
-            <Step title="Install your requirements">
-                ```
-                pip install -r requirements.txt
-                ```
-            </Step>
-            <Step title="Create a .env file">
-                Rename the `template.env` to `.env` and update all variables
-                <Tip>
-                    You can follow the instructions [here](https://motherduck.com/docs/authenticating-to-motherduck#authentication-using-a-service-token) to find your Motherduck token.
-                </Tip>
-            </Step>
-            <Step title="Create your resources">
-                Create all the resources that are required for your system.
-                ```
-                buildflow apply
-                ```
-                <Tip>
-                    Make sure you have logged in with AWS with: `aws sso login`
-                </Tip>
+    </Step>
+    <Step title="Create a .env file">
+        Rename the `template.env` to `.env` and update all variables
+        <Tip>
+            You can follow the instructions [here](https://motherduck.com/docs/authenticating-to-motherduck#authentication-using-a-service-token) to find your Motherduck token.
+        </Tip>
+    </Step>
+    <Step title="Create your resources">
+        Create all the resources that are required for your system.
+        ```
+        buildflow apply
+        ```
+        <Tip>
+            Make sure you have logged in with AWS with: `aws sso login`
+        </Tip>
 
-                This will output every primitive that will be created, and ask you to confirm before creating them:
+        This will output every primitive that will be created, and ask you to confirm before creating them:
 
-                ```
-                Primitives to create:
-                ---------------------
-                ├── S3Bucket
-                │   └── s3://caleb-aws-buildflow-image-classification
-                ├── S3FileChangeStream
-                │   └── caleb-aws-buildflow-image-classification:caleb-aws-buildflow-image-classification_queue
-                └── SQSQueue
-                    └── us-east-1-caleb-aws-buildflow-image-classification_queue
+        ```
+        Primitives to create:
+        ---------------------
+        ├── S3Bucket
+        │   └── s3://caleb-aws-buildflow-image-classification
+        ├── S3FileChangeStream
+        │   └── caleb-aws-buildflow-image-classification:caleb-aws-buildflow-image-classification_queue
+        └── SQSQueue
+            └── us-east-1-caleb-aws-buildflow-image-classification_queue
 
 
-                Would you like to apply these changes?
-                Enter "y (yes)" to confirm, "n (no) to reject": 
-                ```
-            </Step>
-            <Step title="Run your Application">
-                Run your application with:
+        Would you like to apply these changes?
+        Enter "y (yes)" to confirm, "n (no) to reject": 
+        ```
+    </Step>
+    <Step title="Run your Application">
+        Run your application with:
 
-                ```
-                    buildflow run
-                ```
+        ```
+            buildflow run
+        ```
 
-                Once running you can visit http://localhost:8000 to see and begin uploading images!
+        Once running you can visit http://localhost:8000 to see and begin uploading images!
 
-                <Tip>
-                    We provide a picture of [Caleb's](https://github.com/boetro) dog in the repo to help get you started!
+        <Tip>
+            We provide a picture of [Caleb's](https://github.com/boetro) dog in the repo to help get you started!
 
-                    ![Dog](/images/founders_dog.jpg)
-                </Tip>
-            </Step>
-            <Step title="What's next?">
-                Now that you have a working image classification app, you can start to customize it to your needs. Such as adding [google auth](/buildflow/guides/google-auth) for user authentication or a [postgres database](/buildflow/guides/serve-from-postgres) for permanent storage. Or even hosting your own model on a private bucket.
-            </Step>
-        </Steps>
-    </Tab>
-</Tabs>
-
+            ![Dog](/images/founders_dog.jpg)
+        </Tip>
+    </Step>
+    <Step title="What's next?">
+        Now that you have a working image classification app, you can start to customize it to your needs. Such as adding [google auth](/buildflow/guides/google-auth) for user authentication or a [postgres database](/buildflow/guides/serve-from-postgres) for permanent storage. Or even hosting your own model on a private bucket.
+    </Step>
+</Steps>
 
